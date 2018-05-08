@@ -5,6 +5,7 @@ class Create extends Component {
     super(props);
 
     this.state = {
+      organizer: '',
       compName: '',
       address: '',
       city: '',

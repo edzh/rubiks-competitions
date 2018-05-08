@@ -16,6 +16,12 @@ class Navbar extends Component {
             <li className="nav-item">
               <NavLink className="nav-link" to={'/competitions'}>Find Competition</NavLink>
             </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={'/login'}>Login</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to={'/signup'}>Sign Up</NavLink>
+            </li>
           </ul>
         </nav>
       </div>

@@ -3,6 +3,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Create from './components/Create';
 import Navbar from './components/Navbar';
 import CompetitionsPage from './components/CompetitionsPage';
+import LogIn from './components/LogIn';
+import SignUp from './components/SignUp'
 import Home from './components/Home';
 
 class Main extends Component {
@@ -32,7 +34,9 @@ class Main extends Component {
             <div className="container">
               <Route exact path="/" render={() => <Home />} />
               <Route path="/create" render={() => <Create addToCompetitions={this.addToCompetitions} />} />
-              <Route path="/competitions" render={() => <CompetitionsPage />} />
+              <Route path="/competitions" render={() => <CompetitionsPage competitions={this.state.competitions} />} />
+              <Route path="/login" render={() => <LogIn />} />
+              <Route path="/signup" render={() => <SignUp />} />
             </div>
           </div>
         </BrowserRouter>
