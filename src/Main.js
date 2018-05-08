@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { firebase } from './firebase';
+
 import Create from './components/Create';
 import Navbar from './components/Navbar';
 import CompetitionsPage from './components/CompetitionsPage';
@@ -14,10 +16,19 @@ class Main extends Component {
     super(props);
 
     this.state = {
-      competitions: []
+      competitions: [],
+      authUser: null,
     };
 
     this.addToCompetitions = this.addToCompetitions.bind(this);
+  }
+
+  componentDidMount() {
+    firebase.auth.onAuthStateChanged(authUser => {
+      authUser
+        ? this.setState(() => ({ authUser }))
+        : this.setState(() => ({ authUser: null }));
+    });
   }
 
   addToCompetitions(competition) {
@@ -32,7 +43,7 @@ class Main extends Component {
       <div>
         <BrowserRouter>
           <div>
-            <Navbar />
+            <Navbar authUser={this.state.authUser} />
             <div className="container">
               <Route exact path={routes.HOME} render={() => <Home />} />
               <Route path={routes.CREATE_COMP} render={() => <Create addToCompetitions={this.addToCompetitions} />} />
