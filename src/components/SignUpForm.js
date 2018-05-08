@@ -5,12 +5,6 @@ import { auth } from '../firebase';
 
 import * as routes from '../constants/routes';
 
-const SignUpPage = ({ history }) =>
-  <div>
-    <h1>Sign Up</h1>
-    <SignUpForm history={history}/>
-  </div>
-
 const INITIAL_STATE = {
   firstName: '',
   lastName: '',
@@ -24,6 +18,11 @@ const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
+const isInvalid =
+  passwordOne !== password Two ||
+  passwordOne === '' ||
+  email === '' ||
+  username === '';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -40,15 +39,10 @@ class SignUpForm extends Component {
       passwordOne,
     } = this.state;
 
-    const {
-      history,
-    } = this.props;
-
-    auth.doCreateUserWithEmailAndPassword(email, passwordOne)
+    auth.doCreateUseerWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
         this.setState(() => ({ ...INITIAL_STATE }));
-        history.push(routes.HOME);
-      })
+      });
       .catch(error => {
         this.setState(byPropKey('error', error));
       });
@@ -57,22 +51,6 @@ class SignUpForm extends Component {
   }
 
   render() {
-    const {
-      firstName,
-      lastName,
-      email,
-      passwordOne,
-      passwordTwo,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      passwordOne !== passwordTwo ||
-      passwordOne === '' ||
-      email === '' ||
-      firstName === '' ||
-      lastName === '';
-
     return(
         <form onSubmit={this.onSubmit}>
           <input
@@ -119,16 +97,4 @@ class SignUpForm extends Component {
   }
 }
 
-const SignUpLink = () =>
-  <p>
-    Don't have an account?
-    {' '}
-    <Link to={routes.SIGN_UP}>Sign Up</Link>
-  </p>
-
-export default withRouter(SignUpPage);
-
-export {
-  SignUpForm,
-  SignUpLink,
-};
+export default SignUpForm;

@@ -7,6 +7,8 @@ import LogIn from './components/LogIn';
 import SignUp from './components/SignUp'
 import Home from './components/Home';
 
+import * as routes from './constants/routes';
+
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -32,11 +34,11 @@ class Main extends Component {
           <div>
             <Navbar />
             <div className="container">
-              <Route exact path="/" render={() => <Home />} />
-              <Route path="/create" render={() => <Create addToCompetitions={this.addToCompetitions} />} />
-              <Route path="/competitions" render={() => <CompetitionsPage competitions={this.state.competitions} />} />
-              <Route path="/login" render={() => <LogIn />} />
-              <Route path="/signup" render={() => <SignUp />} />
+              <Route exact path={routes.HOME} render={() => <Home />} />
+              <Route path={routes.CREATE_COMP} render={() => <Create addToCompetitions={this.addToCompetitions} />} />
+              <Route path={routes.COMPETITIONS} render={() => <CompetitionsPage competitions={this.state.competitions} />} />
+              <Route path={routes.LOG_IN} render={() => <LogIn />} />
+              <Route path={routes.SIGN_UP} render={() => <SignUp />} />
             </div>
           </div>
         </BrowserRouter>
