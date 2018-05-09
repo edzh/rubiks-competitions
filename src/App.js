@@ -10,6 +10,7 @@ import SignUp from './components/SignUp'
 import Home from './components/Home';
 
 import * as routes from './constants/routes';
+import withAuthentication from './components/withAuthentication';
 
 class App extends Component {
   constructor(props) {
@@ -17,20 +18,10 @@ class App extends Component {
 
     this.state = {
       competitions: [],
-      authUser: null,
     };
 
     this.addToCompetitions = this.addToCompetitions.bind(this);
   }
-
-  componentDidMount() {
-    firebase.auth.onAuthStateChanged(authUser => {
-      authUser
-        ? this.setState(() => ({ authUser }))
-        : this.setState(() => ({ authUser: null }));
-    });
-  }
-
   addToCompetitions(competition) {
     const competitions = this.state.competitions.concat(competition);
     this.setState({
@@ -39,22 +30,21 @@ class App extends Component {
   }
 
   render() {
-    return(
-
-        <BrowserRouter>
-          <div>
-            <Navbar authUser={this.state.authUser} />
-            <div className="container">
-              <Route exact path={routes.HOME} render={() => <Home />} />
-              <Route path={routes.CREATE_COMP} render={() => <Create addToCompetitions={this.addToCompetitions} />} />
-              <Route path={routes.COMPETITIONS} render={() => <CompetitionsPage competitions={this.state.competitions} />} />
-              <Route path={routes.LOG_IN} render={() => <LogIn />} />
-              <Route path={routes.SIGN_UP} render={() => <SignUp />} />
-            </div>
+    return (
+      <BrowserRouter>
+        <div>
+          <Navbar />
+          <div className="container">
+            <Route exact path={routes.HOME} render={() => <Home />} />
+            <Route path={routes.CREATE_COMP} render={() => <Create addToCompetitions={this.addToCompetitions} />} />
+            <Route path={routes.COMPETITIONS} render={() => <CompetitionsPage competitions={this.state.competitions} />} />
+            <Route path={routes.LOG_IN} render={() => <LogIn />} />
+            <Route path={routes.SIGN_UP} render={() => <SignUp />} />
           </div>
-        </BrowserRouter>
+        </div>
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+export default withAuthentication(App);
