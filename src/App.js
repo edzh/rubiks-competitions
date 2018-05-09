@@ -11,7 +11,7 @@ import Home from './components/Home';
 
 import * as routes from './constants/routes';
 
-class Main extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
 
@@ -57,4 +57,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default App;
