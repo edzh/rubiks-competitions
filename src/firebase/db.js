@@ -27,5 +27,5 @@ export const doCreateCompetition = (organizer, compName, address, city, state, z
 }
 
 
-export const onceGetCompetition = () =>
+export const onceGetCompetitions = () =>
   db.ref('competitions').once('value');
