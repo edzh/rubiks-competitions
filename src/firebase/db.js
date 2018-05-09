@@ -11,3 +11,21 @@ export const doCreateUser = (id, firstName, lastName, email) =>
 
 export const onceGetUsers = () =>
   db.ref('users').once('value');
+
+export const doCreateCompetition = (organizer, compName, address, city, state, zipcode, date) => {
+  const competitionsRef = db.ref('competitions');
+  const competition = { 
+    organizer,
+    compName,
+    address,
+    city,
+    state,
+    zipcode,
+    date,
+  };
+  competitionsRef.push(competition);
+}
+
+
+export const onceGetCompetition = () =>
+  db.ref('competitions').once('value');

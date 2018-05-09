@@ -1,94 +1,128 @@
 import React, { Component } from 'react';
 
-class Create extends Component {
+import { db } from '../firebase';
+import AuthUserContext from './AuthUserContext';
+import withAuthorization from './withAuthorization';
+
+import * as routes from '../constants/routes';
+
+const CreatePage = () =>
+  <AuthUserContext.Consumer>
+    {authUser => 
+      <div>
+        <h2>Create Competition</h2>
+        <CreateForm authUser={authUser} />
+      </div>
+    }
+  </AuthUserContext.Consumer>
+
+const INITIAL_STATE = {
+  compName: '',
+  address: '',
+  city: '',
+  state: '',
+  zipcode: '',
+  date: '',
+}
+
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value,
+});
+
+class CreateForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      organizer: '',
-      compName: '',
-      address: '',
-      city: '',
-      state: '',
-      zipcode: '',
+    this.state = { 
+      organizer: this.props.authUser.uid,
+      ...INITIAL_STATE 
     };
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleInputChange(event) {
-    const target = event.target;
-    const value = target.value;
-    const name = target.name;
+  onSubmit = (event) => {
+    const {
+      organizer,
+      compName,
+      address,
+      city,
+      state,
+      zipcode,
+      date,
+    } = this.state;
 
-    this.setState({
-      [name]: value
-    });
-  }
+    db.doCreateCompetition(organizer, compName, address, city, state, zipcode, date);
 
-  handleSubmit(event) {
-    this.props.addToCompetitions(this.state);
     event.preventDefault();
   }
 
   render() {
-    return(
-      <div>
-        <h2>Create Competition</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group row">
-            <label htmlFor="compName" className="col-sm-2 col-form-label">Competition Name:</label>
-            <input
-              type="text" className="form-control col-10" name="compName"
-              value={this.state.compName}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group row">
-            <label htmlFor="address" className="col-sm-2 col-form-label">Address:</label>
-            <input
-              type="text" className="form-control col-10" name="address"
-              value={this.state.address}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group row">
-            <label htmlFor="city" className="col-sm-2 col-form-label">City:</label>
-            <input
-              type="text" className="form-control col-10" name="city"
-              value={this.state.city}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group row">
-            <label htmlFor="state" className="col-sm-2 col-form-label">State:</label>
-            <input
-              type="text" className="form-control col-10" name="state"
-              value={this.state.state}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group row">
-            <label htmlFor="zipcode" className="col-sm-2 col-form-label">Zipcode:</label>
-            <input type="text" className="form-control col-10" name="zipcode"
-              value={this.state.zipcode}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <div className="form-group row">
-            <label htmlFor="date" className="col-sm-2 col-form-label">Date:</label>
-            <input
-              type="text" className="form-control col-10" name="date"
-              value={this.state.date}
-              onChange={this.handleInputChange}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary btn-block">Create</button>
-        </form>
-      </div>
+    const {
+      compName,
+      address,
+      city,
+      state,
+      zipcode,
+      date,
+    } = this.state;
+
+    const isInvalid =
+      compName === '' ||
+      address === '' ||
+      city === '' ||
+      state === '' ||
+      zipcode === '';
+
+    return (
+      <form onSubmit={this.onSubmit}>
+        <input
+          type="text" 
+          className="form-control"
+          value={compName}
+          onChange={event => this.setState(byPropKey('compName', event.target.value))}
+          placeholder="Competition Name"
+        />
+        <input
+          type="text" 
+          className="form-control"
+          value={address}
+          onChange={event => this.setState(byPropKey('address', event.target.value))}
+          placeholder="Address"
+        />
+        <input
+          type="text" 
+          className="form-control"
+          value={city}
+          onChange={event => this.setState(byPropKey('city', event.target.value))}
+          placeholder="City"
+        />
+        <input
+          type="text" 
+          className="form-control"
+          value={state}
+          onChange={event => this.setState(byPropKey('state', event.target.value))}
+          placeholder="State"
+        />
+        <input type="text" 
+        className="form-control"
+          value={zipcode}
+          onChange={event => this.setState(byPropKey('zipcode', event.target.value))}
+          placeholder="Zipcode"
+        />
+        <input
+          type="text" 
+          className="form-control"
+          value={date}
+          onChange={event => this.setState(byPropKey('date', event.target.value))}
+          placeholder="Date"
+        />
+
+        <button disabled={isInvalid} type="submit" className="btn btn-primary">Create</button>
+      </form>
     );
   }
 }
 
-export default Create;
+const authCondition = (authUser) => !!authUser;
+
+export default withAuthorization(authCondition)(CreatePage);

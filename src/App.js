@@ -36,7 +36,7 @@ class App extends Component {
           <Navbar />
           <div className="container">
             <Route exact path={routes.HOME} render={() => <Home />} />
-            <Route path={routes.CREATE_COMP} render={() => <Create addToCompetitions={this.addToCompetitions} />} />
+            <Route path={routes.CREATE_COMP} render={() => <Create />} />
             <Route path={routes.COMPETITIONS} render={() => <CompetitionsPage competitions={this.state.competitions} />} />
             <Route path={routes.LOG_IN} render={() => <LogIn />} />
             <Route path={routes.SIGN_UP} render={() => <SignUp />} />

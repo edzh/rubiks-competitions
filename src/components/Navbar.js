@@ -32,9 +32,6 @@ const NavbarNonAuth = () =>
         <NavLink className="nav-link" to={routes.HOME}>Home</NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to={routes.CREATE_COMP}>Create Competition</NavLink>
-      </li>
-      <li className="nav-item">
         <NavLink className="nav-link" to={routes.COMPETITIONS}>Find Competition</NavLink>
       </li>
       <li className="nav-item">
