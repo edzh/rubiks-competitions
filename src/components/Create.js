@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'; 
 
 import { db } from '../firebase';
 import AuthUserContext from './AuthUserContext';
@@ -6,12 +7,12 @@ import withAuthorization from './withAuthorization';
 
 import * as routes from '../constants/routes';
 
-const CreatePage = () =>
+const CreatePage = ({ history }) =>
   <AuthUserContext.Consumer>
     {authUser => 
       <div>
         <h2>Create Competition</h2>
-        <CreateForm authUser={authUser} />
+        <CreateForm authUser={authUser} history={history} />
       </div>
     }
   </AuthUserContext.Consumer>
@@ -52,7 +53,7 @@ class CreateForm extends Component {
     } = this.state;
 
     db.doCreateCompetition(organizer, compName, address, city, state, zipcode, date);
-
+    this.props.history.push(routes.COMPETITIONS);
     event.preventDefault();
   }
 
@@ -125,4 +126,4 @@ class CreateForm extends Component {
 
 const authCondition = (authUser) => !!authUser;
 
-export default withAuthorization(authCondition)(CreatePage);
+export default withAuthorization(authCondition)(withRouter(CreatePage));
