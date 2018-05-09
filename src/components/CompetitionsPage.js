@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 
 import { db } from '../firebase';
+import AuthUserContext from './AuthUserContext';
+import withAuthorization from './withAuthorization';
 
-const CompetitionsList = ({ competitions }) =>
+const CompetitionsFormat = ({ competitions, authUser }) =>
   <table className="table">
     <tbody>
       <tr>
@@ -16,36 +18,55 @@ const CompetitionsList = ({ competitions }) =>
           <td>{competitions[key].compName}</td>
           <td>{competitions[key].address}</td>
           <td>{competitions[key].date}</td>
+          {authUser.uid === competitions[key].organizer ? <td>Manage</td> : ''}
         </tr>
       )}
     </tbody>
   </table>
 
-class CompetitionsPage extends Component {
+
+
+class CompetitionsList extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      authUser: this.props.authUser,
       competitions: null,
+      loading: true,
     };
   }
 
   componentDidMount() {
     db.onceGetCompetitions().then(snapshot =>
-      this.setState(() => ({competitions: snapshot.val() }))
+      this.setState(() => ({competitions: snapshot.val(), loading: false }))
     );
   }
 
   render() {
-    const { competitions } = this.state;
-
-    return(
+    const { competitions, loading, authUser } = this.state;
+    
+    return (
       <div>
         <h2>Competitions</h2>
-        { !!competitions && <CompetitionsList competitions={competitions} /> }
+        { loading && <p>loading...</p> }
+        { !!competitions && <CompetitionsFormat authUser={authUser} competitions={competitions} /> }
       </div>
     );
   }
+
 }
 
-export default CompetitionsPage;
+const CompetitionsPage = () =>
+  <AuthUserContext.Consumer>
+    {authUser =>
+      <div>
+        <CompetitionsList authUser={authUser} />
+        
+      </div>
+    }
+  </AuthUserContext.Consumer>
+
+const authCondition = (authUser) => authUser;
+
+export default withAuthorization(authCondition)(CompetitionsPage);
