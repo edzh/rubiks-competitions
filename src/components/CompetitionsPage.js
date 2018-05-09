@@ -4,7 +4,7 @@ import { db } from '../firebase';
 import AuthUserContext from './AuthUserContext';
 import withAuthorization from './withAuthorization';
 
-const CompetitionsFormat = ({ competitions, authUser }) =>
+const CompetitionsTable = ({ competitions, authUser }) =>
   <table className="table">
     <tbody>
       <tr>
@@ -18,7 +18,7 @@ const CompetitionsFormat = ({ competitions, authUser }) =>
           <td>{competitions[key].compName}</td>
           <td>{competitions[key].address}</td>
           <td>{competitions[key].date}</td>
-          {authUser.uid === competitions[key].organizer ? <td>Manage</td> : ''}
+          {authUser.uid === competitions[key].organizer ? <td>Manage</td> : <td>View</td>}
         </tr>
       )}
     </tbody>
@@ -50,7 +50,7 @@ class CompetitionsList extends Component {
       <div>
         <h2>Competitions</h2>
         { loading && <p>loading...</p> }
-        { !!competitions && <CompetitionsFormat authUser={authUser} competitions={competitions} /> }
+        { !!competitions && <CompetitionsTable authUser={authUser} competitions={competitions} /> }
       </div>
     );
   }
