@@ -40,7 +40,7 @@ class Main extends Component {
 
   render() {
     return(
-      <div>
+
         <BrowserRouter>
           <div>
             <Navbar authUser={this.state.authUser} />
@@ -53,7 +53,6 @@ class Main extends Component {
             </div>
           </div>
         </BrowserRouter>
-      </div>
     );
   }
 }

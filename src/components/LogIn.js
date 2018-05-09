@@ -72,7 +72,7 @@ class LogInForm extends Component {
         <input
           value={password}
           onChange={event => this.setState(byPropKey('password', event.target.value))}
-          type="text"
+          type="password"
           className="form-control"
           placeholder="Password"
         />

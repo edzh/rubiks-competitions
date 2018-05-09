@@ -99,14 +99,14 @@ class SignUpForm extends Component {
           <input
             value={passwordOne}
             onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
-            type="text"
+            type="password"
             className="form-control"
             placeholder="Password"
           />
           <input
             value={passwordTwo}
             onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
-            type="text"
+            type="password"
             className="form-control"
             placeholder="Confirm Password"
           />

@@ -5,7 +5,7 @@ import LogOutButton from './LogOut';
 import * as routes from '../constants/routes';
 
 const Navbar = ({ authUser }) =>
-  <nav className="navbar navbar-expand-lg navbar-light bg-light">
+  <nav className="navbar-expand-lg navbar-dark bg-dark">
     { authUser ? <NavbarAuth /> : <NavbarNonAuth /> }
   </nav>
 
