@@ -25,18 +25,12 @@ const CompetitionsTable = ({ competitions, authUser }) =>
           <td>{competitions[key].compName}</td>
           <td>{competitions[key].address}</td>
           <td>{competitions[key].date}</td>
-          { authUser 
+          <td>
+            <Link to={`${routes.COMPETITIONS}/${key}`}>
+              <button className="btn">View</button>
+            </Link>
+          </td> 
 
-            ? authUser.uid === competitions[key].organizer 
-              ? <td>
-                  <Link to={`${routes.COMPETITIONS}/${competitions[key].organizer}/${competitions[key].compName}`}>
-                    <button className="btn">Manage</button>
-                  </Link>
-                </td> 
-              : <td>View</td> 
-
-            : <td>View</td>
-          }
         </tr>
       )}
     </tbody>
@@ -64,6 +58,7 @@ class CompetitionList extends Component {
       state: 'competitions',
       asArray: true,
     });
+    this.setState({ loading: false })
   }
 
   render() {

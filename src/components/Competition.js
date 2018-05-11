@@ -4,6 +4,11 @@ import { db, base } from '../firebase';
 import AuthUserContext from './AuthUserContext';
 import withAuthentication from './withAuthentication';
 
+const CompetitionPage = () => 
+  <div>
+    
+  </div>
+
 class Competition extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +16,6 @@ class Competition extends Component {
     this.state = {
       competitions: null,
       loading: true,
-      uid: this.props.match.params.uid,
       compid: this.props.match.params.compid,
     }
   }
@@ -23,29 +27,31 @@ class Competition extends Component {
     //     loading: false,
     //   }),
     // );
-    this.ref = base.fetch('competitions', {
+    this.ref = base.syncState('competitions', {
       context: this,
       state: 'competitions',
       asArray: true,
-      loading: false
     })
   }
 
   render() {
 
-
-
+    const { competitions, compid, loading } = this.state;
 
     return (
     <AuthUserContext.Consumer>
-      {authUser => authUser ? 
-      <div className="container">
-        <h3>{this.state.competitions}</h3>
-        <h4>{authUser.uid}</h4>
-
-        <p>asd</p>       
-      </div>
-      : <p>asd</p>
+      {authUser => !!competitions && authUser ?
+        authUser.uid === competitions[compid].organizer ? 
+          <div className="container">
+            <h3>{competitions[compid].compName}</h3>
+            <p>{competitions[compid].address}</p>
+            <p>{competitions[compid].city}</p>
+            <p>{competitions[compid].state}</p>
+            <p>{competitions[compid].zipcode}</p>
+            <p>{competitions[compid].date}</p>
+          </div>
+        : <p>Register</p>
+      : <p>Please login to register for competition</p>
       }
     </AuthUserContext.Consumer>
         
