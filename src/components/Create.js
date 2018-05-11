@@ -2,20 +2,9 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom'; 
 
 import { db } from '../firebase';
-import AuthUserContext from './AuthUserContext';
 import withAuthorization from './withAuthorization';
 
 import * as routes from '../constants/routes';
-
-const CreatePage = ({ history }) =>
-  <AuthUserContext.Consumer>
-    {authUser => 
-      <div>
-        <h2>Create Competition</h2>
-        <CreateForm authUser={authUser} history={history} />
-      </div>
-    }
-  </AuthUserContext.Consumer>
 
 const INITIAL_STATE = {
   compName: '',
@@ -35,22 +24,14 @@ class CreateForm extends Component {
     super(props);
 
     this.state = { 
-      organizer: this.props.authUser.uid,
+      organizer: this.props.authUser,
       ...INITIAL_STATE 
     };
 
   }
 
   onSubmit = (event) => {
-    const {
-      organizer,
-      compName,
-      address,
-      city,
-      state,
-      zipcode,
-      date,
-    } = this.state;
+    const { organizer, compName, address, city, state, zipcode, date, } = this.state;
 
     db.doCreateCompetition(organizer, compName, address, city, state, zipcode, date);
     this.props.history.push(routes.COMPETITIONS);
@@ -58,14 +39,7 @@ class CreateForm extends Component {
   }
 
   render() {
-    const {
-      compName,
-      address,
-      city,
-      state,
-      zipcode,
-      date,
-    } = this.state;
+    const { compName, address, city, state, zipcode, date, } = this.state;
 
     const isInvalid =
       compName === '' ||
@@ -75,55 +49,59 @@ class CreateForm extends Component {
       zipcode === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          type="text" 
-          className="form-control"
-          value={compName}
-          onChange={event => this.setState(byPropKey('compName', event.target.value))}
-          placeholder="Competition Name"
-        />
-        <input
-          type="text" 
-          className="form-control"
-          value={address}
-          onChange={event => this.setState(byPropKey('address', event.target.value))}
-          placeholder="Address"
-        />
-        <input
-          type="text" 
-          className="form-control"
-          value={city}
-          onChange={event => this.setState(byPropKey('city', event.target.value))}
-          placeholder="City"
-        />
-        <input
-          type="text" 
-          className="form-control"
-          value={state}
-          onChange={event => this.setState(byPropKey('state', event.target.value))}
-          placeholder="State"
-        />
-        <input type="text" 
-        className="form-control"
-          value={zipcode}
-          onChange={event => this.setState(byPropKey('zipcode', event.target.value))}
-          placeholder="Zipcode"
-        />
-        <input
-          type="text" 
-          className="form-control"
-          value={date}
-          onChange={event => this.setState(byPropKey('date', event.target.value))}
-          placeholder="Date"
-        />
+      <div>
+        <h2>Create Competition</h2>
 
-        <button disabled={isInvalid} type="submit" className="btn btn-primary">Create</button>
-      </form>
+        <form onSubmit={this.onSubmit}>
+          <input
+            type="text" 
+            className="form-control"
+            value={compName}
+            onChange={event => this.setState(byPropKey('compName', event.target.value))}
+            placeholder="Competition Name"
+          />
+          <input
+            type="text" 
+            className="form-control"
+            value={address}
+            onChange={event => this.setState(byPropKey('address', event.target.value))}
+            placeholder="Address"
+          />
+          <input
+            type="text" 
+            className="form-control"
+            value={city}
+            onChange={event => this.setState(byPropKey('city', event.target.value))}
+            placeholder="City"
+          />
+          <input
+            type="text" 
+            className="form-control"
+            value={state}
+            onChange={event => this.setState(byPropKey('state', event.target.value))}
+            placeholder="State"
+          />
+          <input type="text" 
+          className="form-control"
+            value={zipcode}
+            onChange={event => this.setState(byPropKey('zipcode', event.target.value))}
+            placeholder="Zipcode"
+          />
+          <input
+            type="text" 
+            className="form-control"
+            value={date}
+            onChange={event => this.setState(byPropKey('date', event.target.value))}
+            placeholder="Date"
+          />
+
+          <button disabled={isInvalid} type="submit" className="btn btn-primary">Create</button>
+        </form>
+      </div>
     );
   }
 }
 
 const authCondition = (authUser) => !!authUser;
 
-export default withAuthorization(authCondition)(withRouter(CreatePage));
+export default withAuthorization(authCondition)(withRouter(CreateForm));

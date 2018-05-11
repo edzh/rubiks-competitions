@@ -26,7 +26,7 @@ const withAuthentication = (WrappedComponent) =>
 
       return (
         <AuthUserContext.Provider value={authUser}>
-          <WrappedComponent />
+          <WrappedComponent authUser={authUser}/>
         </AuthUserContext.Provider>
       ); 
     }

@@ -1,4 +1,5 @@
 import * as firebase from 'firebase';
+import Rebase from 're-base';
 
 const config = {
   apiKey: "AIzaSyBQaCrXf4ZyPmHXDSCqvkQGB9GmpurEWjw",
@@ -15,8 +16,9 @@ if (!firebase.apps.length) {
 
 const db = firebase.database();
 const auth = firebase.auth();
-
+const base = Rebase.createClass(db);
 export {
   db,
   auth,
+  base,
 };

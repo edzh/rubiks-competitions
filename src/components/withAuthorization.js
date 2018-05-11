@@ -18,7 +18,7 @@ const withAuthorization = (authCondition) => (WrappedComponent) => {
     render() {
       return (
       <AuthUserContext.Consumer>
-        {authUser => authUser ? <WrappedComponent /> : null}
+        {authUser => authUser ? <WrappedComponent authUser={authUser.uid} /> : null}
       </AuthUserContext.Consumer>
 
       )

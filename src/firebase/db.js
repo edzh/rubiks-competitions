@@ -13,7 +13,7 @@ export const onceGetUsers = () =>
   db.ref('users').once('value');
 
 export const doCreateCompetition = (organizer, compName, address, city, state, zipcode, date) => {
-  const competitionsRef = db.ref('competitions');
+  const competitionsRef = db.ref(`competitions`);
   const competition = { 
     organizer,
     compName,
@@ -25,7 +25,6 @@ export const doCreateCompetition = (organizer, compName, address, city, state, z
   };
   competitionsRef.push(competition);
 }
-
 
 export const onceGetCompetitions = () =>
   db.ref('competitions').once('value');
