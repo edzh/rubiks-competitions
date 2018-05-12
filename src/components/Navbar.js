@@ -25,6 +25,7 @@ const NavbarAuth = () =>
       <li><LogOutButton /></li>
     </ul>
   </nav>
+
 const NavbarNonAuth = () =>
   <nav className="navbar-expand-lg navbar-dark bg-dark">
     <ul className="navbar-nav">

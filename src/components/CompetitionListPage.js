@@ -18,21 +18,20 @@ const CompetitionsTable = ({ competitions, authUser }) =>
       </tr>
 
       {
-
         Object.keys(competitions).map(key =>
+          <tr key={key}>
+            <td>{competitions[key].compName}</td>
+            <td>{competitions[key].address}</td>
+            <td>{competitions[key].date}</td>
+            <td>
+              <Link to={`${routes.COMPETITIONS}/${key}`}>
+                <button className="btn">View</button>
+              </Link>
+            </td>
 
-        <tr key={key}>
-          <td>{competitions[key].compName}</td>
-          <td>{competitions[key].address}</td>
-          <td>{competitions[key].date}</td>
-          <td>
-            <Link to={`${routes.COMPETITIONS}/${key}`}>
-              <button className="btn">View</button>
-            </Link>
-          </td> 
-
-        </tr>
-      )}
+          </tr>
+        )
+      }
     </tbody>
   </table>
 
@@ -57,13 +56,15 @@ class CompetitionList extends Component {
       context: this,
       state: 'competitions',
       asArray: true,
+      then() {
+        this.setState({ loading: false })
+      }
     });
-    this.setState({ loading: false })
   }
 
   render() {
     const { competitions, loading } = this.state;
-    
+
     return (
       <div>
         <h2>Competitions</h2>
@@ -76,5 +77,5 @@ class CompetitionList extends Component {
 }
 
 const CompetitionListPage = withAuthentication(CompetitionList);
-      
+
 export default CompetitionListPage
