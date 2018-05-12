@@ -3,16 +3,16 @@ import React, { Component } from 'react';
 import { db, base } from '../firebase';
 import AuthUserContext from './AuthUserContext';
 import withAuthentication from './withAuthentication';
-import Announcement from './Announcement';
+import AnnouncementList from './AnnouncementList';
 
-const CompetitionManagePage = ({ competitions, compid }) =>
+const CompetitionManagePage = ({ competitions, compid, authUser, addToAnnouncements }) =>
   <div className="container">
     <h3>{competitions[compid].compName}</h3>
     <br/>
     <p>{competitions[compid].address}</p>
     <p>{competitions[compid].city}, {competitions[compid].state}, {competitions[compid].zipcode}</p>
     <p>{competitions[compid].date}</p>
-    <Announcement />
+    <AnnouncementList authUser={authUser} compid={compid} />
   </div>
 
 
@@ -37,25 +37,14 @@ class Competition extends Component {
         this.setState({ loading: false })
       }
     });
-
-    this.announcementsRef = base.syncState('announcements', {
-      context: this,
-      state: 'announcements',
-      asArray: true,
-    });
   }
 
   componentWillUnmount() {
     base.removeBinding(this.competitionsRef);
-    base.removeBinding(this.announcementsRef);
+
   }
 
-  addToAnnouncements(announcement) {
-    const announcements = this.state.announcements.concat(announcement);
-    this.setState({
-      announcements: announcements,
-    });
-  }
+
 
   render() {
 
@@ -70,7 +59,8 @@ class Competition extends Component {
           <CompetitionManagePage
             competitions={competitions}
             compid={compid}
-            addToAnnouncements={this.addToAnnouncements} />
+            addToAnnouncements={this.addToAnnouncements}
+            authUser={authUser} />
         : <p>Register</p>
       : <p>Please login to register for competition</p>
       }
