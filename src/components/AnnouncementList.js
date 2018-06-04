@@ -28,9 +28,7 @@ class AnnouncementList extends Component {
 
   addToAnnouncements(announcement) {
     const announcements = this.state.announcements.concat(announcement);
-    this.setState({
-      announcements: announcements,
-    });
+    this.setState({ announcements });
   }
 
   render() {
@@ -40,12 +38,17 @@ class AnnouncementList extends Component {
 
     return (
       <div>
-        {Object.keys(announcements).map(key => 
-          <div>
-            <h4>{announcements[key].title}</h4>
-            <p>{announcements[key].body}</p>
-            
-          </div>
+      <h3>Announcements</h3>
+        {Object.keys(announcements).map(key => {
+          if (announcements[key].compid === this.props.compid) {
+            return (
+              <div key={key}>
+                <h4>{announcements[key].title}</h4>
+                <p>{announcements[key].body}</p>
+              </div>
+            );
+          }
+        }
         )}
         <AnnouncementForm 
           authUser={authUser} 
@@ -53,7 +56,7 @@ class AnnouncementList extends Component {
           addToAnnouncements={this.addToAnnouncements}
         />
       </div>
-    )
+    );
   }
 }
 

@@ -1,8 +1,9 @@
 import * as firebase from 'firebase';
 import Rebase from 're-base';
+import API_KEY from './config';
 
 const config = {
-  apiKey: "AIzaSyBQaCrXf4ZyPmHXDSCqvkQGB9GmpurEWjw",
+  apiKey: API_KEY,
   authDomain: "rubik-s-competitions.firebaseapp.com",
   databaseURL: "https://rubik-s-competitions.firebaseio.com",
   projectId: "rubik-s-competitions",

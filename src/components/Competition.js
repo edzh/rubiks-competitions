@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
 
-import { db, base } from '../firebase';
+import { base } from '../firebase';
 import AuthUserContext from './AuthUserContext';
-import withAuthentication from './withAuthentication';
 import AnnouncementList from './AnnouncementList';
+import EventList from './EventList';
 
 const CompetitionManagePage = ({ competitions, compid, authUser, addToAnnouncements }) =>
   <div className="container">
-    <h3>{competitions[compid].compName}</h3>
+    <h2>{competitions[compid].compName}</h2>
     <br/>
     <p>{competitions[compid].address}</p>
     <p>{competitions[compid].city}, {competitions[compid].state}, {competitions[compid].zipcode}</p>
     <p>{competitions[compid].date}</p>
     <AnnouncementList authUser={authUser} compid={compid} />
+    <EventList compid={compid} />
   </div>
 
 

@@ -13,6 +13,7 @@ class AnnouncementForm extends Component {
       uid: this.props.authUser.uid,
       title: '',
       body: '',
+      date: '',
     };
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -31,21 +32,26 @@ class AnnouncementForm extends Component {
     const { title, body } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input 
-          value={title} 
-          onChange={event => this.setState(byPropKey('title', event.target.value))}
-          type="text"
-          className="form-control"
-        />
-        <input 
-          value={body} 
-          onChange={event => this.setState(byPropKey('body', event.target.value))}
-          type="textarea"
-          className="form-control"
-        />
-        <button className="btn">Submit</button>
-      </form>
+      <div>
+        <h5>New Announcement</h5>
+        <form onSubmit={this.onSubmit}>
+          <input 
+            value={title} 
+            onChange={event => this.setState(byPropKey('title', event.target.value))}
+            type="text"
+            className="form-control"
+            placeholder="Title"
+          />
+          <textarea 
+            value={body} 
+            onChange={event => this.setState(byPropKey('body', event.target.value))}
+            className="form-control"
+            rows="3"
+            placeholder="Body"
+          />
+          <button className="btn">Submit</button>
+        </form>
+      </div>
     );
   }
 }
