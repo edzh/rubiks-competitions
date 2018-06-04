@@ -33,7 +33,11 @@ class EventList extends Component {
     const { compid } = this.props;
 
     return (
-      <EventForm compid={compid} />
+      <div>
+        <h5>Events:</h5>
+        <EventForm compid={compid} addToEvents={this.addToEvents} />
+        
+      </div>
     );
   }
 }

@@ -13,6 +13,7 @@ const CompetitionManagePage = ({ competitions, compid, authUser, addToAnnounceme
     <p>{competitions[compid].city}, {competitions[compid].state}, {competitions[compid].zipcode}</p>
     <p>{competitions[compid].date}</p>
     <AnnouncementList authUser={authUser} compid={compid} />
+    <hr/>
     <EventList compid={compid} />
   </div>
 

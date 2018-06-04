@@ -17,6 +17,16 @@ class EventForm extends Component {
     };
   }
 
+  onSubmit(event) {
+    event.preventDefault();
+    this.props.addToEvents(this.state);
+    this.setState({
+      name: '',
+      startTime: '',
+      endTime: '',
+    });
+  }
+
   render() {
     const { name, startTime, endTime, date } = this.state;
 
@@ -39,12 +49,6 @@ class EventForm extends Component {
             value={endTime}
             onChange={event => this.setState(byPropKey('endTime', event.target.value))} 
             type="time"
-            className="form-control"
-          />
-          <input
-            value={name}
-            onChange={event => this.setState(byPropKey('name', event.target.value))} 
-            type="text"
             className="form-control"
           />
           <button className="btn">Submit</button>
