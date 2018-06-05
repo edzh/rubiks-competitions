@@ -1,23 +1,21 @@
 import React, { Component } from 'react';
-
 import { base } from '../firebase';
 import AuthUserContext from './AuthUserContext';
 import AnnouncementList from './AnnouncementList';
 import EventList from './EventList';
+import GMap from './GMap';
 
 const CompetitionManagePage = ({ competitions, compid, authUser, addToAnnouncements }) =>
   <div className="container">
     <h2>{competitions[compid].compName}</h2>
     <br/>
     <p>{competitions[compid].address}</p>
-    <p>{competitions[compid].city}, {competitions[compid].state}, {competitions[compid].zipcode}</p>
     <p>{competitions[compid].date}</p>
     <AnnouncementList authUser={authUser} compid={compid} />
     <hr/>
     <EventList compid={compid} />
+    <GMap lat={competitions[compid].lat} lng={competitions[compid].lng} />
   </div>
-
-
 
 class Competition extends Component {
   constructor(props) {

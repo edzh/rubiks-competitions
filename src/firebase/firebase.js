@@ -1,6 +1,6 @@
 import * as firebase from 'firebase';
 import Rebase from 're-base';
-import API_KEY from './config';
+import { API_KEY } from './config';
 
 const config = {
   apiKey: API_KEY,
