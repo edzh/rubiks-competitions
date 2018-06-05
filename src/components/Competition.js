@@ -14,6 +14,7 @@ const CompetitionManagePage = ({ competitions, compid, authUser, addToAnnounceme
     <AnnouncementList authUser={authUser} compid={compid} />
     <hr/>
     <EventList compid={compid} />
+    <hr/>
     <GMap lat={competitions[compid].lat} lng={competitions[compid].lng} />
   </div>
 
@@ -43,8 +44,6 @@ class Competition extends Component {
     base.removeBinding(this.competitionsRef);
 
   }
-
-
 
   render() {
 
