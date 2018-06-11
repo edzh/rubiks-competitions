@@ -5,12 +5,14 @@ import AnnouncementList from './AnnouncementList';
 import EventList from './EventList';
 import GMap from './GMap';
 
+import moment from 'moment';
+
 const CompetitionManagePage = ({ competitions, compid, authUser, addToAnnouncements }) =>
   <div className="container">
     <h2>{competitions[compid].compName}</h2>
     <br/>
     <p>{competitions[compid].address}</p>
-    <p>{competitions[compid].date}</p>
+    <p>{moment(competitions[compid].date).format('LL')}</p>
     <AnnouncementList authUser={authUser} compid={compid} />
     <hr/>
     <EventList compid={compid} />

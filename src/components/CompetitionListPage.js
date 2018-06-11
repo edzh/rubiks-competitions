@@ -6,6 +6,8 @@ import withAuthentication from './withAuthentication';
 
 import { base } from '../firebase';
 
+import moment from 'moment';
+
 const CompetitionsTable = ({ competitions, authUser }) =>
   <table className="table">
     <tbody>
@@ -20,7 +22,7 @@ const CompetitionsTable = ({ competitions, authUser }) =>
           <tr key={key}>
             <td>{competitions[key].compName}</td>
             <td>{competitions[key].address}</td>
-            <td>{competitions[key].date}</td>
+            <td>{moment(competitions[key].date).format('LL')}</td>
             <td>
               <Link to={`${routes.COMPETITIONS}/${key}`}>
                 <button className="btn">View</button>

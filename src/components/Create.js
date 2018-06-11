@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'; 
+import { withRouter } from 'react-router-dom';
 
 import { db } from '../firebase';
 import withAuthorization from './withAuthorization';
@@ -7,7 +7,7 @@ import withAuthorization from './withAuthorization';
 import * as routes from '../constants/routes';
 
 import SearchLocation from './SearchLocation';
-
+import PickDate from './PickDate';
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -17,7 +17,7 @@ class CreateForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { 
+    this.state = {
       organizer: this.props.authUser,
       compName: '',
       address: '',
@@ -27,6 +27,7 @@ class CreateForm extends Component {
     };
 
     this.onAddressChange = this.onAddressChange.bind(this);
+    this.onDateChange = this.onDateChange.bind(this);
   }
 
   onSubmit = (event) => {
@@ -39,7 +40,11 @@ class CreateForm extends Component {
 
   onAddressChange(address, lat, lng) {
     this.setState({ address, lat, lng });
-  }  
+  }
+
+  onDateChange(date) {
+    this.setState({ date });
+  }
 
   render() {
     const { compName, address, date, } = this.state;
@@ -54,21 +59,15 @@ class CreateForm extends Component {
 
         <form onSubmit={this.onSubmit}>
           <input
-            type="text" 
+            type="text"
             className="form-control"
             value={compName}
             onChange={event => this.setState(byPropKey('compName', event.target.value))}
             placeholder="Competition Name"
           />
-          <input
-            type="text" 
-            className="form-control"
-            value={date}
-            onChange={event => this.setState(byPropKey('date', event.target.value))}
-            placeholder="Date"
-          />
+          <PickDate onDateChange={this.onDateChange} />
           <SearchLocation onAddressChange={this.onAddressChange} />
-          
+
           <button disabled={isInvalid} type="submit" className="btn btn-primary">Create</button>
         </form>
       </div>

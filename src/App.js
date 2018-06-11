@@ -22,7 +22,8 @@ const App = () =>
         <Route exact path={routes.COMPETITIONS} render={() => <CompetitionListPage />} />
         <Route path={routes.LOG_IN} render={() => <LogIn />} />
         <Route path={routes.SIGN_UP} render={() => <SignUp />} />
-      
+
+
         <Route exact path={`${routes.COMPETITIONS}/:compid`} component={Competition}/>
       </div>
     </div>
