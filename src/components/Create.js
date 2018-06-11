@@ -51,6 +51,7 @@ class CreateForm extends Component {
 
     const isInvalid =
       compName === '' ||
+      date === '' ||
       address === '';
 
     return (

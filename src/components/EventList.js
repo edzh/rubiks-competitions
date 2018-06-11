@@ -10,6 +10,8 @@ class EventList extends Component {
     this.state = {
       events: [],
     };
+
+    this.addToEvents = this.addToEvents.bind(this);
   }
 
   componentDidMount() {
@@ -31,12 +33,22 @@ class EventList extends Component {
 
   render() {
     const { compid } = this.props;
+    const { events } = this.state;
 
     return (
       <div>
         <h5>Events:</h5>
+        {Object.keys(events).map(key => {
+          if (events[key].compid === compid) {
+            return (
+              <div key={key}>
+                <h4>{events[key].name}</h4>
+              </div>
+            );
+          }
+        })}
         <EventForm compid={compid} addToEvents={this.addToEvents} />
-        
+
       </div>
     );
   }

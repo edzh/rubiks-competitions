@@ -6,7 +6,7 @@ import AnnouncementForm from './AnnouncementForm';
 class AnnouncementList extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       announcements: [],
     };
@@ -40,7 +40,7 @@ class AnnouncementList extends Component {
       <div>
       <h3>Announcements</h3>
         {Object.keys(announcements).map(key => {
-          if (announcements[key].compid === this.props.compid) {
+          if (announcements[key].compid === compid) {
             return (
               <div key={key}>
                 <h4>{announcements[key].title}</h4>
@@ -50,9 +50,9 @@ class AnnouncementList extends Component {
           }
         }
         )}
-        <AnnouncementForm 
-          authUser={authUser} 
-          compid={compid} 
+        <AnnouncementForm
+          authUser={authUser}
+          compid={compid}
           addToAnnouncements={this.addToAnnouncements}
         />
       </div>

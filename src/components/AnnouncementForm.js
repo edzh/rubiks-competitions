@@ -31,25 +31,29 @@ class AnnouncementForm extends Component {
   render() {
     const { title, body } = this.state;
 
+    const isInvalid =
+      title === '' ||
+      body === ''
+
     return (
       <div>
         <h5>New Announcement</h5>
         <form onSubmit={this.onSubmit}>
-          <input 
-            value={title} 
+          <input
+            value={title}
             onChange={event => this.setState(byPropKey('title', event.target.value))}
             type="text"
             className="form-control"
             placeholder="Title"
           />
-          <textarea 
-            value={body} 
+          <textarea
+            value={body}
             onChange={event => this.setState(byPropKey('body', event.target.value))}
             className="form-control"
             rows="3"
             placeholder="Body"
           />
-          <button className="btn">Submit</button>
+          <button disabled={isInvalid} className="btn">Submit</button>
         </form>
       </div>
     );
