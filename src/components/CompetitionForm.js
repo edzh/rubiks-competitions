@@ -13,12 +13,12 @@ const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
-class CreateForm extends Component {
+class CompetitionForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      organizer: this.props.authUser,
+      organizer: this.props.authUser.uid,
       compName: '',
       address: '',
       lat: '',
@@ -28,14 +28,17 @@ class CreateForm extends Component {
 
     this.onAddressChange = this.onAddressChange.bind(this);
     this.onDateChange = this.onDateChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  onSubmit = (event) => {
-    const { organizer, compName, address, lat, lng, date, } = this.state;
-
-    db.doCreateCompetition(organizer, compName, address, lat, lng, date);
-    this.props.history.push(routes.COMPETITIONS);
+  onSubmit(event) {
     event.preventDefault();
+    this.props.addToCompetitions(this.state);
+    this.setState({
+      compName: '',
+      address: '',
+      date: '',
+    });
   }
 
   onAddressChange(address, lat, lng) {
@@ -78,4 +81,4 @@ class CreateForm extends Component {
 
 const authCondition = (authUser) => !!authUser;
 
-export default withAuthorization(authCondition)(withRouter(CreateForm));
+export default CompetitionForm;

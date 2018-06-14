@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as routes from '../constants/routes';
-import withAuthentication from './withAuthentication';
+// import withAuthentication from './withAuthentication';
+
+import AuthUserContext from './AuthUserContext';
+import CompetitionForm from './CompetitionForm';
 
 import { base } from '../firebase';
 
 import moment from 'moment';
 
-const CompetitionsTable = ({ competitions, authUser }) =>
+const CompetitionsTable = ({ competitions }) =>
   <table className="table">
     <tbody>
       <tr>
@@ -45,6 +48,8 @@ class CompetitionList extends Component {
       competitions: null,
       loading: true,
     };
+
+    this.addToCompetitions = this.addToCompetitions.bind(this);
   }
 
   componentDidMount() {
@@ -62,20 +67,33 @@ class CompetitionList extends Component {
     });
   }
 
+  addToCompetitions(competition) {
+    const competitions = this.state.competitions.concat(competition);
+    this.setState({ competitions });
+  }
+
   render() {
     const { competitions, loading } = this.state;
 
     return (
-      <div>
-        <h2>Competitions</h2>
-        { loading && <p>loading...</p> }
-        { !!competitions && <CompetitionsTable authUser={this.props.authUser} competitions={competitions} /> }
-      </div>
+      <AuthUserContext.Consumer>
+      {
+        authUser => authUser ?
+        <div>
+          <h2>Competitions</h2>
+          { loading && <p>loading...</p> }
+          { !!competitions && <CompetitionsTable competitions={competitions} /> }
+          <CompetitionForm addToCompetitions={this.addToCompetitions} authUser={authUser} />
+        </div>
+       : <p>hi</p>
+
+      }
+      </AuthUserContext.Consumer>
     );
   }
 
 }
 
-const CompetitionListPage = withAuthentication(CompetitionList);
+// const CompetitionListPage = withAuthentication(CompetitionList);
 
-export default CompetitionListPage
+export default CompetitionList;

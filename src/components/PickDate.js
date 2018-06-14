@@ -17,7 +17,7 @@ class PickDate extends React.Component {
   }
 
   componentDidMount() {
-    this.props.onDateChange(this.state.date);
+    this.props.onDateChange(this.state.date.format());
   }
 
   handleChange(date) {

@@ -65,7 +65,7 @@ class LogInForm extends Component {
         <input
           value={email}
           onChange={event => this.setState(byPropKey('email', event.target.value))}
-          type="text"
+          type="email"
           className="form-control"
           placeholder="Email Address"
         />

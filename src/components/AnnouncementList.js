@@ -19,6 +19,10 @@ class AnnouncementList extends Component {
       context: this,
       state: 'announcements',
       asArray: true,
+      queries: {
+        orderByChild: 'compid',
+        equalTo: this.props.compid
+      }
     });
   }
 
@@ -40,14 +44,12 @@ class AnnouncementList extends Component {
       <div>
       <h3>Announcements</h3>
         {Object.keys(announcements).map(key => {
-          if (announcements[key].compid === compid) {
-            return (
-              <div key={key}>
-                <h4>{announcements[key].title}</h4>
-                <p>{announcements[key].body}</p>
-              </div>
-            );
-          }
+          return (
+            <div key={key}>
+              <h4>{announcements[key].title}</h4>
+              <p>{announcements[key].body}</p>
+            </div>
+          );
         }
         )}
         <AnnouncementForm
