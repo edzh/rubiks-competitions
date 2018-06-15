@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { base } from '../firebase';
-import AuthUserContext from './AuthUserContext';
-import AnnouncementList from './AnnouncementList';
-import EventList from './EventList';
-import GMap from './GMap';
+import { base } from '../../firebase';
+import AuthUserContext from '../Auth/AuthUserContext';
+import AnnouncementList from '../Announcement/List';
+import EventList from '../Event/List';
+import GMap from '../GMap';
 
 import moment from 'moment';
 
@@ -15,7 +15,7 @@ const CompetitionManagePage = ({ competitions, compid, authUser, addToAnnounceme
     <p>{moment(competitions[compid].date).format('LL')}</p>
     <AnnouncementList authUser={authUser} compid={compid} />
     <hr/>
-    <EventList compid={compid} />
+    <EventList compid={compid} date={competitions[compid].date} />
     <hr/>
     <GMap lat={competitions[compid].lat} lng={competitions[compid].lng} />
   </div>

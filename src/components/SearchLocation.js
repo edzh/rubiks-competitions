@@ -22,7 +22,7 @@ const AutoComplete = compose(
         <input
           {...getInputProps({
             placeholder: 'Search Places ...',
-            className: 'location-search-input'
+            className: 'form-control'
           })}
         />
         <div>

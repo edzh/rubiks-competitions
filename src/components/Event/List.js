@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { base } from '../firebase';
+import { base } from '../../firebase';
 
-import EventForm from './EventForm';
+import EventForm from './Form';
+import Event from './Event';
 
 class EventList extends Component {
   constructor(props) {
@@ -9,6 +10,7 @@ class EventList extends Component {
 
     this.state = {
       events: [],
+      date: this.props.date,
     };
 
     this.addToEvents = this.addToEvents.bind(this);
@@ -19,6 +21,10 @@ class EventList extends Component {
       context: this,
       state: 'events',
       asArray: true,
+      queries: {
+        orderByChild: 'compid',
+        equalTo: this.props.compid
+      }
     })
   }
 
@@ -32,22 +38,24 @@ class EventList extends Component {
   }
 
   render() {
+    const { events, date } = this.state;
     const { compid } = this.props;
-    const { events } = this.state;
 
     return (
       <div>
         <h5>Events:</h5>
         {Object.keys(events).map(key => {
-          if (events[key].compid === compid) {
-            return (
-              <div key={key}>
-                <h4>{events[key].name}</h4>
-              </div>
-            );
-          }
+          return (
+            <Event 
+              key={key}
+              name={events[key].name}
+              startTime={events[key].startTime}
+              endTime={events[key].endTime}
+              date={events[key].date}
+            />
+          );
         })}
-        <EventForm compid={compid} addToEvents={this.addToEvents} />
+        <EventForm compid={compid} date={date} addToEvents={this.addToEvents} />
 
       </div>
     );

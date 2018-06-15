@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { base } from '../firebase';
-import AnnouncementForm from './AnnouncementForm';
+import { base } from '../../firebase';
+import AnnouncementForm from './Form';
+import Announcement from './Announcement'
 
 
 class AnnouncementList extends Component {
@@ -45,10 +46,11 @@ class AnnouncementList extends Component {
       <h3>Announcements</h3>
         {Object.keys(announcements).map(key => {
           return (
-            <div key={key}>
-              <h4>{announcements[key].title}</h4>
-              <p>{announcements[key].body}</p>
-            </div>
+            <Announcement 
+              key={key}
+              title={announcements[key].title}
+              body={announcements[key].body}
+            />
           );
         }
         )}

@@ -13,7 +13,7 @@ class EventForm extends Component {
       name: '',
       startTime: '',
       endTime: '',
-      date: '',
+      date: this.props.date,
     };
 
     this.onSubmit = this.onSubmit.bind(this);

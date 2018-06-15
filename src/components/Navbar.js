@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import AuthUserContext from './AuthUserContext';
-import LogOutButton from './LogOut';
+import AuthUserContext from './Auth/AuthUserContext';
+import LogOutButton from './Auth/LogOut';
 import * as routes from '../constants/routes';
 
 const Navbar = () =>

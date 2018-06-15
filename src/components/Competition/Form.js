@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { db } from '../firebase';
-import withAuthorization from './withAuthorization';
+import { db } from '../../firebase';
+import withAuthorization from '../Auth/withAuthorization';
 
-import * as routes from '../constants/routes';
+import * as routes from '../../constants/routes';
 
-import SearchLocation from './SearchLocation';
-import PickDate from './PickDate';
+import SearchLocation from '../SearchLocation';
+import PickDate from '../PickDate';
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,

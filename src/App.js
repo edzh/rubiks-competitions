@@ -2,14 +2,14 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 
 import Navbar from './components/Navbar';
-import CompetitionListPage from './components/CompetitionListPage';
-import LogIn from './components/LogIn';
-import SignUp from './components/SignUp'
+import CompetitionListPage from './components/Competition/List';
+import LogIn from './components/Auth/LogIn';
+import SignUp from './components/Auth/SignUp'
 import Home from './components/Home';
-import Competition from './components/Competition';
+import Competition from './components/Competition/Competition';
 
 import * as routes from './constants/routes';
-import withAuthentication from './components/withAuthentication';
+import withAuthentication from './components/Auth/withAuthentication';
 
 const App = () =>
   <BrowserRouter>

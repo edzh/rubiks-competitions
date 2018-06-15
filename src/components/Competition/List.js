@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import * as routes from '../constants/routes';
-// import withAuthentication from './withAuthentication';
+import * as routes from '../../constants/routes';
+// import withAuthentication from './../withAuthentication';
 
-import AuthUserContext from './AuthUserContext';
-import CompetitionForm from './CompetitionForm';
+import AuthUserContext from '../Auth/AuthUserContext';
+import CompetitionForm from '../Competition/Form';
 
-import { base } from '../firebase';
+import { base } from '../../firebase';
 
 import moment from 'moment';
 
