@@ -7,17 +7,17 @@ import GMap from '../GMap';
 
 import moment from 'moment';
 
-const CompetitionManagePage = ({ competitions, compid, authUser, addToAnnouncements }) =>
+const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, authUser, addToAnnouncements }) =>
   <div className="container">
-    <h2>{competitions[compid].compName}</h2>
+    <h2>{compName}</h2>
     <br/>
-    <p>{competitions[compid].address}</p>
-    <p>{moment(competitions[compid].date).format('LL')}</p>
+    <p>{address}</p>
+    <p>{moment(date).format('LL')}</p>
     <AnnouncementList authUser={authUser} compid={compid} />
     <hr/>
-    <EventList compid={compid} date={competitions[compid].date} />
+    <EventList compid={compid} />
     <hr/>
-    <GMap lat={competitions[compid].lat} lng={competitions[compid].lng} />
+    <GMap lat={lat} lng={lng} />
   </div>
 
 class Competition extends Component {
@@ -25,21 +25,33 @@ class Competition extends Component {
     super(props);
 
     this.state = {
-      competitions: null,
       loading: true,
       compid: this.props.match.params.compid,
+      address: '',
+      compName: '',
+      date: '',
+      lat: '',
+      lng: '',
+      uid: '',
     };
   }
 
   componentDidMount() {
-    this.competitionsRef = base.syncState('competitions', {
+    this.competitionsRef = base.syncState(`competitions`, {
       context: this,
       state: 'competitions',
       asArray: true,
+      queries: {
+        orderByKey:'',
+        equalTo: this.props.match.params.compid,
+      },
       then() {
-        this.setState({ loading: false })
-      }
-    });
+        Object.keys(this.state.competitions[0]).map(key => {
+          this.setState({ [key]: this.state.competitions[0][key] })
+        });
+        this.setState({ loading: false });
+      }}
+    )
   }
 
   componentWillUnmount() {
@@ -49,16 +61,21 @@ class Competition extends Component {
 
   render() {
 
-    const { competitions, compid, loading } = this.state;
+    const { address, compName, date, lat, lng, uid, compid, loading } = this.state;
 
     return (
     !!loading ? <p>loading...</p> :
     <AuthUserContext.Consumer>
       { // Check if competitions state is populated before passing competitions down
-        authUser => !!competitions && authUser ?
-        authUser.uid === competitions[compid].organizer ?
-          <CompetitionManagePage
-            competitions={competitions}
+        authUser => !loading && authUser ?
+        authUser.uid === this.state.uid ?
+          <CompetitionManage
+            address={address}
+            compName={compName}
+            date={date}
+            lat={lat}
+            lng={lng}
+            uid={uid}
             compid={compid}
             addToAnnouncements={this.addToAnnouncements}
             authUser={authUser} />

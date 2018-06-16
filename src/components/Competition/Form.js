@@ -18,7 +18,7 @@ class CompetitionForm extends Component {
     super(props);
 
     this.state = {
-      organizer: this.props.authUser.uid,
+      uid: this.props.authUser.uid,
       compName: '',
       address: '',
       lat: '',
