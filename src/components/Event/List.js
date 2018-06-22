@@ -46,7 +46,7 @@ class EventList extends Component {
         <h5>Events:</h5>
         {Object.keys(events).map(key => {
           return (
-            <Event 
+            <Event
               key={key}
               name={events[key].name}
               startTime={events[key].startTime}
@@ -55,7 +55,7 @@ class EventList extends Component {
             />
           );
         })}
-        <EventForm compid={compid} date={date} addToEvents={this.addToEvents} />
+        {this.props.manage && <EventForm compid={compid} date={date} addToEvents={this.addToEvents} />}
 
       </div>
     );

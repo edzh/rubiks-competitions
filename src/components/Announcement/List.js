@@ -13,6 +13,7 @@ class AnnouncementList extends Component {
     };
 
     this.addToAnnouncements = this.addToAnnouncements.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +37,15 @@ class AnnouncementList extends Component {
     this.setState({ announcements });
   }
 
+  handleDelete(index) {
+    // const announcements = this.state.announcements.splice(index, 1);
+    // this.setState({ announcements });
+    const announcement = this.state.announcements[index];
+    this.setState({
+      announcements: this.state.announcements.filter(i => i !== announcement)
+    })
+  }
+
   render() {
     const { authUser, compid } = this.props;
     const { announcements } = this.state;
@@ -46,19 +56,22 @@ class AnnouncementList extends Component {
       <h3>Announcements</h3>
         {Object.keys(announcements).map(key => {
           return (
-            <Announcement 
+            <Announcement
               key={key}
+              id={key}
               title={announcements[key].title}
               body={announcements[key].body}
+              handleDelete={this.handleDelete}
+              manage={this.props.manage}
             />
           );
         }
         )}
-        <AnnouncementForm
+        {this.props.manage && <AnnouncementForm
           authUser={authUser}
           compid={compid}
           addToAnnouncements={this.addToAnnouncements}
-        />
+        /> }
       </div>
     );
   }

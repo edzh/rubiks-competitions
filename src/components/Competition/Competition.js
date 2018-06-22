@@ -3,22 +3,10 @@ import { base } from '../../firebase';
 import AuthUserContext from '../Auth/AuthUserContext';
 import AnnouncementList from '../Announcement/List';
 import EventList from '../Event/List';
+import CompetitionManage from './Manage';
 import GMap from '../GMap';
 
 import moment from 'moment';
-
-const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, authUser, addToAnnouncements }) =>
-  <div className="container">
-    <h2>{compName}</h2>
-    <br/>
-    <p>{address}</p>
-    <p>{moment(date).format('LL')}</p>
-    <AnnouncementList authUser={authUser} compid={compid} />
-    <hr/>
-    <EventList compid={compid} />
-    <hr/>
-    <GMap lat={lat} lng={lng} />
-  </div>
 
 class Competition extends Component {
   constructor(props) {
@@ -33,7 +21,15 @@ class Competition extends Component {
       lat: '',
       lng: '',
       uid: '',
+
+      manage: false,
+
+      announcements: [],
+      events: [],
+
     };
+
+    this.handleManageChange = this.handleManageChange.bind(this);
   }
 
   componentDidMount() {
@@ -54,6 +50,10 @@ class Competition extends Component {
     )
   }
 
+  handleManageChange() {
+    this.setState({ manage: !this.state.manage });
+  }
+
   componentWillUnmount() {
     base.removeBinding(this.competitionsRef);
 
@@ -61,14 +61,26 @@ class Competition extends Component {
 
   render() {
 
-    const { address, compName, date, lat, lng, uid, compid, loading } = this.state;
+    const {
+      address,
+      compName,
+      date,
+      lat,
+      lng,
+      uid,
+      compid,
+      loading,
+      manage,
+    } = this.state;
 
     return (
     !!loading ? <p>loading...</p> :
     <AuthUserContext.Consumer>
       { // Check if competitions state is populated before passing competitions down
         authUser => !loading && authUser ?
-        authUser.uid === this.state.uid ?
+        authUser.uid === uid ?
+        <div>
+          <button className="btn btn-primary" onClick={this.handleManageChange}>{ this.state.manage ? "View" : "Manage" }</button>
           <CompetitionManage
             address={address}
             compName={compName}
@@ -78,7 +90,9 @@ class Competition extends Component {
             uid={uid}
             compid={compid}
             addToAnnouncements={this.addToAnnouncements}
-            authUser={authUser} />
+            authUser={authUser}
+            manage={manage} />
+        </div>
         : <p>Register</p>
       : <p>Please login to register for competition</p>
       }

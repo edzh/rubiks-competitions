@@ -4,18 +4,21 @@ import AnnouncementList from '../Announcement/List';
 import GMap from '../GMap';
 import EventList from '../Event/List';
 
-const CompetitionManage = ({ competitions, compid, authUser, addToAnnouncements }) =>
+const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, authUser, addToAnnouncements, manage }) =>
   <div className="container">
-  asdasd
-    <h2>{competitions[compid].compName}</h2>
+    <h2>{compName}</h2>
     <br/>
-    <p>{competitions[compid].address}</p>
-    <p>{moment(competitions[compid].date).format('LL')}</p>
-    <AnnouncementList authUser={authUser} compid={compid} />
+    <p>{address}</p>
+    <p>{moment(date).format('LL')}</p>
+    <AnnouncementList
+      manage={manage}
+      authUser={authUser}
+      compid={compid}
+    />
     <hr/>
-    <EventList compid={compid} date={competitions[compid].date} />
+    <EventList manage={manage} date={date} compid={compid} />
     <hr/>
-    <GMap lat={competitions[compid].lat} lng={competitions[compid].lng} />
+    <GMap lat={lat} lng={lng} />
   </div>
 
 export default CompetitionManage;
