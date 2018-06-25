@@ -7,7 +7,7 @@ import * as routes from '../../constants/routes';
 import AuthUserContext from '../Auth/AuthUserContext';
 import CompetitionForm from '../Competition/Form';
 
-import { base } from '../../firebase';
+import { db, base } from '../../firebase';
 
 import moment from 'moment';
 
@@ -49,28 +49,29 @@ class CompetitionList extends Component {
       loading: true,
     };
 
-    this.addToCompetitions = this.addToCompetitions.bind(this);
+    // this.addToCompetitions = this.addToCompetitions.bind(this);
   }
 
   componentDidMount() {
-    // db.onceGetCompetitions().then(snapshot =>
-    //   this.setState(() => ({competitions: snapshot.val(), loading: false }))
-    // );
+    console.log(db.onceGetCompetitions())
+    db.onceGetCompetitions().then(snapshot =>
+      this.setState(() => ({competitions: snapshot.val(), loading: false }))
+    );
 
-    this.ref = base.syncState('competitions', {
-      context: this,
-      state: 'competitions',
-      asArray: true,
-      then() {
-        this.setState({ loading: false })
-      }
-    });
+    // this.ref = base.syncState('competitions', {
+    //   context: this,
+    //   state: 'competitions',
+    //   asArray: true,
+    //   then() {
+    //     this.setState({ loading: false })
+    //   }
+    // });
   }
 
-  addToCompetitions(competition) {
-    const competitions = this.state.competitions.concat(competition);
-    this.setState({ competitions });
-  }
+  // addToCompetitions(competition) {
+  //   const competitions = this.state.competitions.concat(competition);
+  //   this.setState({ competitions });
+  // }
 
   render() {
     const { competitions, loading } = this.state;

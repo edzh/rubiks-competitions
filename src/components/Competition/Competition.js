@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { base } from '../../firebase';
+import { db, base } from '../../firebase';
 import AuthUserContext from '../Auth/AuthUserContext';
 import AnnouncementList from '../Announcement/List';
 import EventList from '../Event/List';
@@ -24,30 +24,34 @@ class Competition extends Component {
 
       manage: false,
 
-      announcements: [],
-      events: [],
-
+      competitors: [],
     };
 
     this.handleManageChange = this.handleManageChange.bind(this);
   }
 
   componentDidMount() {
-    this.competitionsRef = base.syncState(`competitions`, {
-      context: this,
-      state: 'competitions',
-      asArray: true,
-      queries: {
-        orderByKey:'',
-        equalTo: this.props.match.params.compid,
-      },
-      then() {
-        Object.keys(this.state.competitions[0]).map(key => {
-          this.setState({ [key]: this.state.competitions[0][key] })
-        });
-        this.setState({ loading: false });
-      }}
-    )
+    const { compid } = this.props.match.params;
+
+    db.watchCompetition(compid).then(snap => {
+      this.setState({ data: snap.val() })
+    });
+
+    // this.competitionsRef = base.syncState('competitions', {
+    //   context: this,
+    //   state: 'competitions',
+    //   asArray: true,
+    //   queries: {
+    //     orderByKey:'',
+    //     equalTo: this.state.compid,
+    //   },
+    //   then() {
+    //     Object.keys(this.state.competitions[0]).map(key => {
+    //       this.setState({ [key]: this.state.competitions[0][key] })
+    //     });
+    //     this.setState({ loading: false });
+    //   }}
+    // )
   }
 
   handleManageChange() {
@@ -55,7 +59,11 @@ class Competition extends Component {
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.competitionsRef);
+    // base.removeBinding(this.competitionsRef);
+
+  }
+
+  handleRegister() {
 
   }
 
@@ -81,6 +89,7 @@ class Competition extends Component {
         authUser.uid === uid ?
         <div>
           <button className="btn btn-primary" onClick={this.handleManageChange}>{ this.state.manage ? "View" : "Manage" }</button>
+          <button className="btn btn-primary" onClick={this.handleRegister}>Register</button>
           <CompetitionManage
             address={address}
             compName={compName}

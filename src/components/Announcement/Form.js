@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { db } from '../../firebase';
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -9,8 +10,8 @@ class AnnouncementForm extends Component {
     super(props);
 
     this.state = {
-      compid: this.props.compid,
       uid: this.props.authUser.uid,
+      compid: this.props.compid,
       title: '',
       body: '',
       date: '',
@@ -20,12 +21,14 @@ class AnnouncementForm extends Component {
   }
 
   onSubmit(event) {
+    const { uid, compid, title, body, date } = this.state;
     event.preventDefault();
-    this.props.addToAnnouncements(this.state);
-    this.setState({
-      title: '',
-      body: '',
-    });
+    // this.props.addToAnnouncements(this.state);
+    // this.setState({
+    //   title: '',
+    //   body: '',
+    // });
+    db.doCreateAnnouncement(uid, compid, title, body, date);
   }
 
   render() {
