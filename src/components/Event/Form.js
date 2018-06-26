@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { db } from '../../firebase';
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -20,8 +21,10 @@ class EventForm extends Component {
   }
 
   onSubmit(event) {
+    const { name, startTime, endTime, date } = this.state;
+
     event.preventDefault();
-    this.props.addToEvents(this.state);
+    db.doCreateEvent(this.props.compid, name, startTime, endTime, date);
     this.setState({
       name: '',
       startTime: '',

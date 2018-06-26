@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { base } from '../../firebase';
+import { db, base } from '../../firebase';
 
 import EventForm from './Form';
 import Event from './Event';
@@ -12,29 +12,16 @@ class EventList extends Component {
       events: [],
       date: this.props.date,
     };
-
-    this.addToEvents = this.addToEvents.bind(this);
   }
 
   componentDidMount() {
-    this.eventsRef = base.syncState('events', {
-      context: this,
-      state: 'events',
-      asArray: true,
-      queries: {
-        orderByChild: 'compid',
-        equalTo: this.props.compid
-      }
-    })
+    db.watchEvents(this.props.compid, snap => {
+      this.setState({ events: snap.val() })
+    });
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.eventsRef);
-  }
-
-  addToEvents(event) {
-    const events = this.state.events.concat(event);
-    this.setState({ events });
+    db.detach;
   }
 
   render() {
@@ -44,10 +31,11 @@ class EventList extends Component {
     return (
       <div>
         <h5>Events:</h5>
-        {Object.keys(events).map(key => {
+        {!!events && Object.keys(events).map(key => {
           return (
             <Event
               key={key}
+              id={key}
               name={events[key].name}
               startTime={events[key].startTime}
               endTime={events[key].endTime}
@@ -55,7 +43,7 @@ class EventList extends Component {
             />
           );
         })}
-        {this.props.manage && <EventForm compid={compid} date={date} addToEvents={this.addToEvents} />}
+        {this.props.manage && <EventForm compid={compid} date={date} />}
 
       </div>
     );

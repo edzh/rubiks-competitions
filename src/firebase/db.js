@@ -31,6 +31,33 @@ export const doCreateAnnouncement = (uid, compid, title, body, date) => {
 export const onceGetAnnouncements = (compid) =>
   db.ref('announcements').orderByChild('compid').equalTo(compid).once('value');
 
+export const watchAnnouncements = (compid, cb) =>
+  db.ref('announcements').orderByChild('compid').equalTo(compid).on('value', cb);
 
-export const watchCompetition = (compid) =>
-  db.ref(`competitions/${compid}`).once('value');
+export const deleteAnnouncement = (announcementid) =>
+  db.ref(`announcements/${announcementid}`).remove();
+
+export const watchCompetition = (compid, cb) =>
+  db.ref(`competitions/${compid}`).on('value', cb);
+
+export const watchAllCompetitions = (cb) =>
+  db.ref('competitions').on('value', cb);
+
+export const watchEvents = (compid, cb) =>
+  db.ref('events').orderByChild('compid').equalTo(compid).on('value', cb);
+
+export const doCreateEvent = (compid, name, startTime, endTime, date) => {
+  const eventsRef = db.ref('events');
+  const event = { compid, name, startTime, endTime, date };
+  eventsRef.push(event);
+}
+
+export const doCreateAttendee = (compid, uid, firstName, lastName) => {
+  const competitionsAttendeesRef = db.ref(`competitionAttendees/${compid}/${uid}`)
+  const userRef = db.ref(`users/${uid}`);
+  // const attendee = { firstName, lastName };
+  competitionsAttendeesRef.set(true);
+}
+
+export const detach = () =>
+  db.ref.off();

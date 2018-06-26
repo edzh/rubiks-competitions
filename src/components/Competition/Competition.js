@@ -13,18 +13,15 @@ class Competition extends Component {
     super(props);
 
     this.state = {
-      loading: true,
+      uid: '',
       compid: this.props.match.params.compid,
       address: '',
       compName: '',
       date: '',
       lat: '',
       lng: '',
-      uid: '',
-
+      loading: true,
       manage: false,
-
-      competitors: [],
     };
 
     this.handleManageChange = this.handleManageChange.bind(this);
@@ -33,25 +30,12 @@ class Competition extends Component {
   componentDidMount() {
     const { compid } = this.props.match.params;
 
-    db.watchCompetition(compid).then(snap => {
-      this.setState({ data: snap.val() })
+    this.competitionRef = db.watchCompetition(compid, snap => {
+      Object.keys(snap.val()).forEach(key => {
+        this.setState({ [key]: snap.val()[key] })
+      });
+      this.setState({ loading: false });
     });
-
-    // this.competitionsRef = base.syncState('competitions', {
-    //   context: this,
-    //   state: 'competitions',
-    //   asArray: true,
-    //   queries: {
-    //     orderByKey:'',
-    //     equalTo: this.state.compid,
-    //   },
-    //   then() {
-    //     Object.keys(this.state.competitions[0]).map(key => {
-    //       this.setState({ [key]: this.state.competitions[0][key] })
-    //     });
-    //     this.setState({ loading: false });
-    //   }}
-    // )
   }
 
   handleManageChange() {
@@ -59,12 +43,11 @@ class Competition extends Component {
   }
 
   componentWillUnmount() {
-    // base.removeBinding(this.competitionsRef);
-
+    db.detach;
   }
 
-  handleRegister() {
-
+  handleRegister(compid, uid) {
+    db.doCreateAttendee(compid, uid);
   }
 
   render() {
@@ -89,7 +72,7 @@ class Competition extends Component {
         authUser.uid === uid ?
         <div>
           <button className="btn btn-primary" onClick={this.handleManageChange}>{ this.state.manage ? "View" : "Manage" }</button>
-          <button className="btn btn-primary" onClick={this.handleRegister}>Register</button>
+          <button className="btn btn-primary" onClick={() => this.handleRegister(compid, authUser.uid)}>Register</button>
           <CompetitionManage
             address={address}
             compName={compName}

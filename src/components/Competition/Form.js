@@ -34,7 +34,6 @@ class CompetitionForm extends Component {
   onSubmit(event) {
     const { uid, compName, address, lat, lng, date } = this.state;
     event.preventDefault();
-    // this.props.addToCompetitions(this.state);
     db.doCreateCompetition(uid, compName, address, lat, lng, date);
     this.setState({
       compName: '',

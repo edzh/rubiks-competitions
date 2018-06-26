@@ -23,12 +23,11 @@ class AnnouncementForm extends Component {
   onSubmit(event) {
     const { uid, compid, title, body, date } = this.state;
     event.preventDefault();
-    // this.props.addToAnnouncements(this.state);
-    // this.setState({
-    //   title: '',
-    //   body: '',
-    // });
     db.doCreateAnnouncement(uid, compid, title, body, date);
+    this.setState({
+      title: '',
+      body: '',
+    })
   }
 
   render() {

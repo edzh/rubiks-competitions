@@ -12,25 +12,18 @@ class AnnouncementList extends Component {
       announcements: null,
     };
 
-    this.addToAnnouncements = this.addToAnnouncements.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
-    // this.announcementsRef = base.syncState('announcements', {
-    //   context: this,
-    //   state: 'announcements',
-    //   asArray: true,
-    //   queries: {
-    //     orderByChild: 'compid',
-    //     equalTo: this.props.compid
-    //   }
-    // });
-    console.log(db.onceGetAnnouncements(this.props.compid))
+    db.watchAnnouncements(this.props.compid, snap => {
+      this.setState({ announcements: snap.val() })
+      console.log(snap.val());
+    })
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.announcementsRef);
+    db.detach;
   }
 
   addToAnnouncements(announcement) {
@@ -38,11 +31,8 @@ class AnnouncementList extends Component {
     this.setState({ announcements });
   }
 
-  handleDelete(index) {
-    const announcement = this.state.announcements[index];
-    this.setState({
-      announcements: this.state.announcements.filter(i => i !== announcement)
-    })
+  handleDelete(id) {
+    db.deleteAnnouncement(id);
   }
 
   render() {
@@ -69,7 +59,6 @@ class AnnouncementList extends Component {
         {this.props.manage && <AnnouncementForm
           authUser={authUser}
           compid={compid}
-          addToAnnouncements={this.addToAnnouncements}
         /> }
       </div>
     );

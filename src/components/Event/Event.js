@@ -6,7 +6,7 @@ class Event extends Component {
     super(props);
 
     this.state = {
-      key: this.props.key,
+      key: this.props.id,
       name: this.props.name,
       startTime: this.props.startTime,
       endTime: this.props.endTime,

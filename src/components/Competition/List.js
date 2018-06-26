@@ -48,30 +48,17 @@ class CompetitionList extends Component {
       competitions: null,
       loading: true,
     };
-
-    // this.addToCompetitions = this.addToCompetitions.bind(this);
   }
 
   componentDidMount() {
-    console.log(db.onceGetCompetitions())
-    db.onceGetCompetitions().then(snapshot =>
+    db.watchAllCompetitions(snapshot =>
       this.setState(() => ({competitions: snapshot.val(), loading: false }))
     );
-
-    // this.ref = base.syncState('competitions', {
-    //   context: this,
-    //   state: 'competitions',
-    //   asArray: true,
-    //   then() {
-    //     this.setState({ loading: false })
-    //   }
-    // });
   }
 
-  // addToCompetitions(competition) {
-  //   const competitions = this.state.competitions.concat(competition);
-  //   this.setState({ competitions });
-  // }
+  componentWillUnmount() {
+    db.detach;
+  }
 
   render() {
     const { competitions, loading } = this.state;
@@ -84,7 +71,7 @@ class CompetitionList extends Component {
           <h2>Competitions</h2>
           { loading && <p>loading...</p> }
           { !!competitions && <CompetitionsTable competitions={competitions} /> }
-          <CompetitionForm addToCompetitions={this.addToCompetitions} authUser={authUser} />
+          <CompetitionForm authUser={authUser} />
         </div>
        : <p>hi</p>
 
