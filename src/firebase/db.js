@@ -52,6 +52,11 @@ export const watchCompetition = (compid, cb) =>
 export const watchAllCompetitions = (cb) =>
   db.ref('competitions').on('value', cb);
 
+export const deleteCompetition = (compid) => {
+  db.ref(`competitions/${compid}`).remove();
+  db.ref(`competitionAttendees/${compid}`).remove();
+}
+
 /*** EVENT VIEW ***/
 export const watchEvents = (compid, cb) =>
   db.ref('events').orderByChild('compid').equalTo(compid).on('value', cb);
@@ -70,7 +75,10 @@ export const doCreateAttendee = (compid, uid, firstName, lastName) => {
 
 export const watchAttending = (uid, cb) => 
   db.ref('competitionAttendees').orderByChild(`${uid}`).equalTo(true).once('value', cb);
-  
+
+export const checkUserAttendingCompetition = (uid, compid, cb) => 
+  db.ref(`competitionAttendees/${compid}/${uid}`).equalTo(true).once('value', cb);
+
 export const onceGetCompetitionsByUser = (uid, cb) => 
   db.ref('competitionAttendees').orderByChild(`${uid}`).equalTo(true).on('child_added', snap => {
     db.ref(`competitions/${snap.key}`).once('value', cb);
@@ -80,3 +88,6 @@ export const onceGetCompetitionsByUser = (uid, cb) =>
 
 export const detach = () =>
   db.ref.off();
+
+export const onceGetUserInfo = (uid, cb) => 
+  db.ref(`users/${uid}`).once('value', cb);

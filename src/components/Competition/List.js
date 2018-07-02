@@ -11,7 +11,7 @@ import { db, base } from '../../firebase';
 
 import moment from 'moment';
 
-const CompetitionsTable = ({ competitions }) =>
+const CompetitionsTable = ({ competitions, handleDelete }) =>
   <table className="table">
     <tbody>
       <tr>
@@ -31,6 +31,7 @@ const CompetitionsTable = ({ competitions }) =>
                 <button className="btn">View</button>
               </Link>
             </td>
+            <td><button onClick={() => handleDelete(key)} className="btn btn-danger">Delete</button></td>
 
           </tr>
         )
@@ -48,6 +49,7 @@ class CompetitionList extends Component {
       competitions: null,
       loading: true,
     };
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -60,28 +62,29 @@ class CompetitionList extends Component {
     db.detach;
   }
 
+  handleDelete(compid) {
+    db.deleteCompetition(compid);
+  }
+
   render() {
     const { competitions, loading } = this.state;
+    const { authUser } = this.props;
 
     return (
-      <AuthUserContext.Consumer>
-      {
-        authUser => authUser ?
+
         <div>
           <h2>Competitions</h2>
           { loading && <p>loading...</p> }
-          { !!competitions && <CompetitionsTable competitions={competitions} /> }
+          { !!competitions && <CompetitionsTable competitions={competitions} handleDelete={this.handleDelete} /> }
           <CompetitionForm authUser={authUser} />
         </div>
-       : <p>hi</p>
-
-      }
-      </AuthUserContext.Consumer>
     );
   }
 
 }
 
-// const CompetitionListPage = withAuthentication(CompetitionList);
-
-export default CompetitionList;
+export default React.forwardRef((props, ref) => (
+  <AuthUserContext.Consumer>
+    {authUser => !!authUser && <CompetitionList {...props} authUser={authUser} ref={ref} />}
+  </AuthUserContext.Consumer>
+));

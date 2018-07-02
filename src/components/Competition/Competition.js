@@ -6,6 +6,8 @@ import EventList from '../Event/List';
 import CompetitionManage from './Manage';
 import GMap from '../GMap';
 
+import * as routes from '../../constants/routes';
+
 import moment from 'moment';
 
 class Competition extends Component {
@@ -21,9 +23,11 @@ class Competition extends Component {
       lng: '',
       loading: true,
       manage: false,
+      register: false,
     };
 
     this.handleManageChange = this.handleManageChange.bind(this);
+    // this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -48,49 +52,42 @@ class Competition extends Component {
     db.doCreateAttendee(compid, uid);
   }
 
+  // handleDelete(compid) {
+  //   db.deleteCompetition(compid);
+  //   this.props.history.push(routes.HOME);
+  // }
+
   render() {
 
     const {
       address,
       compName,
       date,
-      lat,
-      lng,
-      uid,
-      compid,
+      lat, lng,
+      uid, compid,
       loading,
       manage,
     } = this.state;
 
-    // db.onceGetAttending(uid, snap => {
-    //   console.log(snap.val());
-    // })
-
     return (
-    !!loading ? <p>loading...</p> :
-    <AuthUserContext.Consumer>
-      { // Check if competitions state is populated before passing competitions down
-        authUser => !loading && authUser ?
-        authUser.uid === uid ?
-        <div>
-          <button className="btn btn-primary" onClick={this.handleManageChange}>{ this.state.manage ? "View" : "Manage" }</button>
-          <button className="btn btn-primary" onClick={() => this.handleRegister(compid, authUser.uid)}>Register</button>
-          <CompetitionManage
-            address={address}
-            compName={compName}
-            date={date}
-            lat={lat}
-            lng={lng}
-            uid={uid}
-            compid={compid}
-            addToAnnouncements={this.addToAnnouncements}
-            authUser={authUser}
-            manage={manage} />
-        </div>
-        : <p>Register</p>
-      : <p>Please login to register for competition</p>
-      }
-    </AuthUserContext.Consumer>
+    loading ? <p>loading...</p> : 
+      <div>
+        <button className="btn btn-primary" onClick={this.handleManageChange}>{ this.state.manage ? "View" : "Manage" }</button>
+        <button className="btn btn-primary" onClick={() => this.handleRegister(compid, this.props.authUser.uid)}>Register</button>
+        <CompetitionManage
+          compName={compName}
+          address={address}
+          date={date}
+          lat={lat} lng={lng}
+          uid={uid} compid={compid}
+          manage={manage} 
+          authUser={this.props.authUser}
+          addToAnnouncements={this.addToAnnouncements}
+        />
+      </div>
+
+      
+
 
     );
   }
@@ -99,4 +96,8 @@ class Competition extends Component {
 
 
 
-export default Competition;
+export default React.forwardRef((props, ref) => (
+  <AuthUserContext.Consumer>
+    {authUser => !!authUser && <Competition {...props} authUser={authUser} ref={ref} />}
+  </AuthUserContext.Consumer>
+));
