@@ -13,7 +13,6 @@ class Competition extends Component {
     super(props);
 
     this.state = {
-      uid: '',
       compid: this.props.match.params.compid,
       address: '',
       compName: '',
@@ -29,7 +28,6 @@ class Competition extends Component {
 
   componentDidMount() {
     const { compid } = this.props.match.params;
-
     this.competitionRef = db.watchCompetition(compid, snap => {
       Object.keys(snap.val()).forEach(key => {
         this.setState({ [key]: snap.val()[key] })
@@ -38,12 +36,12 @@ class Competition extends Component {
     });
   }
 
-  handleManageChange() {
-    this.setState({ manage: !this.state.manage });
-  }
-
   componentWillUnmount() {
     db.detach;
+  }
+
+  handleManageChange() {
+    this.setState({ manage: !this.state.manage });
   }
 
   handleRegister(compid, uid) {
@@ -63,6 +61,10 @@ class Competition extends Component {
       loading,
       manage,
     } = this.state;
+
+    // db.onceGetAttending(uid, snap => {
+    //   console.log(snap.val());
+    // })
 
     return (
     !!loading ? <p>loading...</p> :

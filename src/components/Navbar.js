@@ -7,10 +7,10 @@ import * as routes from '../constants/routes';
 
 const Navbar = () =>
   <AuthUserContext.Consumer>
-    {authUser => authUser ? <NavbarAuth /> : <NavbarNonAuth /> }
+    {authUser => authUser ? <NavbarAuth authUser={authUser} /> : <NavbarNonAuth /> }
   </AuthUserContext.Consumer>
 
-const NavbarAuth = () =>
+const NavbarAuth = (props) =>
   <nav className="navbar-expand-lg navbar-dark bg-dark">
     <ul className="navbar-nav">
       <li className="nav-item">
@@ -20,6 +20,9 @@ const NavbarAuth = () =>
         <NavLink className="nav-link" to={routes.COMPETITIONS}>Find Competition</NavLink>
       </li>
       <li><LogOutButton /></li>
+      <li className="nav-item">
+        <NavLink className="nav-link" to={`${routes.PROFILE}/${props.authUser.uid}`}>My Profile</NavLink>
+      </li>
     </ul>
   </nav>
 

@@ -17,16 +17,18 @@ const byPropKey = (propertyName, value) => () => ({
 });
 
 const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
+
 };
 
 class LogInForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { ...INITIAL_STATE };
+    this.state = {   
+      email: '',
+      password: '',
+      error: null, 
+    };
   }
 
   onSubmit = (event) => {
@@ -41,7 +43,11 @@ class LogInForm extends Component {
 
     auth.doSignInWithEmailAndPassword(email, password)
       .then(() => {
-        this.setState(() => ({ ...INITIAL_STATE }));
+        this.setState(() => ({   
+          email: '',
+          password: '',
+          error: null, 
+        }));
         history.push(routes.HOME);
       })
       .catch(error => {

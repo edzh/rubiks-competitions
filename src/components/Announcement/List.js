@@ -18,7 +18,6 @@ class AnnouncementList extends Component {
   componentDidMount() {
     db.watchAnnouncements(this.props.compid, snap => {
       this.setState({ announcements: snap.val() })
-      console.log(snap.val());
     })
   }
 

@@ -7,6 +7,7 @@ import LogIn from './components/Auth/LogIn';
 import SignUp from './components/Auth/SignUp'
 import Home from './components/Home';
 import Competition from './components/Competition/Competition';
+import Profile from './components/User/Profile';
 
 import * as routes from './constants/routes';
 import withAuthentication from './components/Auth/withAuthentication';
@@ -21,7 +22,7 @@ const App = () =>
         <Route path={routes.LOG_IN} render={() => <LogIn />} />
         <Route path={routes.SIGN_UP} render={() => <SignUp />} />
 
-
+        <Route exact path={`${routes.PROFILE}/:uid`} component={Profile} />
         <Route exact path={`${routes.COMPETITIONS}/:compid`} component={Competition}/>
       </div>
     </div>
