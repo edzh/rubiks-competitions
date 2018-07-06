@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 
 import { db } from '../../firebase';
-import withAuthorization from '../Auth/withAuthorization';
-
-import * as routes from '../../constants/routes';
 
 import SearchLocation from '../SearchLocation';
 import PickDate from '../PickDate';
@@ -79,7 +75,5 @@ class CompetitionForm extends Component {
     );
   }
 }
-
-const authCondition = (authUser) => !!authUser;
 
 export default CompetitionForm;

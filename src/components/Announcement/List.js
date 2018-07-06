@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { base, db } from '../../firebase';
+import { db } from '../../firebase';
 import AnnouncementForm from './Form';
 import Announcement from './Announcement'
 

@@ -67,6 +67,25 @@ export const doCreateEvent = (compid, name, startTime, endTime, date) => {
   eventsRef.push(event);
 }
 
+export const doCreateEventUser = (eventid, uid, firstName, lastName) => {
+  const eventUserRef = db.ref(`eventAttendees/${eventid}/${uid}`)
+  eventUserRef.set({
+    role: 'none',
+    firstName,
+    lastName
+  });
+}
+
+export const onceGetUsersByEvent = (eventid, cb) =>
+  db.ref('eventAttendees').orderByChild(eventid).on('value', snap => {
+    !!snap.val() && Object.keys(snap.val()[eventid]).forEach(key => {
+      db.ref(`users/${key}`).once('value', cb);
+    })
+  });
+
+export const onceGetEventUsers = (eventid, cb) => 
+  db.ref(`eventAttendees/${eventid}`).once('value', cb);
+
 /*** ATTENDEE MODEL ***/
 export const doCreateAttendee = (compid, uid, firstName, lastName) => {
   const competitionsAttendeesRef = db.ref(`competitionAttendees/${compid}/${uid}`)

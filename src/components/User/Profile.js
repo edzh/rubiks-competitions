@@ -60,7 +60,6 @@ class Profile extends Component {
 
   componentDidMount() {
     db.onceGetUserInfo(this.props.authUser.uid, snap => {
-      console.log(snap.val());
       Object.keys(snap.val()).forEach(key => {
         this.setState({ [key]: snap.val()[key] })
       });

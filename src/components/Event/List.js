@@ -26,7 +26,7 @@ class EventList extends Component {
 
   render() {
     const { events, date } = this.state;
-    const { compid, manage } = this.props;
+    const { compid, manage, authUser } = this.props;
 
     return (
       <div>
@@ -40,6 +40,7 @@ class EventList extends Component {
               startTime={events[key].startTime}
               endTime={events[key].endTime}
               date={events[key].date}
+              authUser={authUser}
             />
           );
         })}

@@ -33,7 +33,7 @@ class EventForm extends Component {
   }
 
   render() {
-    const { name, startTime, endTime, date } = this.state;
+    const { name, startTime, endTime } = this.state;
 
     const isInvalid =
       name === '' ||

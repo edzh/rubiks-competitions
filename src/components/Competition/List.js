@@ -7,7 +7,7 @@ import * as routes from '../../constants/routes';
 import AuthUserContext from '../Auth/AuthUserContext';
 import CompetitionForm from '../Competition/Form';
 
-import { db, base } from '../../firebase';
+import { db } from '../../firebase';
 
 import moment from 'moment';
 

@@ -16,10 +16,6 @@ const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
 
-const INITIAL_STATE = {
-
-};
-
 class LogInForm extends Component {
   constructor(props) {
     super(props);

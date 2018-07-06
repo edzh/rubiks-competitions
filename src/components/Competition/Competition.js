@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
-import { db, base } from '../../firebase';
+import { db } from '../../firebase';
 import AuthUserContext from '../Auth/AuthUserContext';
-import AnnouncementList from '../Announcement/List';
-import EventList from '../Event/List';
 import CompetitionManage from './Manage';
-import GMap from '../GMap';
-
-import * as routes from '../../constants/routes';
-
-import moment from 'moment';
 
 class Competition extends Component {
   constructor(props) {

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import moment from 'moment';
 import AnnouncementList from '../Announcement/List';
 import GMap from '../GMap';
 import EventList from '../Event/List';
-import AttendingList from './Attending';
+import CompetitionAttendingList from './Attending';
 
 const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, authUser, addToAnnouncements, manage }) =>
   <div className="container">
@@ -17,10 +17,10 @@ const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, aut
       compid={compid}
     />
     <hr/>
-    <EventList manage={manage} date={date} compid={compid} />
+    <EventList authUser={authUser} manage={manage} date={date} compid={compid} />
     <hr/>
     <GMap lat={lat} lng={lng} />
-    <AttendingList compid={compid} />
+    <CompetitionAttendingList compid={compid} />
   </div>
 
 export default CompetitionManage;

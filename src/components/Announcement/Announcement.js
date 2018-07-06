@@ -8,7 +8,7 @@ class Announcement extends Component {
   }
 
   onDelete(event) {
-    event.preventDefault;
+    event.preventDefault();
     this.props.handleDelete(this.props.id);
   }
 

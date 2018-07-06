@@ -4,7 +4,7 @@ import { db } from '../../firebase';
 
 import * as routes from '../../constants/routes';
 
-class AttendingList extends Component {
+class CompetitionAttendingList extends Component {
   constructor(props) {
     super(props);
 
@@ -33,14 +33,14 @@ class AttendingList extends Component {
   render() {
 
     const { attendees } = this.state;
-    console.log(attendees)
+
     return (
       <div>
       <h2>attending:</h2>
       {
         Object.keys(attendees).map(key => 
-          <Link to={`${routes.PROFILE}/${key}`}>
-            <p key={key}>{attendees[key].firstName} {attendees[key].lastName}</p>
+          <Link key={key} to={`${routes.PROFILE}/${key}`}>
+            <p>{attendees[key].firstName} {attendees[key].lastName}</p>
           </Link>
         )
       }
@@ -49,4 +49,4 @@ class AttendingList extends Component {
   }
 }
 
-export default AttendingList;
+export default CompetitionAttendingList;
