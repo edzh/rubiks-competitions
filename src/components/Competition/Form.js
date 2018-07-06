@@ -60,7 +60,7 @@ class CompetitionForm extends Component {
 
     return (
       <div>
-        <h2>Create Competition</h2>
+        <h3>Create Competition</h3>
 
         <form onSubmit={this.onSubmit}>
           <input

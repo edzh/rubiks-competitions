@@ -26,7 +26,7 @@ class EventList extends Component {
 
   render() {
     const { events, date } = this.state;
-    const { compid } = this.props;
+    const { compid, manage } = this.props;
 
     return (
       <div>
@@ -43,7 +43,7 @@ class EventList extends Component {
             />
           );
         })}
-        {this.props.manage && <EventForm compid={compid} date={date} />}
+        {manage && <EventForm compid={compid} date={date} />}
 
       </div>
     );

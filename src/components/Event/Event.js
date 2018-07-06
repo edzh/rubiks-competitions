@@ -4,19 +4,10 @@ import moment from 'moment';
 class Event extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      key: this.props.id,
-      name: this.props.name,
-      startTime: this.props.startTime,
-      endTime: this.props.endTime,
-      date: this.props.date,
-
-    }
   }
 
   render() {
-    const { key, name, startTime, endTime, date } = this.state;
+    const { key, name, startTime, endTime, date } = this.props;
 
     return (
       <div key={key}>

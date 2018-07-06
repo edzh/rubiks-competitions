@@ -84,6 +84,20 @@ export const onceGetCompetitionsByUser = (uid, cb) =>
     db.ref(`competitions/${snap.key}`).once('value', cb);
   });
 
+export const onceGetUsersByCompetition = (compid, cb) =>
+  db.ref('competitionAttendees').orderByChild(compid).on('value', snap => {
+    Object.keys(snap.val()[compid]).forEach(key => {
+      db.ref(`users/${key}`).once('value', cb);
+    })
+  });
+
+// export const test = (compid) =>
+//   db.ref('competitionAttendees').orderByChild(compid).on('value', snap => {
+//     Object.keys(snap.val()[compid]).forEach(key => {
+//       db.ref(`users/${key}`).once('value', cb);
+//     })
+//     // db.ref(`users/${snap.val()[compid]}`).once('value');
+//   });
   // db.ref(`competitionAttendees`).orderByChild(`${uid}`).equalTo(true).on('value', cb);
 
 export const detach = () =>

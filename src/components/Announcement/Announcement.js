@@ -13,7 +13,7 @@ class Announcement extends Component {
   }
 
   render() {
-    const { title, body } = this.props;
+    const { title, body, manage } = this.props;
     return (
 
       <div className="container">
@@ -21,7 +21,7 @@ class Announcement extends Component {
           <h4>{title}</h4>
           <p>{body}</p>
         </div>
-        { this.props.manage && <button onClick={this.onDelete} className="btn btn-danger">Delete</button> }
+        { manage && <button onClick={this.onDelete} className="btn btn-danger">Delete</button> }
       </div>
     );
   }

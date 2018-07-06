@@ -25,11 +25,6 @@ class AnnouncementList extends Component {
     db.detach;
   }
 
-  addToAnnouncements(announcement) {
-    const announcements = this.state.announcements.concat(announcement);
-    this.setState({ announcements });
-  }
-
   handleDelete(id) {
     db.deleteAnnouncement(id);
   }
