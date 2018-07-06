@@ -59,9 +59,10 @@ class Profile extends Component {
   }
 
   componentDidMount() {
-    db.onceGetUserInfo(this.props.authUser.uid, snap => {
+    db.onceGetUserInfo(this.props.match.params.uid, snap => {
       Object.keys(snap.val()).forEach(key => {
         this.setState({ [key]: snap.val()[key] })
+        console.log(key)
       });
       this.setState({ loading: false });
     })
@@ -76,7 +77,6 @@ class Profile extends Component {
       <div>
         <h2>{firstName} {lastName}</h2>
         <h4>{email}</h4>  
-        {this.props.authUser.uid}
         <RegisteredCompetitions authUser={this.props.authUser} uid={this.props.match.params.uid} /> 
     
       </div>
