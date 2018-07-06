@@ -42,7 +42,11 @@ class Competition extends Component {
   }
 
   handleRegister(compid, uid) {
-    db.doCreateAttendee(compid, uid);
+    db.onceGetUser(this.props.authUser.uid, snap => {
+      const { firstName, lastName } = snap.val()
+      db.doCreateAttendee(compid, this.props.authUser.uid, firstName, lastName);
+    })
+    // db.doCreateAttendee(compid, uid);
   }
 
   // handleDelete(compid) {

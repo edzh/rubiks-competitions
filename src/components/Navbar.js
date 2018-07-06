@@ -12,7 +12,7 @@ const Navbar = () =>
 
 const NavbarAuth = (props) =>
   <nav className="navbar-expand-lg navbar-dark bg-dark">
-    <button className="navbar-brand">Cubby</button>
+    <h4 className="navbar-brand">Cubby</h4>
     <ul className="navbar-nav">
       <li className="nav-item">
         <NavLink className="nav-link" to={routes.HOME}>Home</NavLink>

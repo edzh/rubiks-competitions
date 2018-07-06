@@ -17,7 +17,6 @@ class Event extends Component {
       const { firstName, lastName } = snap.val()
       db.doCreateEventUser(id, authUser.uid, firstName, lastName);
     })
-    console.log(id, authUser.uid);
   }
 
   render() {

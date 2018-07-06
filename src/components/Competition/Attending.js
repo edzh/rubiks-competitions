@@ -14,20 +14,19 @@ class CompetitionAttendingList extends Component {
   }
 
   componentDidMount() {
-    db.onceGetUsersByCompetition(this.props.compid, snap => {
-      // console.log(snap.key);
-      // console.log(this.state.attendees);
-      this.setState(prevState => ({
-        attendees: {
-          ...prevState.attendees,
-          [snap.key]: {
-            firstName: snap.val().firstName,
-            lastName: snap.val().lastName,
-          }          
-        }
-      }))
+    db.watchCompetitionAttendees(this.props.compid, snap => {
+      !!snap.val() && Object.keys(snap.val()).forEach(key => {
+        this.setState(prevState => ({
+          attendees: {
+            ...prevState.attendees,
+            [key]: {
+              firstName: snap.val()[key].firstName,
+              lastName: snap.val()[key].lastName,
+            }          
+          }
+        }))
+      });
     })
-    // db.test(this.props.compid);
   }
 
   render() {

@@ -14,20 +14,8 @@ class EventAttendingList extends Component {
   }
 
   componentDidMount() {
-    // db.onceGetUsersByEvent(this.props.eventid, snap => {
-    //   this.setState(prevState => ({
-    //     attendees: {
-    //       ...prevState.attendees,
-    //       [snap.key]: {
-    //         firstName: snap.val().firstName,
-    //         lastName: snap.val().lastName,
-    //       }          
-    //     }
-    //   }))
-    // })
-
-    db.onceGetEventUsers(this.props.eventid, snap => {
-      Object.keys(snap.val()).forEach(key => {
+    db.watchEventUsers(this.props.eventid, snap => {
+      !!snap.val() && Object.keys(snap.val()).forEach(key => {
         this.setState(prevState => ({
           attendees: {
             ...prevState.attendees,

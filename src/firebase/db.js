@@ -83,13 +83,16 @@ export const onceGetUsersByEvent = (eventid, cb) =>
     })
   });
 
-export const onceGetEventUsers = (eventid, cb) => 
-  db.ref(`eventAttendees/${eventid}`).once('value', cb);
+export const watchEventUsers = (eventid, cb) => 
+  db.ref('eventAttendees').orderByChild(eventid).on('child_added', cb);
 
 /*** ATTENDEE MODEL ***/
 export const doCreateAttendee = (compid, uid, firstName, lastName) => {
   const competitionsAttendeesRef = db.ref(`competitionAttendees/${compid}/${uid}`)
-  competitionsAttendeesRef.set(true);
+  competitionsAttendeesRef.set({
+    firstName,
+    lastName
+  });
 }
 
 export const watchAttending = (uid, cb) => 
@@ -99,16 +102,19 @@ export const checkUserAttendingCompetition = (uid, compid, cb) =>
   db.ref(`competitionAttendees/${compid}/${uid}`).equalTo(true).once('value', cb);
 
 export const onceGetCompetitionsByUser = (uid, cb) => 
-  db.ref('competitionAttendees').orderByChild(`${uid}`).equalTo(true).on('child_added', snap => {
+  db.ref('competitionAttendees').orderByChild(`${uid}`).on('child_added', snap => {
     db.ref(`competitions/${snap.key}`).once('value', cb);
   });
 
 export const onceGetUsersByCompetition = (compid, cb) =>
   db.ref('competitionAttendees').orderByChild(compid).on('value', snap => {
-    Object.keys(snap.val()[compid]).forEach(key => {
+    !!snap.val() && Object.keys(snap.val()[compid]).forEach(key => {
       db.ref(`users/${key}`).once('value', cb);
     })
   });
+
+export const watchCompetitionAttendees = (compid, cb) => 
+  db.ref('competitionAttendees').orderByChild(compid).on('child_added', cb);
 
 // export const test = (compid) =>
 //   db.ref('competitionAttendees').orderByChild(compid).on('value', snap => {
