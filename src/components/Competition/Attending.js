@@ -15,7 +15,8 @@ class CompetitionAttendingList extends Component {
 
   componentDidMount() {
     db.watchCompetitionAttendees(this.props.compid, snap => {
-      !!snap.val() && Object.keys(snap.val()).forEach(key => {
+      snap.val() && Object.keys(snap.val()).forEach(key => {
+        console.log(snap.val());
         this.setState(prevState => ({
           attendees: {
             ...prevState.attendees,

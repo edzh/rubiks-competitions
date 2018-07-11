@@ -26,7 +26,7 @@ class Competition extends Component {
   componentDidMount() {
     const { compid } = this.props.match.params;
     this.competitionRef = db.watchCompetition(compid, snap => {
-      Object.keys(snap.val()).forEach(key => {
+      snap.val() && Object.keys(snap.val()).forEach(key => {
         this.setState({ [key]: snap.val()[key] })
       });
       this.setState({ loading: false });

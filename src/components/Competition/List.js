@@ -50,7 +50,7 @@ class CompetitionList extends Component {
       loading: true,
     };
     this.handleDelete = this.handleDelete.bind(this);
-  }
+}
 
   componentDidMount() {
     db.watchAllCompetitions(snapshot =>
