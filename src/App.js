@@ -23,7 +23,7 @@ const App = () =>
         <Route path={routes.SIGN_UP} render={() => <SignUp />} />
 
         <Route exact path={`${routes.PROFILE}/:uid`} component={Profile} />
-        <Route exact path={`${routes.COMPETITIONS}/:compid`} component={Competition}/>
+        <Route path={`${routes.COMPETITIONS}/:compid`} component={Competition}/>
       </div>
     </div>
   </BrowserRouter>

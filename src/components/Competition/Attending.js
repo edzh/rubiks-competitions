@@ -36,14 +36,25 @@ class CompetitionAttendingList extends Component {
 
     return (
       <div>
-      <h3>Competitors:</h3>
-      {
-        Object.keys(attendees).map(key => 
-          <Link key={key} to={`${routes.PROFILE}/${key}`}>
-            <p>{attendees[key].firstName} {attendees[key].lastName}</p>
-          </Link>
-        )
-      }
+        <h3>Competitors:</h3>
+        <table className="table">
+          <tbody>
+            <tr>
+              <th scope="col">Name</th>
+            </tr>
+            {
+              Object.keys(attendees).map(key => 
+                <tr key={key}>
+                  <td>
+                    <Link key={key} to={`${routes.PROFILE}/${key}`}>
+                      {attendees[key].firstName} {attendees[key].lastName}
+                    </Link>
+                  </td>
+                </tr>
+              )
+            }
+          </tbody>
+        </table>
       </div>
     );
   }
