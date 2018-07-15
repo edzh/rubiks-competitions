@@ -28,7 +28,7 @@ class PickDate extends React.Component {
   }
 
   render() {
-    return <DatePicker
+    return <DatePicker className="form-control"
         selected={this.state.date}
         onChange={this.handleChange}
     />;

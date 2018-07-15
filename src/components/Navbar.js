@@ -11,12 +11,9 @@ const Navbar = () =>
   </AuthUserContext.Consumer>
 
 const NavbarAuth = (props) =>
-  <nav className="navbar-expand-lg navbar-dark bg-dark">
-    <h4 className="navbar-brand">Cubby</h4>
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <NavLink className="navbar-brand" to={routes.HOME}>Cubby</NavLink>
     <ul className="navbar-nav">
-      <li className="nav-item">
-        <NavLink className="nav-link" to={routes.HOME}>Home</NavLink>
-      </li>
       <li className="nav-item">
         <NavLink className="nav-link" to={routes.COMPETITIONS}>Find Competition</NavLink>
       </li>
@@ -28,11 +25,9 @@ const NavbarAuth = (props) =>
   </nav>
 
 const NavbarNonAuth = () =>
-  <nav className="navbar-expand-lg navbar-dark bg-dark">
+  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+    <NavLink className="navbar-brand" to={routes.HOME}>Cubby</NavLink>
     <ul className="navbar-nav">
-      <li className="nav-item">
-        <NavLink className="nav-link" to={routes.HOME}>Home</NavLink>
-      </li>
       <li className="nav-item">
         <NavLink className="nav-link" to={routes.COMPETITIONS}>Find Competition</NavLink>
       </li>

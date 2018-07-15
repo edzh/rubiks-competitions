@@ -16,9 +16,10 @@ class Announcement extends Component {
     const { title, body, manage } = this.props;
     return (
 
-      <div className="container">
+      <div className="card">
         <div>
           <h4>{title}</h4>
+          <hr/>
           <p>{body}</p>
         </div>
         { manage && <button onClick={this.onDelete} className="btn btn-danger">Delete</button> }

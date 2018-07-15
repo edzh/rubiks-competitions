@@ -35,19 +35,25 @@ class EventAttendingList extends Component {
     const { attendees } = this.state;
 
     return (
-      <div>
-      <h2>attending:</h2>
-      {
-        Object.keys(attendees).map(key => 
-          <div key={key} className="row">
-            <Link to={`${routes.PROFILE}/${key}`}>
-              <p>{attendees[key].firstName} {attendees[key].lastName}</p>
-            </Link>
-            <p>{attendees[key].role}</p>
-          </div>
-        )
-      }
-      </div>
+      <table className="table">
+        <tbody>
+        <tr>
+          <th scope="col">First Name</th>
+          <th scope="col">Last Name</th>
+          <th scope="col">Role</th>
+        </tr>
+
+        {
+          Object.keys(attendees).map(key => 
+            <tr key={key}>
+              <td>{attendees[key].firstName}</td>
+              <td>{attendees[key].lastName}</td>
+              <td>{attendees[key].role}</td>
+            </tr>
+          )
+        }
+        </tbody>
+      </table>
     );
   }
 }

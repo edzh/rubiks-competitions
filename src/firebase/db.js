@@ -86,7 +86,8 @@ export const doCreateEventUser = (eventid, uid, firstName, lastName) => {
   eventUserRef.set({
     role: 'none',
     firstName,
-    lastName
+    lastName,
+    approved: false
   });
 }
 

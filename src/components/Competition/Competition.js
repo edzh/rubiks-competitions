@@ -46,13 +46,7 @@ class Competition extends Component {
       const { firstName, lastName } = snap.val()
       db.doCreateAttendee(compid, this.props.authUser.uid, firstName, lastName);
     })
-    // db.doCreateAttendee(compid, uid);
   }
-
-  // handleDelete(compid) {
-  //   db.deleteCompetition(compid);
-  //   this.props.history.push(routes.HOME);
-  // }
 
   render() {
 
@@ -82,16 +76,9 @@ class Competition extends Component {
           addToAnnouncements={this.addToAnnouncements}
         />
       </div>
-
-      
-
-
     );
   }
 }
-
-
-
 
 export default React.forwardRef((props, ref) => (
   <AuthUserContext.Consumer>

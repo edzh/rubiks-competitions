@@ -66,8 +66,8 @@ class CompetitionForm extends Component {
             onChange={event => this.setState(byPropKey('compName', event.target.value))}
             placeholder="Competition Name"
           />
-          <PickDate onDateChange={this.onDateChange} />
           <SearchLocation onAddressChange={this.onAddressChange} />
+          <PickDate onDateChange={this.onDateChange} />
 
           <button disabled={isInvalid} type="submit" className="btn btn-primary">Create</button>
         </form>

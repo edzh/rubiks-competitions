@@ -23,10 +23,9 @@ class Event extends Component {
     const { key, name, startTime, endTime, date, id } = this.props;
 
     return (
-      <div key={key}>
-        <h4>{name}</h4>
+      <div className="card" key={key}>
+        <h5>{name}</h5>
         <p>{startTime} - {endTime}</p>
-        <p>{moment(date).format('LL')}</p>
         <button className="btn" onClick={this.handleAddUser}>Add</button>
         <Attending eventid={id} />
       </div>

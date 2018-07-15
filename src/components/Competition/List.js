@@ -18,6 +18,8 @@ const CompetitionsTable = ({ competitions, handleDelete }) =>
         <th scope="col">Name</th>
         <th scope="col">Address</th>
         <th scope="col">Date</th>
+        <th scope="col"></th>
+        <th scope="col"></th>
       </tr>
 
       {
@@ -32,7 +34,6 @@ const CompetitionsTable = ({ competitions, handleDelete }) =>
               </Link>
             </td>
             <td><button onClick={() => handleDelete(key)} className="btn btn-danger">Delete</button></td>
-
           </tr>
         )
       }

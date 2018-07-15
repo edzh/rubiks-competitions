@@ -36,7 +36,7 @@ class CompetitionAttendingList extends Component {
 
     return (
       <div>
-      <h2>attending:</h2>
+      <h3>Competitors:</h3>
       {
         Object.keys(attendees).map(key => 
           <Link key={key} to={`${routes.PROFILE}/${key}`}>

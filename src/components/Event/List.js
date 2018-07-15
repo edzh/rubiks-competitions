@@ -30,7 +30,7 @@ class EventList extends Component {
 
     return (
       <div>
-        <h5>Events:</h5>
+        <h4>Events:</h4>
         {!!events && Object.keys(events).map(key => {
           return (
             <Event
