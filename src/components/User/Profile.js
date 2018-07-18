@@ -62,7 +62,6 @@ class Profile extends Component {
     db.onceGetUserInfo(this.props.match.params.uid, snap => {
       Object.keys(snap.val()).forEach(key => {
         this.setState({ [key]: snap.val()[key] })
-        console.log(key)
       });
       this.setState({ loading: false });
     })
@@ -83,8 +82,6 @@ class Profile extends Component {
     );
   }
 }
-
-// export default Profile;
 
 export default React.forwardRef((props, ref) => (
   <AuthUserContext.Consumer>

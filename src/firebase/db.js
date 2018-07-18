@@ -52,19 +52,18 @@ export const watchCompetition = (compid, cb) =>
 export const watchAllCompetitions = (cb) =>
   db.ref('competitions').on('value', cb);
 
+/* Deletes announcements, events, and relations associated with competitions */
 export const deleteCompetition = (compid) => {
   db.ref(`competitions/${compid}`).remove();
   db.ref(`competitionAttendees/${compid}`).remove();
   db.ref('events').orderByChild('compid').equalTo(compid).once('value', snap => {
     snap.val() && Object.keys(snap.val()).forEach(key => {
-      console.log(key);
       db.ref(`events/${key}`).remove();
       db.ref(`eventAttendees/${key}`).remove();
     })
   })
   db.ref('announcements').orderByChild('compid').equalTo(compid).once('value', snap => {
     snap.val() && Object.keys(snap.val()).forEach(key => {
-      console.log(key);
       db.ref(`announcements/${key}`).remove();
     })
   })

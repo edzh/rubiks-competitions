@@ -38,16 +38,18 @@ class EventAttendingList extends Component {
       <table className="table">
         <tbody>
         <tr>
-          <th scope="col">First Name</th>
-          <th scope="col">Last Name</th>
+          <th scope="col">Name</th>
           <th scope="col">Role</th>
         </tr>
 
         {
           Object.keys(attendees).map(key => 
             <tr key={key}>
-              <td>{attendees[key].firstName}</td>
-              <td>{attendees[key].lastName}</td>
+              <td>
+                <Link key={key} to={`${routes.PROFILE}/${key}`}>
+                {attendees[key].firstName} {attendees[key].lastName}
+                </Link>
+              </td>
               <td>{attendees[key].role}</td>
             </tr>
           )

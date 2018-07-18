@@ -19,7 +19,16 @@ class CompetitionForm extends Component {
       address: '',
       lat: '',
       lng: '',
+      venue: '',
       date: '',
+      details: '',
+      organizers: {},
+      delegate: '',
+      registrationLimit: '',
+      registrationFee: '',
+      registrationBegin: '',
+      registrationEnd: '',
+      registrationRequirements: '',
     };
 
     this.onAddressChange = this.onAddressChange.bind(this);
@@ -42,12 +51,12 @@ class CompetitionForm extends Component {
     this.setState({ address, lat, lng });
   }
 
-  onDateChange(date) {
-    this.setState({ date });
+  onDateChange(event) {
+    this.setState({ event });
   }
 
   render() {
-    const { compName, address, date, } = this.state;
+    const { compName, address, date, venue, details,  } = this.state;
 
     const isInvalid =
       compName === '' ||
@@ -68,7 +77,20 @@ class CompetitionForm extends Component {
           />
           <SearchLocation onAddressChange={this.onAddressChange} />
           <PickDate onDateChange={this.onDateChange} />
-
+          <input 
+            type="text"
+            className="form-control"
+            value={venue}
+            onChange={event => this.setState(byPropKey('venue', event.target.value))}
+            placeholder="Venue"
+          />
+          <input 
+            type="text"
+            className="form-control"
+            value={details}
+            onChange={event => this.setState(byPropKey('details', event.target.value))}
+            placeholder="Details"
+          />
           <button disabled={isInvalid} type="submit" className="btn btn-primary">Create</button>
         </form>
       </div>

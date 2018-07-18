@@ -20,10 +20,6 @@ class EventList extends Component {
     });
   }
 
-  componentWillUnmount() {
-    db.detach;
-  }
-
   render() {
     const { events, date } = this.state;
     const { compid, manage, authUser } = this.props;
