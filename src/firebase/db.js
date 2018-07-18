@@ -17,9 +17,21 @@ export const onceGetUser = (uid, cb) =>
 
 
 /*** COMPETITION LIST ***/
-export const doCreateCompetition = (uid, compName, address, lat, lng, date) => {
+export const doCreateCompetition = (uid, compName, address, lat, lng, date, details, venue, 
+      registrationLimit, 
+      registrationFee,
+      registrationBegin,
+      registrationEnd,
+      registrationRequirements,) => {
   const competitionsRef = db.ref(`competitions`);
-  const competition = { uid, compName, address, lat, lng, date };
+  const competition = { 
+    uid, compName, address, lat, lng, date, details, venue, 
+    registrationLimit, 
+    registrationFee,
+    registrationBegin,
+    registrationEnd,
+    registrationRequirements, 
+  };
   competitionsRef.push(competition);
 }
 

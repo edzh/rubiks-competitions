@@ -4,7 +4,7 @@ import { db } from '../../firebase';
 
 import SearchLocation from '../SearchLocation';
 import PickDate from '../PickDate';
-
+import moment from 'moment';
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
@@ -20,14 +20,14 @@ class CompetitionForm extends Component {
       lat: '',
       lng: '',
       venue: '',
-      date: '',
+      date: moment().format(),
       details: '',
       organizers: {},
       delegate: '',
       registrationLimit: '',
       registrationFee: '',
-      registrationBegin: '',
-      registrationEnd: '',
+      registrationBegin: moment().format(),
+      registrationEnd: moment().format(),
       registrationRequirements: '',
     };
 
@@ -37,9 +37,26 @@ class CompetitionForm extends Component {
   }
 
   onSubmit(event) {
-    const { uid, compName, address, lat, lng, date } = this.state;
+    const { 
+      uid, compName, address, lat, lng, date, details, venue, 
+      registrationLimit, 
+      registrationFee,
+      registrationBegin,
+      registrationEnd,
+      registrationRequirements, 
+    } = this.state;
+
     event.preventDefault();
-    db.doCreateCompetition(uid, compName, address, lat, lng, date);
+
+    db.doCreateCompetition(
+      uid, compName, address, lat, lng, date, details, venue, 
+      registrationLimit, 
+      registrationFee,
+      registrationBegin,
+      registrationEnd,
+      registrationRequirements,
+    );
+
     this.setState({
       compName: '',
       address: '',
@@ -51,12 +68,21 @@ class CompetitionForm extends Component {
     this.setState({ address, lat, lng });
   }
 
-  onDateChange(event) {
-    this.setState({ event });
+  onDateChange(date, value) {
+    this.setState({ [value]: date });
   }
 
   render() {
-    const { compName, address, date, venue, details,  } = this.state;
+    const { 
+      compName, 
+      address, 
+      date, 
+      venue, 
+      details, 
+      registrationLimit, 
+      registrationFee, 
+      registrationRequirements 
+    } = this.state;
 
     const isInvalid =
       compName === '' ||
@@ -75,8 +101,13 @@ class CompetitionForm extends Component {
             onChange={event => this.setState(byPropKey('compName', event.target.value))}
             placeholder="Competition Name"
           />
+
           <SearchLocation onAddressChange={this.onAddressChange} />
-          <PickDate onDateChange={this.onDateChange} />
+
+          <p><strong>Date: </strong></p>
+          <PickDate value={"date"} onDateChange={this.onDateChange} />
+
+
           <input 
             type="text"
             className="form-control"
@@ -84,6 +115,7 @@ class CompetitionForm extends Component {
             onChange={event => this.setState(byPropKey('venue', event.target.value))}
             placeholder="Venue"
           />
+
           <input 
             type="text"
             className="form-control"
@@ -91,6 +123,35 @@ class CompetitionForm extends Component {
             onChange={event => this.setState(byPropKey('details', event.target.value))}
             placeholder="Details"
           />
+          <p><strong>Registration Begins: </strong></p>          
+          <PickDate value={"registrationBegin"} onDateChange={this.onDateChange} />
+          <p><strong>Registration Ends: </strong></p>          
+          <PickDate value={"registrationEnd"} onDateChange={this.onDateChange} />
+          <textarea 
+            type="text"
+            className="form-control"
+            value={registrationRequirements}
+            onChange={event => this.setState(byPropKey('registrationRequirements', event.target.value))}
+            rows="3"
+            placeholder="Registration Requirements"
+          />
+
+          <input 
+            type="number"
+            className="form-control"
+            value={registrationLimit}
+            onChange={event => this.setState(byPropKey('registrationLimit', event.target.value))}
+            placeholder="Registration Limit"
+          />
+
+          <input 
+            type="number"
+            className="form-control"
+            value={registrationFee}
+            onChange={event => this.setState(byPropKey('registrationFee', event.target.value))}
+            placeholder="Registration Fee"
+          />
+
           <button disabled={isInvalid} type="submit" className="btn btn-primary">Create</button>
         </form>
       </div>
