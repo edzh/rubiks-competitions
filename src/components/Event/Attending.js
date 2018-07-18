@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { db } from '../../firebase';
 
 import * as routes from '../../constants/routes';
+import EventRole from './Role';
 
 class EventAttendingList extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class EventAttendingList extends Component {
     this.state = {
       attendees: {},
     }
+
   }
 
   componentDidMount() {
@@ -30,6 +32,8 @@ class EventAttendingList extends Component {
     })
   }
 
+
+
   render() {
 
     const { attendees } = this.state;
@@ -40,18 +44,22 @@ class EventAttendingList extends Component {
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Role</th>
+          <th scope="col"></th>
         </tr>
 
         {
           Object.keys(attendees).map(key => 
             <tr key={key}>
               <td>
-                <Link key={key} to={`${routes.PROFILE}/${key}`}>
+                <Link to={`${routes.PROFILE}/${key}`}>
                 {attendees[key].firstName} {attendees[key].lastName}
                 </Link>
               </td>
               <td>{attendees[key].role}</td>
-            </tr>
+              <td>
+                <EventRole role={attendees[key].role} eventid={this.props.eventid} uid={key} />
+              </td>
+            </tr> 
           )
         }
         </tbody>

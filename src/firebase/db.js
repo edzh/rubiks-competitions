@@ -110,7 +110,10 @@ export const onceGetUsersByEvent = (eventid, cb) =>
   });
 
 export const watchEventUsers = (eventid, cb) => 
-  db.ref(`eventAttendees/${eventid}`).once('value', cb);
+  db.ref(`eventAttendees/${eventid}`).on('value', cb);
+
+export const changeEventUserRole = (eventid, uid, role, cb) =>
+  db.ref(`eventAttendees/${eventid}/${uid}`).child('role').set(role);
 
 /*** ATTENDEE MODEL ***/
 export const doCreateAttendee = (compid, uid, firstName, lastName) => {
