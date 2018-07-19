@@ -17,6 +17,13 @@ class Competition extends Component {
       loading: true,
       manage: false,
       register: false,
+      details: '', 
+      venue: '', 
+      registrationLimit: '', 
+      registrationFee: '',
+      registrationBegin: '',
+      registrationEnd: '',
+      registrationRequirements: '', 
     };
 
     this.handleManageChange = this.handleManageChange.bind(this);
@@ -58,6 +65,12 @@ class Competition extends Component {
       uid, compid,
       loading,
       manage,
+      details, venue, 
+      registrationLimit, 
+      registrationFee,
+      registrationBegin,
+      registrationEnd,
+      registrationRequirements, 
     } = this.state;
 
     return (
@@ -74,6 +87,13 @@ class Competition extends Component {
           manage={manage} 
           authUser={this.props.authUser}
           addToAnnouncements={this.addToAnnouncements}
+          details={details}
+          venue={venue}
+          registrationLimit={registrationLimit}
+          registrationFee={registrationFee}
+          registrationBegin={registrationBegin}
+          registrationEnd={registrationEnd}
+          registrationRequirements={registrationRequirements}
         />
       </div>
     );

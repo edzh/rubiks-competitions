@@ -17,6 +17,9 @@ const Navbar = ({ compid }) =>
       <li className="nav-item">
         <NavLink className="nav-link" to={`${routes.COMPETITIONS}/${compid}/competitors`}>Competitors</NavLink>
       </li>
+      <li className="nav-item">
+        <NavLink className="nav-link" to={`${routes.COMPETITIONS}/${compid}/map`}>Map</NavLink>
+      </li>
     </ul>
   </nav>
 
