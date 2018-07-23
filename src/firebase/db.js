@@ -86,9 +86,9 @@ export const deleteCompetition = (compid) => {
 export const watchEvents = (compid, cb) =>
   db.ref('events').orderByChild('compid').equalTo(compid).on('value', cb);
 
-export const doCreateEvent = (compid, name, startTime, endTime, date) => {
+export const doCreateEvent = (compid, name, round, startTime, endTime, date) => {
   const eventsRef = db.ref('events');
-  const event = { compid, name, startTime, endTime, date };
+  const event = { compid, name, round, startTime, endTime, date };
   eventsRef.push(event);
 }
 
