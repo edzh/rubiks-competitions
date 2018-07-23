@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { compose, withProps } from 'recompose';
 import PlacesAutoComplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
-import { 
-  withScriptjs, 
+import {
+  withScriptjs,
 } from 'react-google-maps';
 import { GMAPS_API } from '../firebase/config';
 
@@ -47,7 +47,7 @@ const AutoComplete = compose(
 class SearchLocation extends Component {
   constructor(props) {
     super(props)
-  
+
     this.state = {
       address: '',
       lat: '',
@@ -77,7 +77,7 @@ class SearchLocation extends Component {
       <AutoComplete
         handleChange={this.handleChange}
         handleSelect={this.handleSelect}
-        address={address} 
+        address={address}
       />
     );
   }

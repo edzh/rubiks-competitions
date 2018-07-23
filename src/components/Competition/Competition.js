@@ -17,13 +17,13 @@ class Competition extends Component {
       loading: true,
       manage: false,
       register: false,
-      details: '', 
-      venue: '', 
-      registrationLimit: '', 
+      details: '',
+      venue: '',
+      registrationLimit: '',
       registrationFee: '',
       registrationBegin: '',
       registrationEnd: '',
-      registrationRequirements: '', 
+      registrationRequirements: '',
     };
 
     this.handleManageChange = this.handleManageChange.bind(this);
@@ -65,26 +65,24 @@ class Competition extends Component {
       uid, compid,
       loading,
       manage,
-      details, venue, 
-      registrationLimit, 
+      details, venue,
+      registrationLimit,
       registrationFee,
       registrationBegin,
       registrationEnd,
-      registrationRequirements, 
+      registrationRequirements,
     } = this.state;
 
     return (
-    loading ? <p>loading...</p> : 
+    loading ? <p>loading...</p> :
       <div>
-        <button className="btn btn-primary" onClick={this.handleManageChange}>{ this.state.manage ? "View" : "Manage" }</button>
-        <button className="btn btn-primary" onClick={() => this.handleRegister(compid, this.props.authUser.uid)}>Register</button>
         <CompetitionManage
           compName={compName}
           address={address}
           date={date}
           lat={lat} lng={lng}
           uid={uid} compid={compid}
-          manage={manage} 
+          manage={manage}
           authUser={this.props.authUser}
           addToAnnouncements={this.addToAnnouncements}
           details={details}
@@ -95,6 +93,8 @@ class Competition extends Component {
           registrationEnd={registrationEnd}
           registrationRequirements={registrationRequirements}
         />
+        <button className="btn btn-primary" onClick={this.handleManageChange}>{ this.state.manage ? "View" : "Manage" }</button>
+        <button className="btn btn-primary" onClick={() => this.handleRegister(compid, this.props.authUser.uid)}>Register</button>
       </div>
     );
   }

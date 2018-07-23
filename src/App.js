@@ -16,7 +16,7 @@ const App = () =>
   <BrowserRouter>
     <div>
       <Navbar />
-      <div className="container">
+      <div className="container col-10">
         <Route exact path={routes.HOME} render={() => <Home />} />
         <Route exact path={routes.COMPETITIONS} render={() => <CompetitionListPage />} />
         <Route path={routes.LOG_IN} render={() => <LogIn />} />

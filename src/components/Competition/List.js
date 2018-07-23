@@ -11,36 +11,34 @@ import { db } from '../../firebase';
 
 import moment from 'moment';
 
-const CompetitionsTable = ({ competitions, handleDelete }) =>
-  <table className="table">
-    <tbody>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Address</th>
-        <th scope="col">Date</th>
-        <th scope="col"></th>
-        <th scope="col"></th>
-      </tr>
+const competitionStyle = {
+  width: '100%',
+  height: '360px',
+  textAlign: 'center',
+}
 
+const CompetitionsTable = ({ competitions, handleDelete }) =>
+      <div className="row border bg-light">
       {
         Object.keys(competitions).map(key =>
-          <tr key={key}>
-            <td>{competitions[key].compName}</td>
-            <td>{competitions[key].address}</td>
-            <td>{moment(competitions[key].date).format('LL')}</td>
-            <td>
+          <div className="col-4 mt-3">
+            <div className="card m-2">
               <Link to={`${routes.COMPETITIONS}/${key}`}>
-                <button className="btn">View</button>
+                <div className="border" style={competitionStyle}>
+                  <h3 className="mx-auto">Placeholder</h3>
+                </div>
               </Link>
-            </td>
-            <td><button onClick={() => handleDelete(key)} className="btn btn-danger">Delete</button></td>
-          </tr>
+              <h4 className="mx-2">{competitions[key].compName}</h4>
+              <p className="mx-2" style={{height: '50px'}}>{competitions[key].address}</p>
+              <div className="mx-2 row">
+                <p>{moment(competitions[key].date).format('LL')}</p>
+                <button onClick={() => handleDelete(key)} className="ml-auto mb-4 btn btn-sm btn-danger">Delete</button>
+              </div>
+            </div>
+          </div>
         )
       }
-    </tbody>
-  </table>
-
-
+      </div>
 
 class CompetitionList extends Component {
   constructor(props) {
@@ -74,7 +72,15 @@ class CompetitionList extends Component {
     return (
 
         <div>
-          <h2>Competitions</h2>
+          <div className="my-4 row">
+            <h2 className="col-2">Competitions</h2>
+            <input
+              type="text"
+              className="col-8 form-control"
+              placeholder="Search..."
+            />
+            <button className="btn ml-auto col-1">Filter </button>
+          </div>
           { loading && <p>loading...</p> }
           { !!competitions && <CompetitionsTable competitions={competitions} handleDelete={this.handleDelete} /> }
           <CompetitionForm authUser={authUser} />

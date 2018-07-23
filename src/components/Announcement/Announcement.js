@@ -16,7 +16,7 @@ class Announcement extends Component {
     const { title, body, manage } = this.props;
     return (
 
-      <div className="card">
+      <div className="card p-4 mt-4">
         <div>
           <h4>{title}</h4>
           <hr/>

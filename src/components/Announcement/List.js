@@ -35,8 +35,12 @@ class AnnouncementList extends Component {
 
 
     return (
-      <div>
-      <h3>Announcements</h3>
+      <div className="px-4 py-2">
+      <h2>Announcements</h2>
+        <AnnouncementForm
+          authUser={authUser}
+          compid={compid}
+        />
         {!!announcements && Object.keys(announcements).map(key => {
           return (
             <Announcement
@@ -50,10 +54,6 @@ class AnnouncementList extends Component {
           );
         }
         )}
-        {this.props.manage && <AnnouncementForm
-          authUser={authUser}
-          compid={compid}
-        /> }
       </div>
     );
   }

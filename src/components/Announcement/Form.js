@@ -38,7 +38,7 @@ class AnnouncementForm extends Component {
       body === ''
 
     return (
-      <div>
+      <div className="card p-4 mt-2">
         <h5>New Announcement</h5>
         <form onSubmit={this.onSubmit}>
           <input
@@ -51,11 +51,11 @@ class AnnouncementForm extends Component {
           <textarea
             value={body}
             onChange={event => this.setState(byPropKey('body', event.target.value))}
-            className="form-control"
+            className="form-control my-2"
             rows="3"
             placeholder="Body"
           />
-          <button disabled={isInvalid} className="btn">Submit</button>
+          <button className="" disabled={isInvalid} className="btn">Submit</button>
         </form>
       </div>
     );
