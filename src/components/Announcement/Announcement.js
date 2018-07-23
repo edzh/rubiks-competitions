@@ -13,16 +13,16 @@ class Announcement extends Component {
   }
 
   render() {
-    const { title, body, manage } = this.props;
+    const { title, body } = this.props;
     return (
 
       <div className="card p-4 mt-4">
-        <div>
-          <h4>{title}</h4>
-          <hr/>
-          <p>{body}</p>
+        <div className="row mx-0">
+          <h4>{title}</h4> 
+          <button onClick={this.onDelete} className="btn btn-danger ml-auto mr-2">Delete</button>
         </div>
-        { manage && <button onClick={this.onDelete} className="btn btn-danger">Delete</button> }
+        <hr/>
+        <p>{body}</p>
       </div>
     );
   }

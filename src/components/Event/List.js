@@ -25,14 +25,15 @@ class EventList extends Component {
     const { compid, manage, authUser } = this.props;
 
     return (
-      <div>
-        <h4>Events:</h4>
+      <div className="px-4 py-2">
+        <h2>Events:</h2>
         {!!events && Object.keys(events).map(key => {
           return (
             <Event
               key={key}
               id={key}
               name={events[key].name}
+              round={events[key].round}
               startTime={events[key].startTime}
               endTime={events[key].endTime}
               date={events[key].date}

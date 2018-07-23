@@ -20,14 +20,16 @@ class Event extends Component {
   }
 
   render() {
-    const { key, name, startTime, endTime, date, id } = this.props;
+    const { key, name, round, startTime, endTime, date, id } = this.props;
 
     return (
-      <div className="card" key={key}>
-        <h5>{name}</h5>
-        <p>{startTime} - {endTime}</p>
-        <button className="btn" onClick={this.handleAddUser}>Add</button>
-        <Attending eventid={id} />
+      <div className="border p-0 m-0 row col-4" key={key}>
+        <div className="px-2">
+          <h5 className="mb-0">{name} <span style={{fontWeight: 'normal'}}>{round}</span></h5>
+          <p className="mb-0">{startTime} - {endTime}</p>
+        </div>    
+        <button className="btn col-3 mx-auto my-auto h-25" onClick={this.handleAddUser}>Add</button>
+        <button className="btn col-3 mx-auto my-auto h-25" onClick={this.handleAddUser}>Add</button>
       </div>
     );
   }
