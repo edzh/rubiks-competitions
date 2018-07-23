@@ -82,6 +82,11 @@ export const deleteCompetition = (compid) => {
   // 
 }
 
+export const deleteEvent = (eventid) => {
+  db.ref(`events/${eventid}`).remove();
+  db.ref(`eventAttendees/${eventid}`).remove();
+}
+
 /*** EVENT VIEW ***/
 export const watchEvents = (compid, cb) =>
   db.ref('events').orderByChild('compid').equalTo(compid).on('value', cb);
