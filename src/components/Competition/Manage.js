@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 
 import moment from 'moment';
 import AnnouncementList from '../Announcement/List';
@@ -41,7 +41,7 @@ const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, aut
         <AnnouncementList manage={manage} authUser={authUser} compid={match.params.compid} />
       )}/>
 
-      <Route exact path={`${routes.COMPETITIONS}/:compid/events`} render={({ match }) => (
+      <Route path={`${routes.COMPETITIONS}/:compid/events`} render={({ match }) => (
         <EventList authUser={authUser} manage={manage} date={date} compid={match.params.compid} />
       )}/>
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { db } from '../../firebase';
 
+import moment from 'moment';
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
 });
@@ -14,7 +15,7 @@ class AnnouncementForm extends Component {
       compid: this.props.compid,
       title: '',
       body: '',
-      date: '',
+      date: moment().format(),
     };
 
     this.onSubmit = this.onSubmit.bind(this);

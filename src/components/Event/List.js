@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { db, base } from '../../firebase';
+import * as routes from '../../constants/routes';
 
 import EventForm from './Form';
 import Event from './Event';
 import EventDetails from './Details';
+
+import { Route, Link } from 'react-router-dom';
 
 class EventList extends Component {
   constructor(props) {
@@ -35,6 +38,7 @@ class EventList extends Component {
                 <Event
                   key={key}
                   id={key}
+                  compid={compid}
                   name={events[key].name}
                   round={events[key].round}
                   startTime={events[key].startTime}
@@ -44,11 +48,20 @@ class EventList extends Component {
                 />
               );
             })}
-            
+            <Link to={`${routes.COMPETITIONS}/${compid}/events/create`}>
+              <button className="btn btn-block rounded-0 rounded-bottom">Create event</button>
+            </Link>
           </div>
           <div className="col-8">
-          {manage && <EventForm compid={compid} date={date} />}
-          
+            <div className="card p-4">
+              <Route exact path={`${routes.COMPETITIONS}/:compid/events/create`} render={({ match }) => (
+                <EventForm compid={match.params.compid} date={date} />
+              )}/>
+              <Route exact path={`${routes.COMPETITIONS}/:compid/events/:eventid`} render={({ match }) => (
+                <EventDetails compid={match.params.eventid} />
+              )}/>
+            </div>
+
           </div>
         </div>
 

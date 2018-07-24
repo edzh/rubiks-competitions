@@ -48,6 +48,7 @@ class AnnouncementList extends Component {
               id={key}
               title={announcements[key].title}
               body={announcements[key].body}
+              date={announcements[key].date}
               handleDelete={this.handleDelete}
               manage={this.props.manage}
             />
