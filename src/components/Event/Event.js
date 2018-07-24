@@ -18,18 +18,25 @@ class Event extends Component {
       db.doCreateEventUser(id, authUser.uid, firstName, lastName);
     })
   }
-
+  handleDelete(eventid) {
+    db.deleteEvent(eventid);
+    console.log(eventid);
+  }
+        
   render() {
     const { key, name, round, startTime, endTime, date, id } = this.props;
 
     return (
-      <div className="border p-0 m-0 row col-4" key={key}>
-        <div className="col-7 px-2">
+      <div>
+        
+      <div className="border p-0 m-0 row" key={key}>
+        <div className="col-7">
           <h5 className="mb-0">{name} <span style={{fontWeight: 'normal'}}>{round}</span></h5>
           <p className="mb-0">{startTime} - {endTime}</p>
         </div>    
         <button className="btn col-2 mx-auto my-auto h-25" onClick={this.handleAddUser}>Add</button>
-        <button className="btn col-2 mx-auto my-auto h-25" onClick={this.handleAddUser}>Add</button>
+        <button className="btn btn-danger col-2 mx-auto my-auto h-25" onClick={() => this.handleDelete(id)}>Delete</button>
+      </div>
       </div>
     );
   }
