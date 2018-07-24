@@ -29,6 +29,7 @@ const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, aut
         <CompetitionDetails manage={manage} authUser={authUser} compid={match.params.compid}
           details={details}
           venue={venue}
+          address={address}
           registrationLimit={registrationLimit}
           registrationFee={registrationFee}
           registrationBegin={registrationBegin}

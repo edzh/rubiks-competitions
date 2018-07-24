@@ -9,17 +9,10 @@ class Event extends Component {
   constructor(props) {
     super(props);
 
-    this.handleAddUser = this.handleAddUser.bind(this);
 
   }
 
-  handleAddUser() {
-    const { id, authUser } = this.props;
-    db.onceGetUser(authUser.uid, snap => {
-      const { firstName, lastName } = snap.val()
-      db.doCreateEventUser(id, authUser.uid, firstName, lastName);
-    })
-  }
+  
   handleDelete(eventid) {
     db.deleteEvent(eventid);
     console.log(eventid);
@@ -31,12 +24,12 @@ class Event extends Component {
     return (
       <div>
 
-      <div className="border p-0 m-0 row" key={key}>
+      <div className="border-bottom p-0 m-0 row" key={key}>
         <div className="col-7">
           <h5 className="mb-0">{name} <span style={{fontWeight: 'normal'}}>{round}</span></h5>
           <p className="mb-0">{startTime} - {endTime}</p>
         </div>
-        <Link className="btn btn-primary col-2 mx-auto my-auto h-25" to={`${routes.COMPETITIONS}/${compid}/events/${id}`}>
+        <Link className="btn btn-primary col-2 mx-auto my-auto h-25" to={`${routes.COMPETITIONS}/${compid}/events/e/${id}`}>
           View
         </Link>
         <button className="btn btn-danger col-2 mx-auto my-auto h-25" onClick={() => this.handleDelete(id)}>Delete</button>

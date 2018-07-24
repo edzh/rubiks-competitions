@@ -107,6 +107,10 @@ export const doCreateEventUser = (eventid, uid, firstName, lastName) => {
   });
 }
 
+export const onceGetEvent = (eventid, cb) => 
+  db.ref(`events/${eventid}`).once('value', cb);
+
+
 export const onceGetUsersByEvent = (eventid, cb) =>
   db.ref('eventAttendees').orderByChild(eventid).on('value', snap => {
     !!snap.val() && Object.keys(snap.val()[eventid]).forEach(key => {
@@ -116,6 +120,9 @@ export const onceGetUsersByEvent = (eventid, cb) =>
 
 export const watchEventUsers = (eventid, cb) => 
   db.ref(`eventAttendees/${eventid}`).on('value', cb);
+
+export const onceGetEventUsers = (eventid, cb) => 
+  db.ref(`eventAttendees/${eventid}`).once('value', cb);
 
 export const changeEventUserRole = (eventid, uid, role, cb) =>
   db.ref(`eventAttendees/${eventid}/${uid}`).child('role').set(role);

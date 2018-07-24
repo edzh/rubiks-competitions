@@ -29,9 +29,9 @@ class EventList extends Component {
     const { compid, manage, authUser } = this.props;
 
     return (
-      <div>
-        <h2 className="m-3">Events:</h2>
-        <div className="row ml-2">
+      <div className="px-4 py-2">
+        <h2>Events:</h2>
+        <div className="row ml-0">
           <div className="card p-0 col-4 mb-2">
             {!!events && Object.keys(events).map(key => {
               return (
@@ -53,12 +53,21 @@ class EventList extends Component {
             </Link>
           </div>
           <div className="col-8">
-            <div className="card p-4">
+            <div className="card pl-4 pt-2">
               <Route exact path={`${routes.COMPETITIONS}/:compid/events/create`} render={({ match }) => (
-                <EventForm compid={match.params.compid} date={date} />
+                <EventForm 
+                  compid={match.params.compid} 
+                  date={date} 
+                  authUser={authUser} 
+                />
               )}/>
-              <Route exact path={`${routes.COMPETITIONS}/:compid/events/:eventid`} render={({ match }) => (
-                <EventDetails compid={match.params.eventid} />
+              <Route exact path={`${routes.COMPETITIONS}/:compid/events/e/:eventid`} render={({ match }) => (
+                <EventDetails 
+                  key={match.params.eventid} 
+                  compid={match.params.compid} 
+                  eventid={match.params.eventid} 
+                  authUser={authUser} 
+                />
               )}/>
             </div>
 
