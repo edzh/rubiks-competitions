@@ -1,0 +1,1 @@
+https://rubik-s-competitions.firebaseapp.com/
