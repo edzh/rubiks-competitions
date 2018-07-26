@@ -47,6 +47,7 @@ class EventForm extends Component {
         <form onSubmit={this.onSubmit}>
           <select className="form-control" onChange={event => this.setState(byPropKey('name', event.target.value))}>
             <option value="">---</option>
+            <option value="2x2x2 Cube">4x4x4 Cube</option>
             <option value="Rubik's Cube">Rubik's Cube</option>
             <option value="4x4x4 Cube">4x4x4 Cube</option>
             <option value="5x5x5 Cube">5x5x5 Cube</option>

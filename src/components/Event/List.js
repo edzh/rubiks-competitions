@@ -26,7 +26,7 @@ class EventList extends Component {
 
   render() {
     const { events, date } = this.state;
-    const { compid, manage, authUser } = this.props;
+    const { compid, authUser } = this.props;
 
     return (
       <div className="px-4 py-2">
@@ -36,14 +36,9 @@ class EventList extends Component {
             {!!events && Object.keys(events).map(key => {
               return (
                 <Event
+                  { ...events[key] }
                   key={key}
                   id={key}
-                  compid={compid}
-                  name={events[key].name}
-                  round={events[key].round}
-                  startTime={events[key].startTime}
-                  endTime={events[key].endTime}
-                  date={events[key].date}
                   authUser={authUser}
                 />
               );
@@ -52,8 +47,10 @@ class EventList extends Component {
               <button className="btn btn-block rounded-0 rounded-bottom">Create event</button>
             </Link>
           </div>
+
           <div className="col-8">
             <div className="card pl-4 pt-2">
+
               <Route exact path={`${routes.COMPETITIONS}/:compid/events/create`} render={({ match }) => (
                 <EventForm 
                   compid={match.params.compid} 
@@ -61,6 +58,7 @@ class EventList extends Component {
                   authUser={authUser} 
                 />
               )}/>
+
               <Route exact path={`${routes.COMPETITIONS}/:compid/events/e/:eventid`} render={({ match }) => (
                 <EventDetails 
                   key={match.params.eventid} 

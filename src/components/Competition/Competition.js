@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { db } from '../../firebase';
 import AuthUserContext from '../Auth/AuthUserContext';
+import CompetitionNavbar from './Navbar';
 import CompetitionManage from './Manage';
+import CompetitionRegister from './Register/Register';
+import * as routes from '../../constants/routes';
+import { Route, Link } from 'react-router-dom';
+
+import moment from 'moment';
 
 class Competition extends Component {
   constructor(props) {
@@ -15,7 +21,6 @@ class Competition extends Component {
       lat: '',
       lng: '',
       loading: true,
-      manage: false,
       register: false,
       details: '',
       venue: '',
@@ -25,9 +30,6 @@ class Competition extends Component {
       registrationEnd: '',
       registrationRequirements: '',
     };
-
-    this.handleManageChange = this.handleManageChange.bind(this);
-    // this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -44,10 +46,6 @@ class Competition extends Component {
     db.detach;
   }
 
-  handleManageChange() {
-    this.setState({ manage: !this.state.manage });
-  }
-
   handleRegister(compid, uid) {
     db.onceGetUser(this.props.authUser.uid, snap => {
       const { firstName, lastName } = snap.val()
@@ -56,45 +54,25 @@ class Competition extends Component {
   }
 
   render() {
-
-    const {
-      address,
-      compName,
-      date,
-      lat, lng,
-      uid, compid,
-      loading,
-      manage,
-      details, venue,
-      registrationLimit,
-      registrationFee,
-      registrationBegin,
-      registrationEnd,
-      registrationRequirements,
-    } = this.state;
-
+    const { loading, compid, compName, date, ...props } = this.state;
     return (
     loading ? <p>loading...</p> :
       <div>
-        <CompetitionManage
-          compName={compName}
-          address={address}
-          date={date}
-          lat={lat} lng={lng}
-          uid={uid} compid={compid}
-          manage={manage}
-          authUser={this.props.authUser}
-          addToAnnouncements={this.addToAnnouncements}
-          details={details}
-          venue={venue}
-          registrationLimit={registrationLimit}
-          registrationFee={registrationFee}
-          registrationBegin={registrationBegin}
-          registrationEnd={registrationEnd}
-          registrationRequirements={registrationRequirements}
-        />
-        <button className="btn btn-primary" onClick={this.handleManageChange}>{ this.state.manage ? "View" : "Manage" }</button>
-        <button className="btn btn-primary" onClick={() => this.handleRegister(compid, this.props.authUser.uid)}>Register</button>
+        <div className="row mx-0 my-2">
+          <h1 className="">{compName}</h1>
+          <h2 className="mt-2 ml-auto" style={{fontWeight: 'normal'}}>{moment(date).format('LL')}</h2>
+        </div>
+    
+        <CompetitionNavbar compid={compid} />
+        <CompetitionManage {...props} authUser={this.props.authUser} />
+
+        <Link to={`${routes.COMPETITIONS}/${compid}/register`}>
+          <button className="btn btn-primary">Register</button>
+        </Link>
+
+        <Route exact path={`${routes.COMPETITIONS}/:compid/register`}>
+          <CompetitionRegister authUser={this.props.authUser} />
+        </Route>
       </div>
     );
   }

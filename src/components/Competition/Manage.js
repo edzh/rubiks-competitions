@@ -1,32 +1,25 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import moment from 'moment';
 import AnnouncementList from '../Announcement/List';
 import GMap from '../GMap';
 import CompetitionDetails from './Details';
 import EventList from '../Event/List';
 import CompetitionAttendingList from './Attending';
-import CompetitionNavbar from './Navbar';
 import Profile from '../User/Profile';
 import * as routes from '../../constants/routes';
 
-const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, authUser, addToAnnouncements, manage, details, venue,
+const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, authUser, addToAnnouncements, details, venue,
     registrationLimit,
     registrationFee,
     registrationBegin,
     registrationEnd,
     registrationRequirements, }) =>
   <div>
-    <div className="row mx-0 my-2">
-      <h1 className="">{compName}</h1>
-      <h2 className="mt-2 ml-auto" style={{fontWeight: 'normal'}}>{moment(date).format('LL')}</h2>
-    </div>
-    <CompetitionNavbar compid={compid} />
 
     <div className="card bg-light">
       <Route exact path={`${routes.COMPETITIONS}/:compid`} render={({ match }) => (
-        <CompetitionDetails manage={manage} authUser={authUser} compid={match.params.compid}
+        <CompetitionDetails authUser={authUser} compid={match.params.compid}
           details={details}
           venue={venue}
           address={address}
@@ -39,11 +32,11 @@ const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, aut
       )}/>
 
       <Route exact path={`${routes.COMPETITIONS}/:compid/announcements`} render={({ match }) => (
-        <AnnouncementList manage={manage} authUser={authUser} compid={match.params.compid} />
+        <AnnouncementList authUser={authUser} compid={match.params.compid} />
       )}/>
 
       <Route path={`${routes.COMPETITIONS}/:compid/events`} render={({ match }) => (
-        <EventList authUser={authUser} manage={manage} date={date} compid={match.params.compid} />
+        <EventList authUser={authUser} date={date} compid={match.params.compid} />
       )}/>
 
       <Route exact path={`${routes.COMPETITIONS}/:compid/competitors`} render={({ match }) => (

@@ -50,7 +50,6 @@ class AnnouncementList extends Component {
               body={announcements[key].body}
               date={announcements[key].date}
               handleDelete={this.handleDelete}
-              manage={this.props.manage}
             />
           );
         }
