@@ -1,6 +1,18 @@
 import React, { Component } from 'react';
 import { db } from '../../../firebase';
 
+const eventStyleDeselected = {
+  width: '64px',
+  height: '64px',
+  backgroundColor: 'white',
+}
+
+const eventStyleSelected = {
+  width: '64px',
+  height: '64px',
+  backgroundColor: 'black',
+}
+
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +48,6 @@ class RegisterForm extends Component {
   }
 
   toggleEvent(event) {
-    console.log(this.state[event]);
     this.setState({ [event]: !this.state[event] })
   }
 
@@ -49,9 +60,9 @@ class RegisterForm extends Component {
           <div className="mx-0 row">
             {Object.keys(events).map(key => 
               <div 
-                className="mx-2 border rounded bg-light" 
+                className="mx-2 border rounded" 
                 onClick={() => this.toggleEvent(key)} 
-                style={{ width: '64px', height: '64px' }}
+                style={this.state[key] ? eventStyleSelected : eventStyleDeselected}
               >{key}</div>
             )}
           </div>
