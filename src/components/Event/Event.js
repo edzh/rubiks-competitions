@@ -12,21 +12,21 @@ class Event extends Component {
 
   }
 
-  
+
   handleDelete(eventid) {
     db.deleteEvent(eventid);
     console.log(eventid);
   }
 
   render() {
-    const { compid, key, name, round, startTime, endTime, date, id } = this.props;
+    const { compid, key, type, name, round, startTime, endTime, date, id } = this.props;
 
     return (
       <div>
 
       <div className="border-bottom p-0 m-0 row" key={key}>
         <div className="col-7">
-          <h5 className="mb-0">{name} <span style={{fontWeight: 'normal'}}>{round}</span></h5>
+          <h5 className="mb-0">{type} <span style={{fontWeight: 'normal'}}>{round}</span></h5>
           <p className="mb-0">{startTime} - {endTime}</p>
         </div>
         <Link className="btn btn-primary col-2 mx-auto my-auto h-25" to={`${routes.COMPETITIONS}/${compid}/events/e/${id}`}>

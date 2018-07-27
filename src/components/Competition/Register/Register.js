@@ -25,7 +25,7 @@ class CompetitionRegister extends Component {
 
     return (
       <div>
-        <RegisterForm {...props} />
+        <RegisterForm {...props} compid={this.props.compid} />
       </div>
     );
   }

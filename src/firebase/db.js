@@ -1,4 +1,5 @@
 import { db } from './firebase';
+import events from '../constants/events';
 
 // User API
 
@@ -17,20 +18,22 @@ export const onceGetUser = (uid, cb) =>
 
 
 /*** COMPETITION LIST ***/
-export const doCreateCompetition = (uid, compName, address, lat, lng, date, details, venue, 
-      registrationLimit, 
-      registrationFee,
-      registrationBegin,
-      registrationEnd,
-      registrationRequirements,) => {
-  const competitionsRef = db.ref(`competitions`);
-  const competition = { 
-    uid, compName, address, lat, lng, date, details, venue, 
-    registrationLimit, 
+export const doCreateCompetition = (uid, compName, address, lat, lng, date, details, venue,
+    registrationLimit,
     registrationFee,
     registrationBegin,
     registrationEnd,
-    registrationRequirements, 
+    registrationRequirements,) => {
+  const competitionsRef = db.ref(`competitions`);
+  const competition = {
+    uid, compName, address, lat, lng, date, details, venue,
+    registrationLimit,
+    registrationFee,
+    registrationBegin,
+    registrationEnd,
+    registrationRequirements,
+    approved: false,
+    active: false
   };
   competitionsRef.push(competition);
 }
@@ -79,8 +82,11 @@ export const deleteCompetition = (compid) => {
       db.ref(`announcements/${key}`).remove();
     })
   })
-  // 
+  //
 }
+
+export const onceGetCompetitionEvents = (compid, cb) =>
+  db.ref(`events`).orderByChild('compid').equalTo(compid).once('value', cb);
 
 export const deleteEvent = (eventid) => {
   db.ref(`events/${eventid}`).remove();
@@ -93,7 +99,8 @@ export const watchEvents = (compid, cb) =>
 
 export const doCreateEvent = (compid, name, round, startTime, endTime, date) => {
   const eventsRef = db.ref('events');
-  const event = { compid, name, round, startTime, endTime, date };
+  const type = events[name];
+  const event = { compid, type, name, round, startTime, endTime, date };
   eventsRef.push(event);
 }
 
@@ -107,7 +114,7 @@ export const doCreateEventUser = (eventid, uid, firstName, lastName) => {
   });
 }
 
-export const onceGetEvent = (eventid, cb) => 
+export const onceGetEvent = (eventid, cb) =>
   db.ref(`events/${eventid}`).once('value', cb);
 
 
@@ -118,10 +125,10 @@ export const onceGetUsersByEvent = (eventid, cb) =>
     })
   });
 
-export const watchEventUsers = (eventid, cb) => 
+export const watchEventUsers = (eventid, cb) =>
   db.ref(`eventAttendees/${eventid}`).on('value', cb);
 
-export const onceGetEventUsers = (eventid, cb) => 
+export const onceGetEventUsers = (eventid, cb) =>
   db.ref(`eventAttendees/${eventid}`).once('value', cb);
 
 export const changeEventUserRole = (eventid, uid, role, cb) =>
@@ -136,13 +143,13 @@ export const doCreateAttendee = (compid, uid, firstName, lastName) => {
   });
 }
 
-export const watchAttending = (uid, cb) => 
+export const watchAttending = (uid, cb) =>
   db.ref('competitionAttendees').orderByChild(`${uid}`).equalTo(true).once('value', cb);
 
-export const checkUserAttendingCompetition = (uid, compid, cb) => 
+export const checkUserAttendingCompetition = (uid, compid, cb) =>
   db.ref(`competitionAttendees/${compid}/${uid}`).equalTo(true).once('value', cb);
 
-export const onceGetCompetitionsByUser = (uid, cb) => 
+export const onceGetCompetitionsByUser = (uid, cb) =>
   db.ref('competitionAttendees').orderByChild(`${uid}`).on('child_added', snap => {
     db.ref(`competitions/${snap.key}`).once('value', cb);
   });
@@ -154,7 +161,7 @@ export const onceGetUsersByCompetition = (compid, cb) =>
     })
   });
 
-export const watchCompetitionAttendees = (compid, cb) => 
+export const watchCompetitionAttendees = (compid, cb) =>
   db.ref(`competitionAttendees/${compid}`).once('value', cb);
 
 export const test = (compid) =>
@@ -163,5 +170,5 @@ export const test = (compid) =>
 export const detach = () =>
   db.ref.off();
 
-export const onceGetUserInfo = (uid, cb) => 
+export const onceGetUserInfo = (uid, cb) =>
   db.ref(`users/${uid}`).once('value', cb);

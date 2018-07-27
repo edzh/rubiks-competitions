@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { db } from '../../firebase';
+import events from '../../constants/events';
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value,
@@ -47,23 +48,23 @@ class EventForm extends Component {
         <form onSubmit={this.onSubmit}>
           <select className="form-control" onChange={event => this.setState(byPropKey('name', event.target.value))}>
             <option value="">---</option>
-            <option value="2x2x2 Cube">4x4x4 Cube</option>
-            <option value="Rubik's Cube">Rubik's Cube</option>
-            <option value="4x4x4 Cube">4x4x4 Cube</option>
-            <option value="5x5x5 Cube">5x5x5 Cube</option>
-            <option value="6x6x6 Cube">6x6x6 Cube</option>
-            <option value="7x7x7 Cube">7x7x7 Cube</option>
-            <option value="3x3x3 Blindfolded">3x3x3 Blindfolded</option>
-            <option value="3x3x3 Fewest Moves">3x3x3 Fewest Moves</option>
-            <option value="3x3x3 One Handed">3x3x3 One Handed</option>
-            <option value="3x3x3 With Feet">3x3x3 With Feet</option>
-            <option value="Megaminx">Megaminx</option>
-            <option value="Pyraminx">Pyraminx</option>
-            <option value="Rubik's Clock">Rubik's Clock</option>
-            <option value="Square-1">Square-1</option>
-            <option value="4x4x4 Blindfolded">4x4x4 Blindfolded</option>
-            <option value="5x5x5 Blindfolded">5x5x5 Blindfolded</option>
-            <option value="3x3x3 Multi-Blind">3x3x3 Multi-Blind</option>
+            <option value="cube2">2x2x2 Cube</option>
+            <option value="cube3">Rubik's Cube</option>
+            <option value="cube4">4x4x4 Cube</option>
+            <option value="cube5">5x5x5 Cube</option>
+            <option value="cube6">6x6x6 Cube</option>
+            <option value="cube7">7x7x7 Cube</option>
+            <option value="blind">3x3x3 Blindfolded</option>
+            <option value="fm">3x3x3 Fewest Moves</option>
+            <option value="oh">3x3x3 One Handed</option>
+            <option value="feet">3x3x3 With Feet</option>
+            <option value="megaminx">Megaminx</option>
+            <option value="pyraminx">Pyraminx</option>
+            <option value="clock">Rubik's Clock</option>
+            <option value="sq1">Square-1</option>
+            <option value="blind4">4x4x4 Blindfolded</option>
+            <option value="blind5">5x5x5 Blindfolded</option>
+            <option value="multiblind">3x3x3 Multi-Blind</option>
           </select>
           <select className="form-control" onChange={event => this.setState(byPropKey('round', event.target.value))}>
             <option value="">---</option>

@@ -9,6 +9,8 @@ import { Route, Link } from 'react-router-dom';
 
 import moment from 'moment';
 
+const allowed = ['Round 1', 'Combined Final']
+
 class Competition extends Component {
   constructor(props) {
     super(props);
@@ -40,6 +42,7 @@ class Competition extends Component {
       });
       this.setState({ loading: false });
     });
+
   }
 
   componentWillUnmount() {
@@ -62,16 +65,16 @@ class Competition extends Component {
           <h1 className="">{compName}</h1>
           <h2 className="mt-2 ml-auto" style={{fontWeight: 'normal'}}>{moment(date).format('LL')}</h2>
         </div>
-    
+
         <CompetitionNavbar compid={compid} />
-        <CompetitionManage {...props} authUser={this.props.authUser} />
+        <CompetitionManage {...props} date={date} authUser={this.props.authUser} />
 
         <Link to={`${routes.COMPETITIONS}/${compid}/register`}>
           <button className="btn btn-primary">Register</button>
         </Link>
 
         <Route exact path={`${routes.COMPETITIONS}/:compid/register`}>
-          <CompetitionRegister authUser={this.props.authUser} />
+          <CompetitionRegister authUser={this.props.authUser} compid={compid} />
         </Route>
       </div>
     );

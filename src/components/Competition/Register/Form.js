@@ -1,45 +1,34 @@
 import React, { Component } from 'react';
 import { db } from '../../../firebase';
 
-const eventStyleDeselected = {
-  width: '64px',
-  height: '64px',
-  backgroundColor: 'white',
-}
+import EventSelector from './EventSelector';
 
-const eventStyleSelected = {
-  width: '64px',
-  height: '64px',
-  backgroundColor: 'black',
-}
+
 
 class RegisterForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      cube2: false,
-      cube3: false,
-      cube4: false,
-      cube5: false,
-      cube6: false,
-      cube7: false,
-      blind: false,
-      fm: false,
-      oh: false,
-      feet: false,
-      megaminx: false,
-      pyraminx: false,
-      clock: false,
-      sq1: false,
-      blind4: false,
-      blind5: false,
-      mblind: false,
+      compid: this.props.compid,
+      events: {},
       guests: '',
     }
 
     this.onSubmit = this.onSubmit.bind(this);
     this.toggleEvent = this.toggleEvent.bind(this);
+  }
+
+  componentDidMount() {
+    const { compid } = this.state;
+    db.onceGetCompetitionEvents(compid, snap => {
+      snap.val() && Object.keys(snap.val()).forEach(key => {
+        this.setState(prevState => ({ events: {
+          ...prevState.events,
+          [snap.val()[key].name]: false }
+        }))
+      })
+    })
   }
 
   onSubmit(compid, uid) {
@@ -48,29 +37,26 @@ class RegisterForm extends Component {
   }
 
   toggleEvent(event) {
-    this.setState({ [event]: !this.state[event] })
+    this.setState(prevState => ({
+      events: {
+        ...prevState.events,
+        [event]: !this.state.events[event]
+      }
+    }));
   }
 
   render() {
-    const { guests, ...events } = this.state
+    const { guests, events } = this.state;
 
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          <div className="mx-0 row">
-            {Object.keys(events).map(key => 
-              <div 
-                className="mx-2 border rounded" 
-                onClick={() => this.toggleEvent(key)} 
-                style={this.state[key] ? eventStyleSelected : eventStyleDeselected}
-              >{key}</div>
-            )}
-          </div>
+          <EventSelector events={events} toggleEvent={this.toggleEvent} />
 
-          <input 
-            type="number" 
-            className="form-control" 
-            placeholder="Guests" 
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Guests"
           />
 
           <button type="submit" className="btn btn-primary">Register</button>
