@@ -135,11 +135,12 @@ export const changeEventUserRole = (eventid, uid, role, cb) =>
   db.ref(`eventAttendees/${eventid}/${uid}`).child('role').set(role);
 
 /*** ATTENDEE MODEL ***/
-export const doCreateAttendee = (compid, uid, firstName, lastName) => {
+export const doCreateAttendee = (compid, uid, firstName, lastName, events) => {
   const competitionsAttendeesRef = db.ref(`competitionAttendees/${compid}/${uid}`)
   competitionsAttendeesRef.set({
     firstName,
-    lastName
+    lastName,
+    events,
   });
 }
 

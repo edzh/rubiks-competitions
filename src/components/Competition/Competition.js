@@ -3,7 +3,6 @@ import { db } from '../../firebase';
 import AuthUserContext from '../Auth/AuthUserContext';
 import CompetitionNavbar from './Navbar';
 import CompetitionManage from './Manage';
-import CompetitionRegister from './Register/Register';
 import * as routes from '../../constants/routes';
 import { Route, Link } from 'react-router-dom';
 
@@ -68,14 +67,6 @@ class Competition extends Component {
 
         <CompetitionNavbar compid={compid} />
         <CompetitionManage {...props} date={date} authUser={this.props.authUser} />
-
-        <Link to={`${routes.COMPETITIONS}/${compid}/register`}>
-          <button className="btn btn-primary">Register</button>
-        </Link>
-
-        <Route exact path={`${routes.COMPETITIONS}/:compid/register`}>
-          <CompetitionRegister authUser={this.props.authUser} compid={compid} />
-        </Route>
       </div>
     );
   }

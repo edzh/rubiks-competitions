@@ -10,7 +10,7 @@ const Navbar = ({ compid }) =>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" to={`${routes.COMPETITIONS}/${compid}/announcements`}>Announcements</NavLink>
-      </li>    
+      </li>
       <li className="nav-item">
         <NavLink className="nav-link" to={`${routes.COMPETITIONS}/${compid}/events`}>Events</NavLink>
       </li>
@@ -19,6 +19,9 @@ const Navbar = ({ compid }) =>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" to={`${routes.COMPETITIONS}/${compid}/map`}>Map</NavLink>
+      </li>
+      <li>
+        <NavLink className="nav-link" to={`${routes.COMPETITIONS}/${compid}/register`}>Register</NavLink>
       </li>
     </ul>
   </nav>

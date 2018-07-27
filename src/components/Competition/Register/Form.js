@@ -31,9 +31,12 @@ class RegisterForm extends Component {
     })
   }
 
-  onSubmit(compid, uid) {
-    const { firstName, lastName } = this.state;
-    db.doCreateAttendee(compid, this.props.authUser.uid, firstName, lastName);
+  onSubmit(event) {
+    event.preventDefault();
+    const { authUser, compid, firstName, lastName } = this.props;
+    const { ...events } = this.state.events;
+    // console.log(events);
+    db.doCreateAttendee(compid, authUser.uid, firstName, lastName, events);
   }
 
   toggleEvent(event) {
