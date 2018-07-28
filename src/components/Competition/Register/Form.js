@@ -35,7 +35,6 @@ class RegisterForm extends Component {
     event.preventDefault();
     const { authUser, compid, firstName, lastName } = this.props;
     const { ...events } = this.state.events;
-    // console.log(events);
     db.doCreateAttendee(compid, authUser.uid, firstName, lastName, events);
   }
 
@@ -52,13 +51,14 @@ class RegisterForm extends Component {
     const { guests, events } = this.state;
 
     return (
-      <div>
+      <div className="card px-4 py-4">
+
         <form onSubmit={this.onSubmit}>
           <EventSelector events={events} toggleEvent={this.toggleEvent} />
 
           <input
             type="number"
-            className="form-control"
+            className="form-control my-2"
             placeholder="Guests"
           />
 

@@ -10,6 +10,7 @@ const eventStyleDeselected = {
 const eventStyleSelected = {
   width: '64px',
   height: '64px',
+  color: 'white',
   backgroundColor: 'black',
 }
 
@@ -17,7 +18,7 @@ const EventSelector = ({...props}) =>
   <div className="mx-0 row">
     {props.events && Object.keys(props.events).map(key =>
       <div
-        className="mx-2 border rounded"
+        className="mr-2 border rounded"
         onClick={() => props.toggleEvent(key)}
         style={props.events[key] ? eventStyleSelected : eventStyleDeselected}
       >{events[key]}</div>
