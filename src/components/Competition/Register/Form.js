@@ -36,6 +36,7 @@ class RegisterForm extends Component {
     const { authUser, compid, firstName, lastName } = this.props;
     const { ...events } = this.state.events;
     db.doCreateAttendee(compid, authUser.uid, firstName, lastName, events);
+    db.doCreateEventUserFromRegistration(compid, authUser.uid, firstName, lastName, events);
   }
 
   toggleEvent(event) {

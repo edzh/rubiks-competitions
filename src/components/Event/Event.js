@@ -9,13 +9,12 @@ class Event extends Component {
   constructor(props) {
     super(props);
 
-
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
 
   handleDelete(eventid) {
     db.deleteEvent(eventid);
-    console.log(eventid);
   }
 
   render() {

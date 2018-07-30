@@ -6,7 +6,7 @@ import GMap from '../GMap';
 import CompetitionDetails from './Details';
 import CompetitionRegister from './Register/Register';
 import EventList from '../Event/List';
-import CompetitionAttendingList from './Attending';
+import CompetitionAttendingList from './Attending/Attending';
 import Profile from '../User/Profile';
 import * as routes from '../../constants/routes';
 

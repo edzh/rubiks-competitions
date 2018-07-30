@@ -86,11 +86,14 @@ export const deleteCompetition = (compid) => {
 }
 
 export const onceGetCompetitionEvents = (compid, cb) =>
-  db.ref(`events`).orderByChild('compid').equalTo(compid).once('value', cb);
+  db.ref(`competitionEvents/${compid}`).once('value', cb);
 
 export const deleteEvent = (eventid) => {
-  db.ref(`events/${eventid}`).remove();
-  db.ref(`eventAttendees/${eventid}`).remove();
+  db.ref(`events/${eventid}/compid`).once('value', snap => {
+    db.ref(`events/${eventid}`).remove();
+    db.ref(`eventAttendees/${eventid}`).remove();
+    db.ref(`competitionEvents/${snap.val()}/${eventid}`).remove();
+  })
 }
 
 /*** EVENT VIEW ***/
@@ -101,7 +104,14 @@ export const doCreateEvent = (compid, name, round, startTime, endTime, date) => 
   const eventsRef = db.ref('events');
   const type = events[name];
   const event = { compid, type, name, round, startTime, endTime, date };
-  eventsRef.push(event);
+  eventsRef.push(event).then(snap => {
+    db.ref(`competitionEvents/${compid}/${snap.key}`).set({
+      name,
+      round,
+      type,
+    });
+  });
+
 }
 
 export const doCreateEventUser = (eventid, uid, firstName, lastName) => {
@@ -112,6 +122,25 @@ export const doCreateEventUser = (eventid, uid, firstName, lastName) => {
     lastName,
     approved: false
   });
+}
+
+export const doCreateEventUserFromRegistration = (compid, uid, firstName, lastName, events) => {
+  const competitionEventsRef = db.ref(`competitionEvents/${compid}`)
+  competitionEventsRef.once('value', snap => {
+    // Object.keys(snap.val()).forEach(key => {
+    //   doCreateEventUser(key, uid, firstName, lastName)
+    // })
+    Object.keys(events).forEach(event => {
+      if (events[event]) {
+        Object.keys(snap.val()).forEach(key => {
+          if (snap.val()[key].name === event &&
+              snap.val()[key].round === ('Round 1' || 'Combined Final')) {
+                doCreateEventUser(key, uid, firstName, lastName)
+          }
+        });
+      }
+    })
+  })
 }
 
 export const onceGetEvent = (eventid, cb) =>

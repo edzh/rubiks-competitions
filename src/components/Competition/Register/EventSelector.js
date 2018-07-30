@@ -21,7 +21,8 @@ const EventSelector = ({...props}) =>
         className="mr-2 border rounded"
         onClick={() => props.toggleEvent(key)}
         style={props.events[key] ? eventStyleSelected : eventStyleDeselected}
-      >{events[key]}</div>
+      ><p className="small">{events[key]}</p>
+      </div>
     )}
   </div>
 

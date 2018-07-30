@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { db } from '../../firebase';
+import { db } from '../../../firebase';
+import CompetitionAttendee from './Attendee';
 
-import * as routes from '../../constants/routes';
+import * as routes from '../../../constants/routes';
 
 class CompetitionAttendingList extends Component {
   constructor(props) {
@@ -16,14 +17,10 @@ class CompetitionAttendingList extends Component {
   componentDidMount() {
     db.watchCompetitionAttendees(this.props.compid, snap => {
       snap.val() && Object.keys(snap.val()).forEach(key => {
-        console.log(snap.val());
         this.setState(prevState => ({
           attendees: {
             ...prevState.attendees,
-            [key]: {
-              firstName: snap.val()[key].firstName,
-              lastName: snap.val()[key].lastName,
-            }          
+            [key]: snap.val()[key]
           }
         }))
       });
@@ -35,21 +32,23 @@ class CompetitionAttendingList extends Component {
     const { attendees } = this.state;
 
     return (
-      <div>
-        <h3>Competitors:</h3>
+      <div className="px-4 py-2">
+        <h2>Competitors:</h2>
         <table className="table">
           <tbody>
             <tr>
               <th scope="col">Name</th>
+              <th scope="col">Events</th>
             </tr>
             {
-              Object.keys(attendees).map(key => 
+              Object.keys(attendees).map(key =>
                 <tr key={key}>
                   <td>
                     <Link key={key} to={`${routes.PROFILE}/${key}`}>
                       {attendees[key].firstName} {attendees[key].lastName}
                     </Link>
                   </td>
+                  <td><CompetitionAttendee attendeeEvents={attendees[key].events} /></td>
                 </tr>
               )
             }

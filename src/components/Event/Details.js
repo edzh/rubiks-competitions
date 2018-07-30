@@ -39,7 +39,9 @@ class EventDetails extends Component {
       <div>
         <h4>{event.type} <span style={{ fontWeight: 'normal' }}>{event.round}</span></h4>
         <p>{event.startTime} - {event.endTime}</p>
-        <button onClick={() => this.handleAddUser()}>Register</button>
+        {
+          // <button onClick={() => this.handleAddUser()}>Register</button>
+        }
         <EventAttendingList eventid={this.props.eventid} />
       </div>
     );
