@@ -32,8 +32,9 @@ class EventRole extends Component {
       <form onSubmit={this.onSubmit} className="row">
         <select className="form-control col-3" onChange={event => this.setState(byPropKey('role', event.target.value))} id="role-select">
           <option value="">---</option>
-          <option value="Staff">Staff</option>
-          <option value="Volunteer">Volunteer</option>
+          <option value="Judge">Judge</option>
+          <option value="Runner">Runner</option>
+          <option value="Scrambler">Scrambler</option>
           <option value="None">None</option>
         </select>
         <button type="submit" disabled={isInvalid} className="btn btn-primary">&#10003;</button>
