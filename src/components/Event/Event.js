@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../../firebase';
 import moment from 'moment';
-import Attending from './Attending';
+import Attending from './Details/Attending';
 import * as routes from '../../constants/routes';
 
 class Event extends Component {

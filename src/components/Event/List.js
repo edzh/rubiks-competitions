@@ -4,7 +4,7 @@ import * as routes from '../../constants/routes';
 
 import EventForm from './Form';
 import Event from './Event';
-import EventDetails from './Details';
+import EventDetails from './Details/Details';
 
 import { Route, Link } from 'react-router-dom';
 

@@ -117,10 +117,11 @@ export const doCreateEvent = (compid, name, round, startTime, endTime, date) => 
 export const doCreateEventUser = (eventid, uid, firstName, lastName) => {
   const eventUserRef = db.ref(`eventAttendees/${eventid}/${uid}`)
   eventUserRef.set({
-    role: 'none',
+    role: 'None',
+    title: 'None',
     firstName,
     lastName,
-    approved: false
+    approved: false,
   });
 }
 
@@ -162,6 +163,9 @@ export const onceGetEventUsers = (eventid, cb) =>
 
 export const changeEventUserRole = (eventid, uid, role, cb) =>
   db.ref(`eventAttendees/${eventid}/${uid}`).child('role').set(role);
+
+export const changeEventUserTitle = (eventid, uid, title) =>
+  db.ref(`eventAttendees/${eventid}/${uid}`).child('title').set(title);
 
 /*** ATTENDEE MODEL ***/
 export const doCreateAttendee = (compid, uid, firstName, lastName, events) => {
