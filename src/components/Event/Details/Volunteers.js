@@ -2,7 +2,7 @@ import React from 'react';
 import EventRole from './Role';
 
 const VolunteerList = ({ attendees, eventid }) => 
-  <table className="table">
+  <table className="table border">
     <tbody>
     <tr>
       <th>
@@ -17,7 +17,7 @@ const VolunteerList = ({ attendees, eventid }) =>
       <th scope="col"></th>
     </tr>
       {Object.keys(attendees).map(key => 
-        attendees[key].title === 'Volunteer' && 
+        attendees[key].title === 'Volunteer' && attendees[key].role !== 'None' &&
         <tr key={key}>
           <td>
             {attendees[key].firstName} {attendees[key].lastName}
@@ -28,7 +28,23 @@ const VolunteerList = ({ attendees, eventid }) =>
           </td>
         </tr>
       )}
-      
+      <tr>
+        <th>Unassigned Volunteers</th>
+        <th></th>
+        <th></th>
+      </tr>
+      {Object.keys(attendees).map(key => 
+        attendees[key].title === 'Volunteer' && attendees[key].role === 'None' &&
+        <tr key={key}>
+          <td>
+            {attendees[key].firstName} {attendees[key].lastName}
+          </td>
+          <td>{attendees[key].role}</td>
+          <td>
+            <EventRole role={attendees[key].role} eventid={eventid} uid={key} />
+          </td>
+        </tr>
+      )}
     </tbody>
   </table>
 

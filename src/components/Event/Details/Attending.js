@@ -6,7 +6,7 @@ import * as routes from '../../../constants/routes';
 import EventRole from './Role';
 
 const AttendeeList = ({ attendees }) =>
-  <table className="table">
+  <table className="table border">
     <tbody>
     <tr>
       <th scope="col">Name</th>

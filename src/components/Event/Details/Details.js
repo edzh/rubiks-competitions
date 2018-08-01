@@ -30,10 +30,6 @@ class EventDetails extends Component {
   requestVolunteer() {
     const { eventid, authUser } = this.props;
     db.changeEventUserTitle(eventid, authUser.uid, 'Volunteer');
-    this.setState(prevState => ({ 
-      attendees: {
-        [authUser.uid]: {
-          title: 'Volunteer' }}}))
   }
 
   render() {
@@ -45,12 +41,15 @@ class EventDetails extends Component {
         <h4>{event.type} <span style={{ fontWeight: 'normal' }}>{event.round}</span></h4>
         <p>{event.startTime} - {event.endTime}</p>
         { 
-          !!attendees && attendees[authUser.uid] &&
+          !!attendees && attendees[authUser.uid] && (
           attendees[authUser.uid].title === 'Volunteer'
-            ? attendees[authUser.uid].role === 'None'
-              ? <p>Please wait for a role to be assigned</p> 
-              : <p>You are a {attendees[authUser.uid].role}</p>
+          ? attendees[authUser.uid].role === 'None'
+            ? <p>Please wait for a role to be assigned</p> 
+            : <p>You are a {attendees[authUser.uid].role}</p>
+          : attendees[authUser.uid].title === 'Staff' 
+            ? <p>You are already a staff member</p>
             : <button className="btn" onClick={this.requestVolunteer}>Request to Volunteer</button>
+          )
         } 
 
         <AttendeeList attendees={attendees} />
