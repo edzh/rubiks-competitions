@@ -21,7 +21,7 @@ const CompetitionsTable = ({ competitions, handleDelete }) =>
       <div className="row border bg-light">
       {
         Object.keys(competitions).map(key =>
-          <div className="col-4 mt-3">
+          <div key={key} className="col-4 mt-3">
             <div className="card m-2">
               <Link to={`${routes.COMPETITIONS}/${key}`}>
                 <div className="border" style={competitionStyle}>

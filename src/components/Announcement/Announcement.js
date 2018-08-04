@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
+
 class Announcement extends Component {
   constructor(props) {
     super(props);
@@ -30,3 +32,9 @@ class Announcement extends Component {
 }
 
 export default Announcement;
+
+Announcement.propTypes = {
+  title: PropTypes.string,
+  body: PropTypes.string,
+  date: PropTypes.string,
+};

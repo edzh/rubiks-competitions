@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import RegisterForm from './Form';
 import RegisterDetails from './Details';
 import { db } from '../../../firebase';
@@ -40,3 +41,7 @@ class CompetitionRegister extends Component {
 }
 
 export default CompetitionRegister;
+CompetitionRegister.propTypes = {
+  authUser: PropTypes.object,
+  compid: PropTypes.string,
+};

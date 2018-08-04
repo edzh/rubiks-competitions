@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
 import { db } from '../../../firebase';
 import CompetitionAttendee from './Attendee';
@@ -60,3 +62,7 @@ class CompetitionAttendingList extends Component {
 }
 
 export default CompetitionAttendingList;
+
+CompetitionAttendingList.propTypes = {
+  compid: PropTypes.string,
+};

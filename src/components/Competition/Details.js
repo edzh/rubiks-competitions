@@ -12,7 +12,7 @@ class CompetitionDetails extends Component {
   }
 
   componentDidMount() {
-    const { compid, address } = this.props;
+    const { compid } = this.props;
 
     this.competitionRef = db.watchCompetition(compid, snap => {
       snap.val() && Object.keys(snap.val()).forEach(key => {
@@ -24,8 +24,6 @@ class CompetitionDetails extends Component {
 
   render() {
     const {      
-      uid,
-      loading,
       details, 
       venue, 
       address,

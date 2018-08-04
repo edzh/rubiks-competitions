@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { db } from '../../firebase';
 import AnnouncementForm from './Form';
 import Announcement from './Announcement'
@@ -21,9 +23,9 @@ class AnnouncementList extends Component {
     })
   }
 
-  componentWillUnmount() {
-    db.detach;
-  }
+  // componentWillUnmount() {
+  //   db.detach;
+  // }
 
   handleDelete(id) {
     db.deleteAnnouncement(id);
@@ -60,3 +62,9 @@ class AnnouncementList extends Component {
 }
 
 export default AnnouncementList;
+
+AnnouncementList.propTypes = {
+  title: PropTypes.string,
+  body: PropTypes.string,
+  date: PropTypes.string,
+};

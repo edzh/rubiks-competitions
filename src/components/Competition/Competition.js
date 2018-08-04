@@ -3,8 +3,6 @@ import { db } from '../../firebase';
 import AuthUserContext from '../Auth/AuthUserContext';
 import CompetitionNavbar from './Navbar';
 import CompetitionManage from './Manage';
-import * as routes from '../../constants/routes';
-import { Route, Link } from 'react-router-dom';
 
 import moment from 'moment';
 

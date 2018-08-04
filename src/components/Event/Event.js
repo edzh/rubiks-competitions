@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { db } from '../../firebase';
-import moment from 'moment';
-import Attending from './Details/Attending';
+// import moment from 'moment';
+// import Attending from './Details/Attending';
 import * as routes from '../../constants/routes';
 
 class Event extends Component {
@@ -18,12 +18,12 @@ class Event extends Component {
   }
 
   render() {
-    const { compid, key, type, name, round, startTime, endTime, date, id } = this.props;
+    const { compid, type, round, startTime, endTime, id } = this.props;
 
     return (
       <div>
 
-      <div className="border-bottom p-0 m-0 row" key={key}>
+      <div className="border-bottom p-0 m-0 row" key={id}>
         <div className="col-7">
           <h5 className="mb-0">{type} <span style={{fontWeight: 'normal'}}>{round}</span></h5>
           <p className="mb-0">{startTime} - {endTime}</p>

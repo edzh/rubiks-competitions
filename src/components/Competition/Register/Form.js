@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { db } from '../../../firebase';
 
 import EventSelector from './EventSelector';
@@ -49,7 +50,7 @@ class RegisterForm extends Component {
   }
 
   render() {
-    const { guests, events } = this.state;
+    const { events } = this.state;
 
     return (
       <div className="card px-4 py-4">
@@ -71,3 +72,7 @@ class RegisterForm extends Component {
 }
 
 export default RegisterForm;
+
+RegisterForm.propTypes = {
+  compid: PropTypes.string,
+};

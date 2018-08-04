@@ -23,9 +23,9 @@ class RegisteredCompetitions extends Component {
     })
   }
 
-  componentWillUnmount() {
-    db.detach;
-  }
+  // componentWillUnmount() {
+  //   db.detach;
+  // }
 
   render() {
     return (

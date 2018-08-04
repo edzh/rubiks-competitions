@@ -2,7 +2,7 @@ import React from 'react';
 import EventRole from './Role';
 
 const VolunteerList = ({ attendees, eventid }) => 
-  <table className="table border">
+  <table className="table border col-6">
     <tbody>
     <tr>
       <th>
@@ -16,7 +16,7 @@ const VolunteerList = ({ attendees, eventid }) =>
       <th scope="col">Role</th>
       <th scope="col"></th>
     </tr>
-      {Object.keys(attendees).map(key => 
+      {attendees && Object.keys(attendees).map(key => 
         attendees[key].title === 'Volunteer' && attendees[key].role !== 'None' &&
         <tr key={key}>
           <td>
@@ -33,7 +33,7 @@ const VolunteerList = ({ attendees, eventid }) =>
         <th></th>
         <th></th>
       </tr>
-      {Object.keys(attendees).map(key => 
+      {attendees && Object.keys(attendees).map(key => 
         attendees[key].title === 'Volunteer' && attendees[key].role === 'None' &&
         <tr key={key}>
           <td>

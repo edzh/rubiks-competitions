@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { db } from '../../firebase';
 
 import moment from 'moment';
@@ -22,9 +23,10 @@ class AnnouncementForm extends Component {
   }
 
   onSubmit(event) {
-    const { uid, compid, title, body, date } = this.state;
+    const { authUser, compid } = this.props;
+    const { title, body, date } = this.state;
     event.preventDefault();
-    db.doCreateAnnouncement(uid, compid, title, body, date);
+    db.doCreateAnnouncement(authUser.uid, compid, title, body, date);
     this.setState({
       title: '',
       body: '',
@@ -64,3 +66,11 @@ class AnnouncementForm extends Component {
 }
 
 export default AnnouncementForm;
+
+AnnouncementForm.propTypes = {
+  authUser: PropTypes.object,
+  title: PropTypes.string,
+  body: PropTypes.string,
+  compid: PropTypes.string,
+  date: PropTypes.string,
+};

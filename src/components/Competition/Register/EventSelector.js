@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+
 import events from '../../../constants/events';
 
 const eventStyleDeselected = {
@@ -18,6 +20,7 @@ const EventSelector = ({...props}) =>
   <div className="mx-0 row">
     {props.events && Object.keys(props.events).map(key =>
       <div
+        key={key}
         className="mr-2 border rounded"
         onClick={() => props.toggleEvent(key)}
         style={props.events[key] ? eventStyleSelected : eventStyleDeselected}
@@ -27,3 +30,8 @@ const EventSelector = ({...props}) =>
   </div>
 
 export default EventSelector;
+
+EventSelector.propTypes = {
+  events: PropTypes.object,
+  toggleEvent: PropTypes.func,
+};

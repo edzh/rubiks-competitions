@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { db } from '../../../firebase';
 
 import * as routes from '../../../constants/routes';
-import EventRole from './Role';
+// import EventRole from './Role';
 
 const AttendeeList = ({ attendees }) =>
   <table className="table border">
@@ -13,7 +12,7 @@ const AttendeeList = ({ attendees }) =>
     </tr>
 
     {
-      Object.keys(attendees).map(key => 
+     attendees && Object.keys(attendees).map(key => 
         <tr key={key}>
           <td>
             <Link to={`${routes.PROFILE}/${key}`}>

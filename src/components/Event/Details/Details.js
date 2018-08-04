@@ -3,6 +3,7 @@ import { db } from '../../../firebase';
 import AttendeeList from './Attending';
 import VolunteerList from './Volunteers';
 import StaffList from './Staff';
+import Status from './VolunteerStatus';
 
 class EventDetails extends Component {
   constructor(props) {
@@ -40,21 +41,13 @@ class EventDetails extends Component {
       <div>
         <h4>{event.type} <span style={{ fontWeight: 'normal' }}>{event.round}</span></h4>
         <p>{event.startTime} - {event.endTime}</p>
-        { 
-          !!attendees && attendees[authUser.uid] && (
-          attendees[authUser.uid].title === 'Volunteer'
-          ? attendees[authUser.uid].role === 'None'
-            ? <p>Please wait for a role to be assigned</p> 
-            : <p>You are a {attendees[authUser.uid].role}</p>
-          : attendees[authUser.uid].title === 'Staff' 
-            ? <p>You are already a staff member</p>
-            : <button className="btn" onClick={this.requestVolunteer}>Request to Volunteer</button>
-          )
-        } 
+        <Status authUser={authUser} attendees={attendees} requestVolunteer={this.requestVolunteer} />
+        <div className="row">
+          <VolunteerList attendees={attendees} eventid={eventid}/>
+          <StaffList attendees={attendees} eventid={eventid}/>
+        </div>
 
         <AttendeeList attendees={attendees} />
-        <VolunteerList attendees={attendees} eventid={eventid}/>
-        <StaffList attendees={attendees} eventid={eventid}/>
       </div>
     );
   }

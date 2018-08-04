@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import RegisterForm from './Form';
+import PropTypes from 'prop-types';
 import { db } from '../../../firebase';
-
 import moment from 'moment'
+
+import RegisterForm from './Form';
+
 
 class RegisterDetails extends Component {
   constructor(props) {
@@ -55,3 +57,7 @@ class RegisterDetails extends Component {
 }
 
 export default RegisterDetails;
+
+RegisterDetails.propTypes = {
+  compid: PropTypes.string,
+};
