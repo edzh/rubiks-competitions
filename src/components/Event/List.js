@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { db } from '../../firebase';
 import * as routes from '../../constants/routes';
 
@@ -14,7 +15,6 @@ class EventList extends Component {
 
     this.state = {
       events: [],
-      date: this.props.date,
     };
   }
 
@@ -25,8 +25,8 @@ class EventList extends Component {
   }
 
   render() {
-    const { events, date } = this.state;
-    const { compid, authUser } = this.props;
+    const { events } = this.state;
+    const { compid, authUser, date } = this.props;
 
     return (
       <div className="px-4 py-2">
@@ -38,7 +38,7 @@ class EventList extends Component {
                 <Event
                   { ...events[key] }
                   key={key}
-                  id={key}
+                  eventid={key}
                   authUser={authUser}
                 />
               );
@@ -52,19 +52,19 @@ class EventList extends Component {
             <div className="card pl-4 pt-2">
 
               <Route exact path={`${routes.COMPETITIONS}/:compid/events/create`} render={({ match }) => (
-                <EventForm 
-                  compid={match.params.compid} 
-                  date={date} 
-                  authUser={authUser} 
+                <EventForm
+                  compid={match.params.compid}
+                  date={date}
+                  authUser={authUser}
                 />
               )}/>
 
               <Route exact path={`${routes.COMPETITIONS}/:compid/events/e/:eventid`} render={({ match }) => (
-                <EventDetails 
-                  key={match.params.eventid} 
-                  compid={match.params.compid} 
-                  eventid={match.params.eventid} 
-                  authUser={authUser} 
+                <EventDetails
+                  key={match.params.eventid}
+                  compid={match.params.compid}
+                  eventid={match.params.eventid}
+                  authUser={authUser}
                 />
               )}/>
             </div>
@@ -78,3 +78,10 @@ class EventList extends Component {
 }
 
 export default EventList;
+
+EventList.propTypes = {
+  compid: PropTypes.string.isRequired,
+  authUser: PropTypes.object,
+  date: PropTypes.string,
+
+}

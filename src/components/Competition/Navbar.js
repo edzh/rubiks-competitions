@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { NavLink } from 'react-router-dom';
 import * as routes from '../../constants/routes';
 
@@ -27,3 +29,7 @@ const Navbar = ({ compid }) =>
   </nav>
 
 export default Navbar;
+
+Navbar.propTypes = {
+  compid: PropTypes.string.isRequired,
+}

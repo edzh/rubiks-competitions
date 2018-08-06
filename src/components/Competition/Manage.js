@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
 
 import AnnouncementList from '../Announcement/List';
@@ -54,3 +55,15 @@ const CompetitionManage = ({ compid, compName, address, date, lat, lng, uid, aut
 
 
 export default CompetitionManage;
+
+CompetitionManage.propTypes = {
+  date: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  venue: PropTypes.string,
+  details: PropTypes.string,
+  registrationLimit: PropTypes.number,
+  registrationRequirements: PropTypes.string,
+  registrationFee: PropTypes.number,
+  registrationBegin: PropTypes.string.isRequired,
+  registrationEnd: PropTypes.string.isRequired,
+}

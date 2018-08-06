@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { db } from '../../../firebase';
 
 const byPropKey = (propertyName, value) => () => ({
@@ -19,9 +21,7 @@ class EventRole extends Component {
   onSubmit(event) {
     const { eventid, uid } = this.props
     event.preventDefault();
-    db.changeEventUserRole(eventid, uid, this.state.role, snap => {
-      console.log('asd')
-    });
+    db.changeEventUserRole(eventid, uid, this.state.role);
   }
 
   render() {
@@ -44,3 +44,8 @@ class EventRole extends Component {
 }
 
 export default EventRole;
+
+EventRole.propTypes = {
+  eventid: PropTypes.string,
+  uid: PropTypes.string
+}

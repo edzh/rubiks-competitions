@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { db } from '../../../firebase';
 import AttendeeList from './Attending';
 import VolunteerList from './Volunteers';
@@ -24,7 +26,6 @@ class EventDetails extends Component {
     })
     db.watchEventUsers(eventid, snap => {
       this.setState({ attendees: snap.val() })
-      console.log(this.state);
     })
   }
 
@@ -54,3 +55,8 @@ class EventDetails extends Component {
 }
 
 export default EventDetails;
+
+EventDetails.propTypes = {
+  eventid: PropTypes.string.isRequired,
+  authUser: PropTypes.object,
+}

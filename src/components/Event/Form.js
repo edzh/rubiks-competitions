@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { db } from '../../firebase';
 // import events from '../../constants/events';
 
@@ -11,22 +12,21 @@ class EventForm extends Component {
     super(props);
 
     this.state = {
-      compid: this.props.compid,
       name: '',
       round: '',
       startTime: '',
       endTime: '',
-      date: this.props.date,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   onSubmit(event) {
-    const { name, round, startTime, endTime, date } = this.state;
+    const { name, round, startTime, endTime } = this.state;
+    const { date, compid } = this.props
 
     event.preventDefault();
-    db.doCreateEvent(this.props.compid, name, round, startTime, endTime, date);
+    db.doCreateEvent(compid, name, round, startTime, endTime, date);
     this.setState({
       name: '',
       startTime: '',
@@ -93,3 +93,8 @@ class EventForm extends Component {
 }
 
 export default EventForm;
+
+EventForm.propTypes = {
+  compid: PropTypes.string.isRequired,
+  date: PropTypes.string,
+}

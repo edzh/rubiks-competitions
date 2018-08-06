@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { db } from '../../firebase';
 import AuthUserContext from '../Auth/AuthUserContext';
 import CompetitionNavbar from './Navbar';
@@ -13,7 +15,6 @@ class Competition extends Component {
     super(props);
 
     this.state = {
-      compid: this.props.match.params.compid,
       address: '',
       compName: '',
       date: '',
@@ -32,7 +33,7 @@ class Competition extends Component {
   }
 
   componentDidMount() {
-    const { compid } = this.props.match.params;
+    const { compid } = this.props;
     this.competitionRef = db.watchCompetition(compid, snap => {
       snap.val() && Object.keys(snap.val()).forEach(key => {
         this.setState({ [key]: snap.val()[key] })
@@ -40,10 +41,6 @@ class Competition extends Component {
       this.setState({ loading: false });
     });
 
-  }
-
-  componentWillUnmount() {
-    db.detach;
   }
 
   handleRegister(compid, uid) {
@@ -54,7 +51,8 @@ class Competition extends Component {
   }
 
   render() {
-    const { loading, compid, compName, date, ...props } = this.state;
+    const { loading, compName, date, ...props } = this.state;
+    const { compid } = this.props;
     return (
     loading ? <p>loading...</p> :
       <div>
@@ -72,6 +70,11 @@ class Competition extends Component {
 
 export default React.forwardRef((props, ref) => (
   <AuthUserContext.Consumer>
-    {authUser => !!authUser && <Competition {...props} authUser={authUser} ref={ref} />}
+    {authUser => !!authUser && <Competition {...props} compid={props.match.params.compid} authUser={authUser} ref={ref} />}
   </AuthUserContext.Consumer>
 ));
+
+Competition.propTypes = {
+  authUser: PropTypes.object.isRequired,
+  compid: PropTypes.string.isRequired,
+};

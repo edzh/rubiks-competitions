@@ -24,5 +24,5 @@ const CompetitionAttendee = ({ attendeeEvents }) =>
 export default CompetitionAttendee;
 
 CompetitionAttendee.propTypes = {
-  attendeeEvents: PropTypes.object,
+  attendeeEvents: PropTypes.object.isRequired,
 };

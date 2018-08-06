@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
 
 import * as routes from '../../../constants/routes';
@@ -12,7 +14,7 @@ const AttendeeList = ({ attendees }) =>
     </tr>
 
     {
-     attendees && Object.keys(attendees).map(key => 
+     attendees && Object.keys(attendees).map(key =>
         <tr key={key}>
           <td>
             <Link to={`${routes.PROFILE}/${key}`}>
@@ -21,7 +23,7 @@ const AttendeeList = ({ attendees }) =>
           </td>
 
 
-        </tr> 
+        </tr>
       )
     }
     </tbody>
@@ -29,3 +31,7 @@ const AttendeeList = ({ attendees }) =>
 
 
 export default AttendeeList;
+
+AttendeeList.propTypes = {
+  attendees: PropTypes.object,
+}

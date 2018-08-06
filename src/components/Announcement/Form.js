@@ -68,9 +68,9 @@ class AnnouncementForm extends Component {
 export default AnnouncementForm;
 
 AnnouncementForm.propTypes = {
-  authUser: PropTypes.object,
+  authUser: PropTypes.object.isRequired,
   title: PropTypes.string,
   body: PropTypes.string,
-  compid: PropTypes.string,
+  compid: PropTypes.string.isRequired,
   date: PropTypes.string,
 };

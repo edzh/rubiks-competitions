@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import EventRole from './Role';
 
-const StaffList = ({ attendees, eventid }) => 
+const StaffList = ({ attendees, eventid }) =>
   <table className="table border col-6">
     <tbody>
     <tr>
@@ -16,7 +17,7 @@ const StaffList = ({ attendees, eventid }) =>
       <th scope="col">Role</th>
       <th scope="col"></th>
     </tr>
-      {attendees && Object.keys(attendees).map(key => 
+      {attendees && Object.keys(attendees).map(key =>
         attendees[key].title === 'Staff' && attendees[key].role !== 'None' &&
         <tr key={key}>
           <td>
@@ -33,7 +34,7 @@ const StaffList = ({ attendees, eventid }) =>
         <th></th>
         <th></th>
       </tr>
-      {attendees && Object.keys(attendees).map(key => 
+      {attendees && Object.keys(attendees).map(key =>
         attendees[key].title === 'Staff' && attendees[key].role === 'None' &&
         <tr key={key}>
           <td>
@@ -49,3 +50,8 @@ const StaffList = ({ attendees, eventid }) =>
   </table>
 
 export default StaffList;
+
+StaffList.propTypes = {
+  eventid: PropTypes.string.isRequired,
+  attendees: PropTypes.object,
+}

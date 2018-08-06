@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { db } from '../../firebase';
 
@@ -17,15 +18,15 @@ class CompetitionForm extends Component {
       uid: this.props.authUser.uid,
       compName: '',
       address: '',
-      lat: '',
-      lng: '',
+      lat: null,
+      lng: null,
       venue: '',
       date: moment().format(),
       details: '',
       organizers: {},
-      delegate: '',
-      registrationLimit: '',
-      registrationFee: '',
+      delegate: null,
+      registrationLimit: 0,
+      registrationFee: 0,
       registrationBegin: moment().format(),
       registrationEnd: moment().format(),
       registrationRequirements: '',
@@ -37,20 +38,20 @@ class CompetitionForm extends Component {
   }
 
   onSubmit(event) {
-    const { 
-      uid, compName, address, lat, lng, date, details, venue, 
-      registrationLimit, 
+    const {
+      uid, compName, address, lat, lng, date, details, venue,
+      registrationLimit,
       registrationFee,
       registrationBegin,
       registrationEnd,
-      registrationRequirements, 
+      registrationRequirements,
     } = this.state;
 
     event.preventDefault();
 
     db.doCreateCompetition(
-      uid, compName, address, lat, lng, date, details, venue, 
-      registrationLimit, 
+      uid, compName, address, lat, lng, date, details, venue,
+      registrationLimit,
       registrationFee,
       registrationBegin,
       registrationEnd,
@@ -73,15 +74,15 @@ class CompetitionForm extends Component {
   }
 
   render() {
-    const { 
-      compName, 
-      address, 
-      date, 
-      venue, 
-      details, 
-      registrationLimit, 
-      registrationFee, 
-      registrationRequirements 
+    const {
+      compName,
+      address,
+      date,
+      venue,
+      details,
+      registrationLimit,
+      registrationFee,
+      registrationRequirements,
     } = this.state;
 
     const isInvalid =
@@ -108,7 +109,7 @@ class CompetitionForm extends Component {
           <PickDate value={"date"} onDateChange={this.onDateChange} />
 
 
-          <input 
+          <input
             type="text"
             className="form-control"
             value={venue}
@@ -116,18 +117,18 @@ class CompetitionForm extends Component {
             placeholder="Venue"
           />
 
-          <input 
+          <input
             type="text"
             className="form-control"
             value={details}
             onChange={event => this.setState(byPropKey('details', event.target.value))}
             placeholder="Details"
           />
-          <p><strong>Registration Begins: </strong></p>          
+          <p><strong>Registration Begins: </strong></p>
           <PickDate value={"registrationBegin"} onDateChange={this.onDateChange} />
-          <p><strong>Registration Ends: </strong></p>          
+          <p><strong>Registration Ends: </strong></p>
           <PickDate value={"registrationEnd"} onDateChange={this.onDateChange} />
-          <textarea 
+          <textarea
             type="text"
             className="form-control"
             value={registrationRequirements}
@@ -136,18 +137,18 @@ class CompetitionForm extends Component {
             placeholder="Registration Requirements"
           />
 
-          <input 
+          <input
             type="number"
             className="form-control"
-            value={registrationLimit}
+            value={parseInt(registrationLimit, 10)}
             onChange={event => this.setState(byPropKey('registrationLimit', event.target.value))}
             placeholder="Registration Limit"
           />
 
-          <input 
+          <input
             type="number"
             className="form-control"
-            value={registrationFee}
+            value={parseInt(registrationFee, 10)}
             onChange={event => this.setState(byPropKey('registrationFee', event.target.value))}
             placeholder="Registration Fee"
           />
@@ -160,3 +161,7 @@ class CompetitionForm extends Component {
 }
 
 export default CompetitionForm;
+
+CompetitionForm.propTypes = {
+  authUser: PropTypes.object,
+}
