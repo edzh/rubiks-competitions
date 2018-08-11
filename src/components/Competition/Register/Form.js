@@ -4,7 +4,9 @@ import { db } from '../../../firebase';
 
 import EventSelector from './EventSelector';
 
-
+const byPropKey = (propertyName, value) => () => ({
+  [propertyName]: value,
+});
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -13,7 +15,7 @@ class RegisterForm extends Component {
     this.state = {
       compid: this.props.compid,
       events: {},
-      guests: '',
+      guests: 0,
     }
 
     this.onSubmit = this.onSubmit.bind(this);
@@ -36,7 +38,7 @@ class RegisterForm extends Component {
     event.preventDefault();
     const { authUser, compid, firstName, lastName } = this.props;
     const { ...events } = this.state.events;
-    db.doCreateAttendee(compid, authUser.uid, firstName, lastName, events);
+    db.doCreateAttendee(compid, authUser.uid, firstName, lastName, events, this.state.guests);
     db.doCreateEventUserFromRegistration(compid, authUser.uid, firstName, lastName, events);
   }
 
@@ -50,7 +52,7 @@ class RegisterForm extends Component {
   }
 
   render() {
-    const { events } = this.state;
+    const { events, guests } = this.state;
 
     return (
       <div className="card px-4 py-4">
@@ -60,6 +62,8 @@ class RegisterForm extends Component {
 
           <input
             type="number"
+            value={parseInt(guests, 10)}
+            onChange={ event => this.setState(byPropKey('guests', event.target.value))}
             className="form-control my-2"
             placeholder="Guests"
           />

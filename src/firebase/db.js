@@ -33,7 +33,10 @@ export const doCreateCompetition = (uid, compName, address, lat, lng, date, deta
     registrationBegin,
     registrationEnd,
     registrationRequirements,
+    delegate: '',
+    organizers: {[uid]: true},
     approved: false,
+    ready: false,
     active: false
   };
   competitionsRef.push(competition);
@@ -169,12 +172,13 @@ export const changeEventUserTitle = (eventid, uid, title) =>
   db.ref(`eventAttendees/${eventid}/${uid}`).child('title').set(title);
 
 /*** ATTENDEE MODEL ***/
-export const doCreateAttendee = (compid, uid, firstName, lastName, events) => {
+export const doCreateAttendee = (compid, uid, firstName, lastName, events, guests) => {
   const competitionsAttendeesRef = db.ref(`competitionAttendees/${compid}/${uid}`)
   competitionsAttendeesRef.set({
     firstName,
     lastName,
     events,
+    guests
   });
 }
 
