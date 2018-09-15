@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import * as routes from '../../constants/routes';
 // import withAuthentication from './../withAuthentication';
 
-import AuthUserContext from '../Auth/AuthUserContext';
+
 import CompetitionForm from '../Competition/Form';
 
 import { db } from '../../firebase';
@@ -67,31 +67,26 @@ class CompetitionList extends Component {
     const { authUser } = this.props;
 
     return (
-
-        <div>
-          <div className="my-4 row">
-            <h2 className="col-2">Competitions</h2>
-            <input
-              type="text"
-              className="col-8 form-control"
-              placeholder="Search..."
-            />
-            <button className="btn ml-auto col-1">Filter </button>
-          </div>
-          { loading && <p>loading...</p> }
-          { !!competitions && <CompetitionsTable competitions={competitions} handleDelete={this.handleDelete} /> }
-          <CompetitionForm authUser={authUser} />
+      <div>
+        <div className="my-4 row">
+          <h2 className="col-2">Competitions</h2>
+          <input
+            type="text"
+            className="col-8 form-control"
+            placeholder="Search..."
+          />
+          <button className="btn ml-auto col-1">Filter </button>
         </div>
+        { loading && <p>loading...</p> }
+        { !!competitions && <CompetitionsTable competitions={competitions} handleDelete={this.handleDelete} /> }
+        <CompetitionForm authUser={authUser} />
+      </div>
     );
   }
 
 }
 
-export default React.forwardRef((props, ref) => (
-  <AuthUserContext.Consumer>
-    {authUser => !!authUser && <CompetitionList {...props} authUser={authUser} ref={ref} />}
-  </AuthUserContext.Consumer>
-));
+export default CompetitionList;
 
 CompetitionList.propTypes = {
   authUser: PropTypes.object,

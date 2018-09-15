@@ -42,6 +42,12 @@ export const doCreateCompetition = (uid, compName, address, lat, lng, date, deta
   competitionsRef.push(competition);
 }
 
+export const doReadyCompetition = (compid, cb) =>
+  db.ref(`competitions/${compid}`).update({ ready: true });
+
+export const doApproveCompetition = (compid, cb) =>
+  db.ref(`competitions/${compid}`).update({ approved: true });
+
 export const onceGetCompetitions = () =>
   db.ref('competitions').once('value');
 
@@ -211,3 +217,7 @@ export const detach = () =>
 
 export const onceGetUserInfo = (uid, cb) =>
   db.ref(`users/${uid}`).once('value', cb);
+
+/** DELEGATE API **/
+export const onceGetReadyCompetitions = (cb) =>
+  db.ref(`competitions`).orderByChild('ready').equalTo(true).once('value', cb);

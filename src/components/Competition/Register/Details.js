@@ -17,6 +17,8 @@ class RegisterDetails extends Component {
       registrationLimit: '',
       registrationRequirements: ''
     }
+
+
   }
 
   componentDidMount() {
@@ -29,6 +31,7 @@ class RegisterDetails extends Component {
       })
     });
   }
+
 
   render() {
     const {

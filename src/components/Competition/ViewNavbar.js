@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import * as routes from '../../constants/routes';
 
-const Navbar = ({ compid }) =>
+const ViewNavbar = ({ compid }) =>
   <nav className="rounded-top navbar navbar-expand-lg navbar-dark bg-dark">
     <ul className="navbar-nav">
       <li className="nav-item">
@@ -28,8 +28,8 @@ const Navbar = ({ compid }) =>
     </ul>
   </nav>
 
-export default Navbar;
+export default ViewNavbar;
 
-Navbar.propTypes = {
+ViewNavbar.propTypes = {
   compid: PropTypes.string.isRequired,
 }

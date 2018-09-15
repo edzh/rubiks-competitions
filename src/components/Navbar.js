@@ -22,6 +22,9 @@ const NavbarAuth = (props) =>
       <li className="nav-item">
         <NavLink className="nav-link" to={`${routes.PROFILE}/${props.authUser.uid}`}>My Profile</NavLink>
       </li>
+      <li className="nav-item">
+        <NavLink className="nav-link" to={`${routes.DELEGATE}`}>Review Competitions</NavLink>
+      </li>
     </ul>
   </nav>
 

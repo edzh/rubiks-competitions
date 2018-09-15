@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import { db } from '../../firebase';
-
+import AuthUserContext from '../Auth/AuthUserContext';
 import SearchLocation from '../SearchLocation';
 import PickDate from '../PickDate';
 import moment from 'moment';
@@ -160,7 +160,11 @@ class CompetitionForm extends Component {
   }
 }
 
-export default CompetitionForm;
+export default React.forwardRef((props, ref) => (
+  <AuthUserContext.Consumer>
+    {authUser => !!authUser && <CompetitionForm {...props} authUser={authUser} ref={ref} />}
+  </AuthUserContext.Consumer>
+));
 
 CompetitionForm.propTypes = {
   authUser: PropTypes.object,

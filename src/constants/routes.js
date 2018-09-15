@@ -4,3 +4,4 @@ export const HOME = '/';
 export const COMPETITIONS = '/competitions';
 export const CREATE_COMP = '/create';
 export const PROFILE = '/user';
+export const DELEGATE = '/delegate';

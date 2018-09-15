@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { db } from '../../firebase';
 import AuthUserContext from '../Auth/AuthUserContext';
-import CompetitionNavbar from './Navbar';
 import CompetitionManage from './Manage';
+import CompetitionView from './View';
 
 import moment from 'moment';
 
@@ -15,13 +15,13 @@ class Competition extends Component {
     super(props);
 
     this.state = {
+      uid: '',
       address: '',
       compName: '',
       date: '',
       lat: '',
       lng: '',
       loading: true,
-      register: false,
       details: '',
       venue: '',
       registrationLimit: '',
@@ -29,7 +29,12 @@ class Competition extends Component {
       registrationBegin: '',
       registrationEnd: '',
       registrationRequirements: '',
+      ready: null,
+      approved: null,
+      active: null,
     };
+
+    this.readyCompetition = this.readyCompetition.bind(this);
   }
 
   componentDidMount() {
@@ -43,11 +48,8 @@ class Competition extends Component {
 
   }
 
-  handleRegister(compid, uid) {
-    db.onceGetUser(this.props.authUser.uid, snap => {
-      const { firstName, lastName } = snap.val()
-      db.doCreateAttendee(compid, this.props.authUser.uid, firstName, lastName);
-    })
+  readyCompetition() {
+    db.doReadyCompetition(this.props.compid);
   }
 
   render() {
@@ -60,9 +62,12 @@ class Competition extends Component {
           <h1 className="">{compName}</h1>
           <h2 className="mt-2 ml-auto" style={{fontWeight: 'normal'}}>{moment(date).format('LL')}</h2>
         </div>
+        <button onClick={this.readyCompetition} className="btn btn-primary">Ready</button>
 
-        <CompetitionNavbar compid={compid} />
-        <CompetitionManage {...props} date={date} authUser={this.props.authUser} />
+        {this.props.authUser.uid === this.state.uid 
+          ? <CompetitionManage {...props} compid={compid} date={date} authUser={this.props.authUser} />
+          : <CompetitionView {...props} compid={compid} />
+        }
       </div>
     );
   }
@@ -70,7 +75,7 @@ class Competition extends Component {
 
 export default React.forwardRef((props, ref) => (
   <AuthUserContext.Consumer>
-    {authUser => !!authUser && <Competition {...props} compid={props.match.params.compid} authUser={authUser} ref={ref} />}
+    {authUser => authUser && <Competition {...props} compid={props.match.params.compid} authUser={authUser} ref={ref} />}
   </AuthUserContext.Consumer>
 ));
 
